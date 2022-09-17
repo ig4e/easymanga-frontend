@@ -75,7 +75,7 @@ function SearchBar() {
 	const [open, setOpen] = useState(false);
 	useEffect(() => {
 		console.log(query, open);
-		const searchTimeout = setTimeout(() => setOpen(true), 250);
+		const searchTimeout = setTimeout(() => setOpen(!!query), 250);
 		return () => clearTimeout(searchTimeout);
 	}, [query]);
 
