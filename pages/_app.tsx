@@ -7,8 +7,10 @@ import Navbar from "../components/Navbar";
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ApolloProvider client={client}>
-			<Navbar></Navbar>
-			<Component {...pageProps} />
+			<div className="font-body">
+				<Navbar></Navbar>
+				<Component {...pageProps} />
+			</div>
 		</ApolloProvider>
 	);
 }

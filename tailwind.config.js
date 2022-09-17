@@ -5,13 +5,34 @@ module.exports = {
 		"./components/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
+		fontFamily: {
+			display: ["'Inter'", "sans-serif"],
+			body: ["'Inter'", "sans-serif"],
+		},
+		container: {
+			center: true,
+			screens: {
+				sm: "1240px",
+				md: "1240px",
+				lg: "1240px",
+				xl: "1240px",
+				"2xl": "1240px",
+			},
+			padding: "1rem",
+		},
+	
 		extend: {
+			fontSize: {
+				'base': '0.95rem',
+			},
 			colors: {
-				primary: "#2C4CE5",
-				base: "#0F1117",
-				"base-100": "#212328",
-				neutral: "#C1C1C2",
-				"neutral-100": "#FFFFFF",
+				primary: "#32aaff",
+				base: "#f0f1f3",
+				"base-100": "#ffffff",
+				neutral: "#242424",
+				"neutral-100": "#212328",
+				"neutral-200": "#363940",
+
 			},
 		},
 	},
