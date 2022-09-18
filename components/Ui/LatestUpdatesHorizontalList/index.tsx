@@ -11,7 +11,7 @@ const breakpoints = {
 	"2xl": 1536,
 };
 
-function index({ mangaList }: { mangaList: Manga[][] }) {
+function Index({ mangaList }: { mangaList: Manga[][] }) {
 	const [width, setWidth] = React.useState(0);
 	useEffect(() => {
 		setWidth(window.innerWidth);
@@ -39,4 +39,4 @@ function index({ mangaList }: { mangaList: Manga[][] }) {
 	);
 }
 
-export default index;
+export default Index;

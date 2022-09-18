@@ -6,7 +6,7 @@ const Home: NextPage = () => {
 	return (
 		<div>
 			<Head>
-				<title>Manga List</title>
+				<title>Manga List H</title>
 			</Head>
 		</div>
 	);
