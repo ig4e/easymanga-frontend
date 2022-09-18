@@ -20,10 +20,10 @@ module.exports = {
 			},
 			padding: "1rem",
 		},
-	
+
 		extend: {
 			fontSize: {
-				'base': '0.95rem',
+				base: "0.95rem",
 			},
 			colors: {
 				primary: "#32aaff",
@@ -31,8 +31,7 @@ module.exports = {
 				"base-100": "#f0f1f3",
 				neutral: "#242424",
 				"neutral-100": "#212328",
-				"neutral-200": "#363940",
-
+				"neutral-200": "#777777",
 			},
 		},
 	},

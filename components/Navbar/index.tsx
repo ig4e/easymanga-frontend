@@ -7,7 +7,7 @@ import SearchBar from "../Ui/SearchBar";
 function Navbar() {
 	return (
 		<div className="h-14">
-			<nav className="bg-base my-0 py-2.5 shadow-md fixed w-screen h-14">
+			<nav className="bg-base my-0 py-2.5 shadow-md fixed w-screen h-14 z-40">
 				<div className="flex items-center justify-between container h-full w-full">
 					<div className="flex items-center space-x-16">
 						<div className="flex items-center space-x-2">

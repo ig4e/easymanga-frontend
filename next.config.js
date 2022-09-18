@@ -2,11 +2,14 @@
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	images: {
+		domains: ["workers.emanga.tk"],
+	},
 	compiler: {
 		styledComponents: {
-			ssr: true
-		}
-	}
+			ssr: true,
+		},
+	},
 };
 
 module.exports = nextConfig;

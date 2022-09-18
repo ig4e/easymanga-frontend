@@ -110,7 +110,7 @@ function SearchBar() {
 					</Dialog.Trigger>
 					<Dialog.Portal>
 						<AnimatePresence>
-							<Dialog.Overlay className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-center">
+							<Dialog.Overlay className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">
 								<motion.div
 									initial={{ scale: 0.5 }}
 									animate={{ scale: 1 }}
