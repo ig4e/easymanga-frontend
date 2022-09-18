@@ -1,39 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Manga } from "../../../typings/manga";
-import { layoutGenerator } from 'react-break';
 import MangaCardHorizontalList from "./MangaCardHorizontalList";
+import { AnimatePresence, motion } from "framer-motion";
 
-const layout = layoutGenerator({
-    mobile: 0,
-    phablet: 550,
-    tablet: 768,
-    desktop: 992,
-    
-  });
-
-  /*
-  'sm': '640px',
-  // => @media (min-width: 640px) { ... }
-
-  'md': '768px',
-  // => @media (min-width: 768px) { ... }
-
-  'lg': '1024px',
-  // => @media (min-width: 1024px) { ... }
-
-  'xl': '1280px',
-  // => @media (min-width: 1280px) { ... }
-
-  '2xl': '1536px',
-  // => @media (min-width: 1536px) { ... }
-  */
+const breakpoints = {
+	sm: 640,
+	md: 768,
+	lg: 1024,
+	xl: 1280,
+	"2xl": 1536,
+};
 
 function index({ mangaList }: { mangaList: Manga[][] }) {
+	const [width, setWidth] = React.useState(0);
+	useEffect(() => {
+		setWidth(window.innerWidth);
+		window.addEventListener("resize", () => setWidth(window.innerWidth));
+	}, []);
+
 	return (
 		<div className="grid gap-x-6 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1">
-			{mangaList.map((list, i) => (
-				<MangaCardHorizontalList key = {i} manga={list}></MangaCardHorizontalList>
-			))}
+			{mangaList.map((list, i) => {
+				if (i === 2 && width < breakpoints["2xl"]) return null;
+				if (i === 1 && width < breakpoints.lg) return null;
+				return (
+					<motion.div
+						key={i}
+						initial={{ scale: 0.9 }}
+						animate={{ scale: 1 }}
+					>
+						<MangaCardHorizontalList
+							manga={list}
+						></MangaCardHorizontalList>
+					</motion.div>
+				);
+			})}
 		</div>
 	);
 }

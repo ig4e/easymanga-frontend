@@ -8,10 +8,6 @@ const Home: NextPage = () => {
 			<Head>
 				<title>Manga List</title>
 			</Head>
-
-			<div className = "h-96 bg-neutral-200">
-
-			</div>
 		</div>
 	);
 };

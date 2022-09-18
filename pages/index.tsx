@@ -19,7 +19,7 @@ const Home: NextPage<HomePageProps> = ({
 	popularMangaList,
 	newMangaList,
 }: HomePageProps) => {
-	const Header: any = tw.h1`text-3xl font-medium my-4`;
+	const Header: any = tw.h1`text-2xl font-medium my-4`;
 
 	return (
 		<div className="mt-12 space-y-20">
