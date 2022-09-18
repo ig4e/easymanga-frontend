@@ -27,8 +27,8 @@ module.exports = {
 			},
 			colors: {
 				primary: "#32aaff",
-				base: "#f0f1f3",
-				"base-100": "#ffffff",
+				base: "#ffffff",
+				"base-100": "#f0f1f3",
 				neutral: "#242424",
 				"neutral-100": "#212328",
 				"neutral-200": "#363940",
