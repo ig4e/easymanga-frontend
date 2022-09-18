@@ -70,11 +70,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
 						name
 						number
 					}
+					source
 				}
 			}
 		`,
 		variables: {
 			mangaListInput: {
+				source: "MANGASWAT",
 				filters: {
 					order: "UPDATE",
 				},
