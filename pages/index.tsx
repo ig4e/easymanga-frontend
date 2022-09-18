@@ -4,10 +4,10 @@ import tw from "tailwind-styled-components";
 import { Manga } from "../typings/manga";
 import { gql } from "@apollo/client";
 import { client } from "../apollo-client";
-import { motion } from "framer-motion";
-
+import { MANGA_FIELDS } from "../apollo/fragments";
 import MangaCardHorizontalList from "../components/Ui/LatestUpdatesHorizontalList";
 import Link from "next/link";
+import MangaListRow from "../components/Ui/MangaListRow";
 
 interface HomePageProps {
 	latestUpdatesList: Manga[][];
@@ -28,18 +28,25 @@ const Home: NextPage<HomePageProps> = ({
 				<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
 			</Head>
 
-			<div>
-				<div className="flex flex-col">
-					<Header>Latest Updates</Header>
-					<MangaCardHorizontalList
-						mangaList={latestUpdatesList}
-					></MangaCardHorizontalList>
-					<Link href="">
-						<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
-							View All
-						</a>
-					</Link>
-				</div>
+			<div className="flex flex-col">
+				<Header>Latest Updates</Header>
+				<MangaCardHorizontalList
+					mangaList={latestUpdatesList}
+				></MangaCardHorizontalList>
+				<Link href="/titles/">
+					<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
+						View All
+					</a>
+				</Link>
+			</div>
+			<div className="flex flex-col">
+				<Header>Latest Updates</Header>
+				<MangaListRow></MangaListRow>
+				<Link href="/titles/">
+					<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
+						View All
+					</a>
+				</Link>
 			</div>
 		</div>
 	);
@@ -48,35 +55,26 @@ const Home: NextPage<HomePageProps> = ({
 export const getServerSideProps: GetServerSideProps = async () => {
 	const { data } = await client.query({
 		query: gql`
-			query Query($mangaListInput: MangalistInput) {
-				latestUpdates: mangaList(mangaListInput: $mangaListInput) {
-					aniId
-					dexId
-					muId
-					slug
-					cover
-					url
-					altTitles
-					title
-					genres
-					status
-					synopsis
-					author
-					type
-					releaseYear
-					artist
-					score
-					chapters {
-						name
-						number
-					}
-					source
+			${MANGA_FIELDS}
+			query Query(
+				$latestUpdatesInput: MangalistInput
+				$popularManga: MangalistInput
+			) {
+				latestUpdates: mangaList(mangaListInput: $latestUpdatesInput) {
+					...MangaFields
+				}
+				popularManga: mangaList(mangaListInput: $popularManga) {
+					...MangaFields
 				}
 			}
 		`,
 		variables: {
-			mangaListInput: {
-				source: "MANGASWAT",
+			latestUpdatesInput: {
+				filters: {
+					order: "UPDATE",
+				},
+			},
+			popularManga: {
 				filters: {
 					order: "UPDATE",
 				},
@@ -92,7 +90,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 	return {
 		props: {
-			latestUpdatesList: latestUpdatesList.slice(0, 3),
+			latestUpdatesList: latestUpdatesList.slice(0, 4),
 		},
 	};
 };

@@ -19,15 +19,16 @@ function Index({ mangaList }: { mangaList: Manga[][] }) {
 	}, []);
 
 	return (
-		<div className="grid gap-x-6 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1">
+		<div className="grid gap-x-6 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 grid-cols-1">
 			{mangaList.map((list, i) => {
-				if (i === 2 && width < breakpoints["2xl"]) return null;
-				if (i === 1 && width < breakpoints.lg) return null;
+				if (i === 3 && width < breakpoints["2xl"]) return null;
+        if (i === 2 && width < breakpoints["xl"]) return null;
+				if (i === 1 && width < breakpoints["lg"]) return null;
 				return (
 					<motion.div
 						key={i}
-						initial={{ scale: 0.9 }}
-						animate={{ scale: 1 }}
+						initial={{ scale: 0.5, x: -100 }}
+						animate={{ scale: 1, x: 0 }}
 					>
 						<MangaCardHorizontalList
 							manga={list}
