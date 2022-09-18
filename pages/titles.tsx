@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Home: NextPage = () => {
 	return (
@@ -9,9 +10,7 @@ const Home: NextPage = () => {
 				<title>Manga List</title>
 			</Head>
 
-			<div className = "h-96 bg-neutral-200">
-
-			</div>
+			<div className="h-96 bg-neutral-200"></div>
 		</div>
 	);
 };

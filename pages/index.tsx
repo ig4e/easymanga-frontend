@@ -4,6 +4,7 @@ import tw from "tailwind-styled-components";
 import { Manga } from "../typings/manga";
 import { gql } from "@apollo/client";
 import { client } from "../apollo-client";
+import { motion } from "framer-motion";
 
 import MangaCardHorizontalList from "../components/Ui/LatestUpdatesHorizontalList";
 import Link from "next/link";
