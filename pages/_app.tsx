@@ -5,7 +5,6 @@ import { client } from "../apollo-client";
 import Navbar from "../components/Navbar";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ApolloProvider client={client}>

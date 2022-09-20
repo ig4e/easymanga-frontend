@@ -15,6 +15,8 @@ interface HomePageProps {
 	newMangaList: Manga[];
 }
 
+const Cockroach = ""
+
 const Home: NextPage<HomePageProps> = ({
 	latestUpdatesList,
 	popularMangaList,
@@ -52,7 +54,9 @@ const Home: NextPage<HomePageProps> = ({
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+	let { source } = query;
+	if (!source) source = "ARES";
 	const { data } = await client.query({
 		query: gql`
 			${MANGA_FIELDS}
@@ -70,11 +74,13 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		`,
 		variables: {
 			latestUpdatesInput: {
+				source,
 				filters: {
 					order: "UPDATE",
 				},
 			},
 			popularManga: {
+				source,
 				filters: {
 					order: "UPDATE",
 				},
