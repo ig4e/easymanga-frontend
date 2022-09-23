@@ -15,8 +15,6 @@ interface HomePageProps {
 	newMangaList: Manga[];
 }
 
-const Cockroach = ""
-
 const Home: NextPage<HomePageProps> = ({
 	latestUpdatesList,
 	popularMangaList,
