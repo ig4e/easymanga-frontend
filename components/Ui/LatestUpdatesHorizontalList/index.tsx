@@ -25,15 +25,10 @@ function Index({ mangaList }: { mangaList: Manga[][] }) {
 				if (i === 2 && width < breakpoints["lg"]) return null;
 				if (i === 1 && width < breakpoints["md"]) return null;
 				return (
-					<motion.div
+					<MangaCardHorizontalList
 						key={i}
-						initial={{ scale: 0.95 }}
-						animate={{ scale: 1 }}
-					>
-						<MangaCardHorizontalList
-							manga={list}
-						></MangaCardHorizontalList>
-					</motion.div>
+						manga={list}
+					></MangaCardHorizontalList>
 				);
 			})}
 		</div>

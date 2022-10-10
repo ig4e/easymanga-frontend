@@ -20,10 +20,10 @@ const Home: NextPage<HomePageProps> = ({
 	popularMangaList,
 	newMangaList,
 }: HomePageProps) => {
-	const Header: any = tw.h1`text-2xl font-medium my-4`;
+	const Header: any = tw.h1`text-3xl font-medium mb-6`;
 
 	return (
-		<div className="mt-12 space-y-20">
+		<div className="mt-12 space-y-10">
 			<Head>
 				<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
 			</Head>
@@ -41,7 +41,7 @@ const Home: NextPage<HomePageProps> = ({
 			</div>
 			<div className="flex flex-col">
 				<Header>Latest Updates</Header>
-				<MangaListRow></MangaListRow>
+				<MangaListRow mangaList={popularMangaList}></MangaListRow>
 				<Link href="/titles/">
 					<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
 						View All
@@ -95,6 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	return {
 		props: {
 			latestUpdatesList: latestUpdatesList.slice(0, 4),
+			popularMangaList: data.popularManga,
 		},
 	};
 };
