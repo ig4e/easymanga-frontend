@@ -100,21 +100,25 @@ function SearchBar() {
 	return (
 		<>
 			<motion.div className="h-full relative">
-				<Dialog.Root open={open} onOpenChange={setOpen}>
-					<Dialog.Trigger className="h-full">
-						<SearchBarUi
-							setQuery={setQuery}
-							value={query}
-							active={open}
-						></SearchBarUi>
-					</Dialog.Trigger>
-					<Dialog.Portal>
-						<AnimatePresence>
+				<AnimatePresence>
+					<Dialog.Root open={open} onOpenChange={setOpen}>
+						<Dialog.Trigger className="h-full">
+							<SearchBarUi
+								setQuery={setQuery}
+								value={query}
+								active={open}
+							></SearchBarUi>
+						</Dialog.Trigger>
+						<Dialog.Portal>
 							<Dialog.Overlay className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">
 								<motion.div
 									initial={{ scale: 0.5 }}
 									animate={{ scale: 1 }}
 									exit={{ scale: 0.5 }}
+									transition={{
+										type: "spring",
+										duration: 0.4,
+									}}
 									className="bg-base pb-6 px-6 rounded max-w-7xl w-full"
 								>
 									<Dialog.Content>
@@ -139,9 +143,9 @@ function SearchBar() {
 									</Dialog.Content>
 								</motion.div>
 							</Dialog.Overlay>
-						</AnimatePresence>
-					</Dialog.Portal>
-				</Dialog.Root>
+						</Dialog.Portal>
+					</Dialog.Root>
+				</AnimatePresence>
 			</motion.div>
 		</>
 	);

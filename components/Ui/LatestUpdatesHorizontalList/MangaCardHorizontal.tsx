@@ -4,6 +4,7 @@ import { Manga } from "../../../typings/manga";
 import tw from "tailwind-styled-components";
 import { BookOpenIcon, StarIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 function MangaCardHorizontal({ manga }: { manga: Manga }) {
 	const MangaTitle: any = tw.h1`text-lg font-bold`;

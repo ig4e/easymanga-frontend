@@ -1,7 +1,7 @@
 import React from "react";
 import { Manga } from "../../../typings/manga";
 import MangaCard from "../MangaCard";
-import "swiper/css";
+import "swiper/css/bundle";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
 	A11y,
@@ -18,8 +18,35 @@ function MangaListRow({ mangaList }: { mangaList: Manga[] }) {
 		<div>
 			<Swiper
 				className="select-none w-full"
-				slidesPerView={1}
-				effect={"coverflow"}
+				effect={"fade"}
+				lazy={true}
+				longSwipes={true}
+				longSwipesMs={800}
+				spaceBetween={10}
+				speed={500}
+				freeMode={true}
+				breakpoints={{
+					0: {
+						longSwipesRatio: 0.2,
+						slidesPerView: 2.7,
+					},
+					520: {
+						slidesPerView: 4,
+					},
+					900: {
+						slidesPerView: 6,
+					},
+					1024: {
+						slidesPerView: 8.7,
+					},
+
+					1305: {
+						slidesPerView: 9.5,
+					},
+					1536: {
+						slidesPerView: 10,
+					},
+				}}
 				modules={[
 					FreeMode,
 					Keyboard,

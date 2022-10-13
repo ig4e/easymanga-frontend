@@ -40,7 +40,7 @@ const Home: NextPage<HomePageProps> = ({
 				</Link>
 			</div>
 			<div className="flex flex-col">
-				<Header>Latest Updates</Header>
+				<Header>Popular Manga</Header>
 				<MangaListRow mangaList={popularMangaList}></MangaListRow>
 				<Link href="/titles/">
 					<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
@@ -54,7 +54,7 @@ const Home: NextPage<HomePageProps> = ({
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	let { source } = query;
-	if (!source) source = "ARES";
+	if (!source) source = "MANGASWAT";
 	const { data } = await client.query({
 		query: gql`
 			${MANGA_FIELDS}
@@ -87,10 +87,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	});
 
 	const latestUpdatesList: Manga[][] = [];
+	const PerCol = 6
 
-	for (var i = 0; i < data.latestUpdates.length; i += 5) {
-		latestUpdatesList.push(data.latestUpdates.slice(i, i + 5));
+	for (var i = 0; i < data.latestUpdates.length; i += PerCol) {
+		latestUpdatesList.push(data.latestUpdates.slice(i, i + PerCol));
 	}
+
+	//console.log(data);
 
 	return {
 		props: {
