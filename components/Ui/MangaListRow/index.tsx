@@ -12,10 +12,23 @@ import {
 	Mousewheel,
 	Virtual,
 } from "swiper";
+import Link from "next/link";
+import tw from "tailwind-styled-components";
 
-function MangaListRow({ mangaList }: { mangaList: Manga[] }) {
+function MangaListRow({
+	mangaList,
+	title,
+	href,
+}: {
+	mangaList: Manga[];
+	title: string;
+	href: string;
+}) {
+	const Header: any = tw.h1`text-2xl font-semibold mb-4`;
+
 	return (
-		<div>
+		<div className="flex flex-col gap-2">
+			<Header>{title}</Header>
 			<Swiper
 				className="select-none w-full"
 				effect={"fade"}
@@ -41,10 +54,11 @@ function MangaListRow({ mangaList }: { mangaList: Manga[] }) {
 					},
 
 					1305: {
-						slidesPerView: 9.5,
+						slidesPerView: 9,
 					},
 					1536: {
-						slidesPerView: 10,
+						slidesPerView: 10
+						,
 					},
 				}}
 				modules={[
@@ -62,6 +76,14 @@ function MangaListRow({ mangaList }: { mangaList: Manga[] }) {
 					</SwiperSlide>
 				))}
 			</Swiper>
+			<Link href={href}>
+				<a
+					href={href}
+					className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral"
+				>
+					View All
+				</a>
+			</Link>
 		</div>
 	);
 }

@@ -10,8 +10,8 @@ function MangaCardHorizontal({ manga }: { manga: Manga }) {
 	const MangaTitle: any = tw.h1`text-lg font-bold`;
 
 	return (
-		<Link href={`/title/${manga.source}/${manga.slug}`}>
-			<a className="flex gap-2 max-h-20 bg-base-100 ">
+		<Link href={`/titles/${manga.source}/${manga.slug}`}>
+			<a href={`/titles/${manga.source}/${manga.slug}`} className="flex gap-2 max-h-20 bg-base-100 ">
 				<div className="h-full max-w-[56px] min-w-[56px]">
 					<Image
 						src={manga.cover}

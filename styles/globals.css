@@ -22,4 +22,24 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 	}
+
+	/* width */
+	::-webkit-scrollbar {
+		@apply w-2;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		@apply bg-base-100;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		@apply bg-primary/70 rounded-md;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		@apply bg-primary;
+	}
 }
