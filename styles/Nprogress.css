@@ -1,0 +1,4 @@
+#nprogress {
+	--primary-color: #32aaff;
+	pointer-events: none;
+}

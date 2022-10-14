@@ -37,7 +37,7 @@ function MangaCard({ manga }: { manga: Manga }) {
 
 	return (
 		<AnimatePresence>
-			<Tooltip.Provider delayDuration={0} skipDelayDuration={100}>
+			<Tooltip.Provider delayDuration={350} skipDelayDuration={100}>
 				<Tooltip.Root>
 					<Link href={`/titles/${manga.source}/${manga.slug}`}>
 						<a href={`/titles/${manga.source}/${manga.slug}`}>
@@ -61,8 +61,8 @@ function MangaCard({ manga }: { manga: Manga }) {
 					</Link>
 					<Tooltip.Portal>
 						<Tooltip.Content
-							side="right"
-							className="z-50 mt-14 mx-4"
+							side="left"
+							className="z-50 "
 							forceMount={true}
 						>
 							<motion.div
@@ -72,7 +72,7 @@ function MangaCard({ manga }: { manga: Manga }) {
 								exit={{ scale: 0.5, opacity: 0 }}
 								transition={{ duration: 0.15 }}
 							>
-								<div className="flex items-center w-full justify-between">
+								<div className="flex items-center gap-4 w-full justify-between">
 									<div className="flex gap-0.5 items-end">
 										<h2 className="items-end text-xl font-semibold line-clamp-1 max-w-xs">
 											{manga.title}
@@ -154,7 +154,11 @@ function MangaCard({ manga }: { manga: Manga }) {
 										</div>
 									)}
 								</div>
-								<Tooltip.Arrow className="fill-white " />
+								<Tooltip.Arrow
+									className="fill-slate-300 drop-shadow-xl"
+									width={20}
+									height={10}
+								/>
 							</motion.div>
 						</Tooltip.Content>
 					</Tooltip.Portal>

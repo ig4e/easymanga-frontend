@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	});
 
 	const latestUpdatesList: Manga[][] = [];
-	const PerCol = 6;
+	const PerCol = 5;
 
 	for (var i = 0; i < data.latestUpdates.length; i += PerCol) {
 		latestUpdatesList.push(data.latestUpdates.slice(i, i + PerCol));

@@ -35,26 +35,28 @@ function ShowImageModal({
 									type: "spring",
 									duration: 0.4,
 								}}
-								className="max-w-xl w-full relative aspect-[3/4] rounded-md"
+								className="max-w-[80vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
 							>
-								<Dialog.Content>
+								<Dialog.Content className="">
 									{!isLoaded && (
 										<>
 											<div className="absolute inset-0 bg-neutral-200/80 animate-pulse z-50 rounded-md"></div>
 											<div className="absolute inset-0 bg-neutral-100/25 backdrop-blur-lg rounded-md"></div>
 										</>
 									)}
-
-									<Image
-										src={imgSrc}
-										layout="fill"
-										onLoad={() => setIsLoaded(true)}
-										className={`${
-											isLoaded
-												? "opacity-100"
-												: "opacity-0"
-										} rounded-md`}
-									></Image>
+									<a target={"_blank"} href={imgSrc}>
+										<Image
+											quality={100}
+											src={imgSrc}
+											layout="fill"
+											onLoad={() => setIsLoaded(true)}
+											className={`${
+												isLoaded
+													? "opacity-100"
+													: "opacity-0"
+											} rounded-md`}
+										></Image>
+									</a>
 								</Dialog.Content>
 							</motion.div>
 						</Dialog.Overlay>
