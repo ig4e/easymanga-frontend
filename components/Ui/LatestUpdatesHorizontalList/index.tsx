@@ -26,12 +26,12 @@ function Index({ mangaList }: { mangaList: Manga[][] }) {
 				if (i === 1 && width < breakpoints["md"]) return null;
 				return (
 					<motion.div
+						key={i}
 						animate={{ scale: 1 }}
 						initial={{ scale: 0.9 }}
 						transition={{ type: "spring", duration: 0.4 }}
 					>
 						<MangaCardHorizontalList
-							key={i}
 							manga={list}
 						></MangaCardHorizontalList>
 					</motion.div>
