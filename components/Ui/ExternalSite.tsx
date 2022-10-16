@@ -6,10 +6,12 @@ function ExternalSite({
 	href,
 	title,
 	ImageSrc,
+	ImageClassName,
 }: {
 	href: string;
 	title: string;
 	ImageSrc: StaticImageData;
+	ImageClassName?: string;
 }) {
 	return (
 		<a
@@ -17,7 +19,7 @@ function ExternalSite({
 			target="_blank"
 			className="flex items-center gap-2 hover:bg-neutral-200/25 p-1 rounded-md"
 		>
-			<div className="w-6 h-6">
+			<div className={`w-6 h-6 ${ImageClassName}`}>
 				<Image src={ImageSrc} className="rounded-md"></Image>
 			</div>
 			<span className="font-medium flex items-center gap-4">
