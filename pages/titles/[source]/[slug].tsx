@@ -48,14 +48,14 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga }) => {
 					<Image
 						src={manga.cover}
 						layout="fill"
-						className="rounded-md object-cover inset-0 h-full bg-cover bg-no-repeat bg-center -z-10"
+						className="rounded-md object-cover inset-0 h-full -z-10"
 					></Image>
 					<div className="absolute inset-x-0  top-0 bg-cover bg-no-repeat h-full backdrop-blur bg-black/25"></div>
 				</div>
 
 				<div className="mt-6 md:mt-14">
-					<div className="grid grid-flow-col grid-rows-2 grid-cols-6 z-40">
-						<div className="col-span-1 row-span-2">
+					<div className="grid grid-flow-col-dense grid-rows-2 grid-cols-2 z-40">
+						<div className="col-span-1 row-span-2 w-52">
 							<ShowImageModal imgSrc={manga.cover}>
 								<div className="w-32 md:w-auto">
 									<Image
