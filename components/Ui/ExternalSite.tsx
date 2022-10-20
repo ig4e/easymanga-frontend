@@ -17,6 +17,7 @@ function ExternalSite({
 		<a
 			href={href}
 			target="_blank"
+			rel="noreferrer"
 			className="flex items-center gap-2 hover:bg-neutral-200/25 p-1 rounded-md"
 		>
 			<div className={`w-6 h-6 ${ImageClassName}`}>
