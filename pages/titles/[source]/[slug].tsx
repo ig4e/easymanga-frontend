@@ -83,7 +83,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga }) => {
 
 						<div>
 							<button className="px-8 py-2 text-lg bg-primary text-white">
-								Start Reading ({manga.score})
+								Start Reading ({manga.source})
 							</button>
 						</div>
 					</div>
