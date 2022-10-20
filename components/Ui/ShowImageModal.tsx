@@ -44,7 +44,11 @@ function ShowImageModal({
 											<div className="absolute inset-0 bg-neutral-100/25 backdrop-blur-lg rounded-md"></div>
 										</>
 									)}
-									<a target={"_blank"} href={imgSrc}>
+									<a
+										target={"_blank"}
+										rel="noreferrer"
+										href={imgSrc}
+									>
 										<Image
 											quality={100}
 											src={imgSrc}
