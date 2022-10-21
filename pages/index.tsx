@@ -64,8 +64,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 		query: gql`
 			${MANGA_FIELDS}
 			query Query(
-				$latestUpdatesInput: MangalistInput,
-				$popularManga: MangalistInput,
+				$latestUpdatesInput: MangalistInput
+				$popularManga: MangalistInput
 				$recentlyAddedManga: MangalistInput
 			) {
 				latestUpdates: mangaList(mangaListInput: $latestUpdatesInput) {

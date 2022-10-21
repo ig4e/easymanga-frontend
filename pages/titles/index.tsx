@@ -7,7 +7,7 @@ const Home: NextPage = () => {
 	return (
 		<div>
 			<Head>
-				<title>Manga List</title>
+				<title>Manga List (EU)</title>
 			</Head>
 
 			<div className="h-96 bg-neutral-200"></div>
