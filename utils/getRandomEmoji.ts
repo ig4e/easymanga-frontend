@@ -33,6 +33,9 @@ m(★⊙¬ ㅇ ●)ლ
 へ(｡•ิ‿ -〃)
 ┗(•̀へ •́ ╮ )
 ╭( ✖_✖ )╮`.split("\n");
+   
+
+
 
 export function getRandomEmoji() {
 	return allEmojis[Math.floor(Math.random() * allEmojis.length)];
