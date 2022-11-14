@@ -23,6 +23,7 @@ import {
 	StarIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import Link from "next/link";
 
 const sourcesData = {
 	ARES: { name: "Ares Manga", image: AresLogo },
@@ -131,14 +132,20 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga }) => {
 								<div className="flex items-center flex-wrap gap-2">
 									{manga.genres.map((genre) => {
 										return (
-											<div className="bg-base-100 border  select-none p-1 px-2 text-xs font-bold uppercase rounded">
+											<div
+												key={genre}
+												className="bg-base-100 border  select-none p-1 px-2 text-xs font-bold uppercase rounded"
+											>
 												{genre}
 											</div>
 										);
 									})}
 								</div>
 								<div>
-									<span>{manga.synopsis || "لا يوجد ملخص للأن, نعتذر منكم!"}</span>
+									<span>
+										{manga.synopsis ||
+											"لا يوجد ملخص للأن, نعتذر منكم!"}
+									</span>
 								</div>
 							</div>
 							<div className="pt-6 space-y-4 translate-y-40 w-full">
@@ -165,15 +172,22 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga }) => {
 									{stateReverse(
 										manga.chapters?.map((chapter) => {
 											return (
-												<a
+												<Link
+													key={chapter.slug}
 													href={`/titles/${manga.source}/${manga.slug}/${chapter.slug}`}
-													className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
 												>
-													<span className="text-xs">
-														{chapter.number}
-													</span>
-													<span>{chapter.name}</span>
-												</a>
+													<a
+														href={`/titles/${manga.source}/${manga.slug}/${chapter.slug}`}
+														className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
+													>
+														<span className="text-xs">
+															{chapter.number}
+														</span>
+														<span>
+															{chapter.name}
+														</span>
+													</a>
+												</Link>
 											);
 										}),
 									)}
