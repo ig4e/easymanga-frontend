@@ -21,9 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<ApolloProvider client={client}>
 			<div className="font-body">
 				<Navbar></Navbar>
-				<div className="container">
-					<Component {...pageProps} />
-				</div>
+				<Component {...pageProps} />
 			</div>
 		</ApolloProvider>
 	);

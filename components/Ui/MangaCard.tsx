@@ -22,7 +22,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const sourcesData = {
 	ARES: { name: "Ares Manga", image: AresLogo },
-	FLAMESCANS: { name: "Ar Flame Scans", image: FlameScansLogo },
+	GALAXYMANGA: { name: "Galaxy Manga", image: FlameScansLogo },
 	AZORA: { name: "Manga Azora", image: AzoraLogo },
 	MANGASWAT: { name: "Manga Swat", image: MangaSwatLogo },
 	OZULSCANS: { name: "Ozul Scans", image: OuzlScansLogo },

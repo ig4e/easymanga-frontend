@@ -15,7 +15,7 @@ function ShowImageModal({
 	const [isLoaded, setIsLoaded] = useState(false);
 
 	return (
-		<motion.div className="h-full relative">
+		<motion.div className="relative">
 			<AnimatePresence>
 				<Dialog.Root>
 					<Dialog.Trigger className="relative">

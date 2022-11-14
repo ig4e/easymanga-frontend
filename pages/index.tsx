@@ -8,6 +8,7 @@ import MangaCardHorizontalList from "../components/Ui/LatestUpdatesHorizontalLis
 import Link from "next/link";
 import MangaListRow from "../components/Ui/MangaListRow";
 import tw from "tailwind-styled-components";
+import PageLayout from "../components/Ui/PageLayout";
 
 interface HomePageProps {
 	latestUpdatesList: Manga[][];
@@ -23,35 +24,37 @@ const Home: NextPage<HomePageProps> = ({
 	const Header: any = tw.h1`text-2xl font-semibold mb-6`;
 
 	return (
-		<div className="my-12 space-y-4">
-			<Head>
-				<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
-			</Head>
+		<PageLayout>
+			<div className="my-12 space-y-4">
+				<Head>
+					<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
+				</Head>
 
-			<div className="flex flex-col">
-				<Header>Latest Updates</Header>
-				<MangaCardHorizontalList
-					mangaList={latestUpdatesList}
-				></MangaCardHorizontalList>
-				<Link href="/titles/">
-					<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
-						View All
-					</a>
-				</Link>
+				<div className="flex flex-col">
+					<Header>Latest Updates</Header>
+					<MangaCardHorizontalList
+						mangaList={latestUpdatesList}
+					></MangaCardHorizontalList>
+					<Link href="/titles/">
+						<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
+							View All
+						</a>
+					</Link>
+				</div>
+
+				<MangaListRow
+					mangaList={popularMangaList}
+					title={"Popular Manga"}
+					href={"/titles?orderBy=popular"}
+				></MangaListRow>
+
+				<MangaListRow
+					mangaList={recentlyAddedMangaList}
+					title={"Recently Added"}
+					href={"/titles?orderBy=latest"}
+				></MangaListRow>
 			</div>
-
-			<MangaListRow
-				mangaList={popularMangaList}
-				title={"Popular Manga"}
-				href={"/titles?orderBy=popular"}
-			></MangaListRow>
-
-			<MangaListRow
-				mangaList={recentlyAddedMangaList}
-				title={"Recently Added"}
-				href={"/titles?orderBy=latest"}
-			></MangaListRow>
-		</div>
+		</PageLayout>
 	);
 };
 
