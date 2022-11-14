@@ -41,7 +41,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source, genres }) => {
 			<div className="grid grid-flow-row grid-cols-6 gap-2">
 				{list.map((manga) => {
 					return (
-						<div className="w-full h-auto aspect-[125/178] relative">
+						<div key={manga.slug} className="w-full h-auto aspect-[125/178] relative">
 							<Image
 								src={manga.cover}
 								layout="fill"
