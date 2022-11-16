@@ -62,7 +62,7 @@ function SearchBarUi({
 					initial={{ width: noAnimation ? CURRENT_WIDTH : 0 }}
 					animate={{ width: CURRENT_WIDTH }}
 					whileFocus={{ width: MAX_WIDTH }}
-					className={`bg-base-100 hidden md:block h-full w-full pr-2 pl-10 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary ${
+					className={`bg-base-100  h-full w-full pr-2 pl-10 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary ${
 						active ? "border-primary" : ""
 					}`}
 					type="text"
@@ -103,11 +103,14 @@ function SearchBar() {
 				<AnimatePresence>
 					<Dialog.Root open={open} onOpenChange={setOpen}>
 						<Dialog.Trigger className="h-full">
-							<SearchBarUi
-								setQuery={setQuery}
-								value={query}
-								active={open}
-							></SearchBarUi>
+							<div className="hidden md:block h-full">
+								<SearchBarUi
+									setQuery={setQuery}
+									value={query}
+									active={open}
+								></SearchBarUi>
+							</div>
+							<MagnifyingGlassIcon className="w-6 h-5 text-neutral-200 stroke-2 md:hidden"></MagnifyingGlassIcon>
 						</Dialog.Trigger>
 						<Dialog.Portal>
 							<Dialog.Overlay className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">

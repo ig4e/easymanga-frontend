@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ApolloProvider client={client}>
 			<div className="font-body">
-				<Navbar></Navbar>
 				<Component {...pageProps} />
 			</div>
 		</ApolloProvider>
