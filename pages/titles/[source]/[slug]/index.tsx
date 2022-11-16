@@ -347,6 +347,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 														)
 														.map((edge) => (
 															<CharacterCard
+															key={edge?.node?.id}
 																character={edge}
 															></CharacterCard>
 														))}

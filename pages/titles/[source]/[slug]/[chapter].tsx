@@ -89,7 +89,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 			<div className="container">
 				<div className="max-w-4xl mx-auto select-none">
 					{chapter.pages.map((page) => (
-						<ChapterPageLoader src={page}></ChapterPageLoader>
+						<ChapterPageLoader key={page} src={page}></ChapterPageLoader>
 					))}
 				</div>
 			</div>
