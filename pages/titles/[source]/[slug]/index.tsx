@@ -29,6 +29,7 @@ import Link from "next/link";
 import { ANILIST_MEDIA_QUERY } from "../../../../apollo/queries";
 import CharacterCard from "../../../../components/Ui/CharacterCard";
 import { getWorkersUrl } from "../../../../utils/getImageUrl";
+import Navbar from "../../../../components/Navbar";
 
 const sourcesData = {
 	ARES: { name: "Ares Manga", image: AresLogo },
@@ -237,224 +238,239 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 	}
 
 	return (
-		<div>
-			<Head>
-				<title>{manga.title} Details - Easy Manga</title>
-			</Head>
-
+		<>
+			<Navbar></Navbar>
 			<div>
-				<div className="relative w-full h-60">
-					<Image
-						className="w-full -z-20"
-						src={
-							anilistData?.bannerImage
-								? getWorkersUrl(anilistData?.bannerImage)
-								: manga.cover
-						}
-						layout="fill"
-						objectFit="cover"
-						objectPosition="center"
-					></Image>
-					<div
-						className={`absolute bg-black/25 inset-0 ${
-							anilistData?.bannerImage
-								? "backdrop-blur-sm"
-								: "backdrop-blur"
-						}  -z-10`}
-					></div>
+				<Head>
+					<title>{manga.title} Details - Easy Manga</title>
+				</Head>
 
-					<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
-				</div>
-				<div className="container z-50">
-					<div className="md:flex gap-6">
-						<div className="-translate-y-52 min-w-max">
-							<div className="flex flex-col gap-4">
-								<div>
-									<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
-										<ShowImageModal imgSrc={manga.cover}>
-											<div className="w-32 md:w-auto">
-												<Image
-													src={manga.cover}
-													width={200}
-													height={280}
-													className="rounded-md object-cover"
-												></Image>
-											</div>
-										</ShowImageModal>
-										<h1 className="text-2xl font-bold text-white z-50 md:hidden">
-											{manga.title}
-										</h1>
+				<div>
+					<div className="relative w-full h-60">
+						<Image
+							className="w-full -z-20"
+							src={
+								anilistData?.bannerImage
+									? getWorkersUrl(anilistData?.bannerImage)
+									: manga.cover
+							}
+							layout="fill"
+							objectFit="cover"
+							objectPosition="center"
+						></Image>
+						<div
+							className={`absolute bg-black/25 inset-0 ${
+								anilistData?.bannerImage
+									? "backdrop-blur-sm"
+									: "backdrop-blur"
+							}  -z-10`}
+						></div>
+
+						<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
+					</div>
+					<div className="container z-50">
+						<div className="md:flex gap-6">
+							<div className="-translate-y-52 min-w-max">
+								<div className="flex flex-col gap-4">
+									<div>
+										<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
+											<ShowImageModal
+												imgSrc={manga.cover}
+											>
+												<div className="w-32 md:w-auto">
+													<Image
+														src={manga.cover}
+														width={200}
+														height={280}
+														className="rounded-md object-cover"
+													></Image>
+												</div>
+											</ShowImageModal>
+											<h1 className="text-2xl font-bold text-white z-50 md:hidden">
+												{manga.title}
+											</h1>
+										</div>
+										<Link
+											href={`/titles/${manga.source}/${
+												manga.slug
+											}/${
+												manga?.chapters?.[
+													manga?.chapters?.length - 1
+												].slug
+											}`}
+										>
+											<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
+												Start Reading
+											</button>
+										</Link>
 									</div>
-									<Link
-										href={`/titles/${manga.source}/${
-											manga.slug
-										}/${
-											manga?.chapters?.[
-												manga?.chapters?.length - 1
-											].slug
-										}`}
+
+									<a
+										href={
+											`https://www.youtube.com/watch?v=` +
+											anilistData?.trailer?.id
+										}
+										rel="noreferrer"
+										target="_blank"
+										className="border flex rounded-md relative select-none "
 									>
-										<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
-											Start Reading
-										</button>
-									</Link>
+										<Image
+											src={manga.cover}
+											className="rounded-md absolute"
+											layout="fill"
+											objectFit="cover"
+										></Image>
+										<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
+										<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
+											<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
+											<span>Watch Trailer</span>
+										</div>
+									</a>
+
+									{anilistData &&
+										anilistData?.characters.edges.length >
+											0 && (
+											<div className="bg-base-100 border p-2 rounded-md">
+												<div className="flex md:grid md:grid-flow-row md:grid-cols-2 gap-1.5">
+													{anilistData?.characters.edges
+														.slice(
+															0,
+															width <
+																breakpoints[
+																	"md"
+																]
+																? 4
+																: anilistData
+																		?.characters
+																		.edges
+																		.length,
+														)
+														.map((edge) => (
+															<CharacterCard
+																character={edge}
+															></CharacterCard>
+														))}
+												</div>
+											</div>
+										)}
 								</div>
+							</div>
+							<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
+								<h1 className="text-4xl font-bold text-white -translate-y-52 hidden md:block">
+									{manga.title}
+								</h1>
 
-								<a
-									href={
-										`https://www.youtube.com/watch?v=` +
-										anilistData?.trailer?.id
-									}
-									rel="noreferrer"
-									target="_blank"
-									className="border flex rounded-md relative select-none "
-								>
-									<Image
-										src={manga.cover}
-										className="rounded-md absolute"
-										layout="fill"
-										objectFit="cover"
-									></Image>
-									<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
-									<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
-										<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
-										<span>Watch Trailer</span>
-									</div>
-								</a>
+								<div className="-translate-y-12 space-y-2">
+									<div className="flex items-center flex-wrap gap-2">
+										{manga.aniId && (
+											<ExternalSite
+												title="Anilist"
+												href={`https://anilist.co/manga/${
+													manga.aniId
+												}/${manga.title.replaceAll(
+													" ",
+													"-",
+												)}`}
+												ImageSrc={AnilistLogo}
+											/>
+										)}
 
-								{anilistData && anilistData?.characters.edges.length > 0 && (
-									<div className="bg-base-100 border p-2 rounded-md">
-										<div className="flex md:grid md:grid-flow-row md:grid-cols-2 gap-1.5">
-											{anilistData?.characters.edges
-												.slice(
-													0,
-													width < breakpoints["md"]
-														? 4
-														: anilistData
-																?.characters
-																.edges.length,
-												)
-												.map((edge) => (
-													<CharacterCard
-														character={edge}
-													></CharacterCard>
-												))}
+										{manga.dexId && (
+											<ExternalSite
+												title="MangaDex"
+												href={`https://mangadex.org/title/${
+													manga.dexId
+												}/${manga.title.replaceAll(
+													" ",
+													"-",
+												)}`}
+												ImageSrc={MDLogo}
+											/>
+										)}
+										<ExternalSite
+											title={source.name}
+											href={`${manga.url}`}
+											ImageSrc={source.image!}
+										/>
+										<div className="flex items-center gap-1">
+											<StarIcon className="h-6 w-6 stroke-1 fill-current text-primary"></StarIcon>
+											<span>{manga.score || "N/A"}</span>
 										</div>
 									</div>
-								)}
-							</div>
-						</div>
-						<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
-							<h1 className="text-4xl font-bold text-white -translate-y-52 hidden md:block">
-								{manga.title}
-							</h1>
-
-							<div className="-translate-y-12 space-y-2">
-								<div className="flex items-center flex-wrap gap-2">
-									{manga.aniId && (
-										<ExternalSite
-											title="Anilist"
-											href={`https://anilist.co/manga/${
-												manga.aniId
-											}/${manga.title.replaceAll(
-												" ",
-												"-",
-											)}`}
-											ImageSrc={AnilistLogo}
-										/>
-									)}
-
-									{manga.dexId && (
-										<ExternalSite
-											title="MangaDex"
-											href={`https://mangadex.org/title/${
-												manga.dexId
-											}/${manga.title.replaceAll(
-												" ",
-												"-",
-											)}`}
-											ImageSrc={MDLogo}
-										/>
-									)}
-									<ExternalSite
-										title={source.name}
-										href={`${manga.url}`}
-										ImageSrc={source.image!}
-									/>
-									<div className="flex items-center gap-1">
-										<StarIcon className="h-6 w-6 stroke-1 fill-current text-primary"></StarIcon>
-										<span>{manga.score || "N/A"}</span>
+									<div className="flex items-center flex-wrap gap-2">
+										{manga.genres.map((genre) => {
+											return (
+												<div
+													key={genre}
+													className="bg-base-100 border  select-none p-1 px-2 text-xs font-bold uppercase rounded"
+												>
+													{genre}
+												</div>
+											);
+										})}
+									</div>
+									<div>
+										<span>
+											{manga.synopsis ||
+												"لا يوجد ملخص للأن, نعتذر منكم!"}
+										</span>
 									</div>
 								</div>
-								<div className="flex items-center flex-wrap gap-2">
-									{manga.genres.map((genre) => {
-										return (
-											<div
-												key={genre}
-												className="bg-base-100 border  select-none p-1 px-2 text-xs font-bold uppercase rounded"
-											>
-												{genre}
-											</div>
-										);
-									})}
-								</div>
-								<div>
-									<span>
-										{manga.synopsis ||
-											"لا يوجد ملخص للأن, نعتذر منكم!"}
-									</span>
-								</div>
-							</div>
-							<div className="pt-6 space-y-4 -translate-y-12 w-full">
-								<div className="flex justify-between items-center">
-									<h3 className="text-2xl ">Chapters List</h3>
-									<button
-										className="p-1.5 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
-										onClick={() =>
-											setSort(
-												sort === "asc" ? "dec" : "asc",
-											)
-										}
-									>
-										<ArrowUpIcon
-											className={`h-5 w-5 transition ease-in-out ${
-												sort === "asc"
-													? "rotate-0"
-													: "rotate-180"
-											}`}
-										></ArrowUpIcon>
-									</button>
-								</div>
-								<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full bg-base-100 p-3 rounded-md">
-									{stateReverse(
-										manga.chapters?.map((chapter) => {
-											return (
-												<Link
-													key={chapter.slug}
-													href={`/titles/${manga.source}/${manga.slug}/${chapter.slug}`}
-												>
-													<a
+								<div className="pt-6 space-y-4 -translate-y-12 w-full">
+									<div className="flex justify-between items-center">
+										<h3 className="text-2xl ">
+											Chapters List
+										</h3>
+										<button
+											className="p-1.5 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
+											onClick={() =>
+												setSort(
+													sort === "asc"
+														? "dec"
+														: "asc",
+												)
+											}
+										>
+											<ArrowUpIcon
+												className={`h-5 w-5 transition ease-in-out ${
+													sort === "asc"
+														? "rotate-0"
+														: "rotate-180"
+												}`}
+											></ArrowUpIcon>
+										</button>
+									</div>
+									<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full bg-base-100 p-3 rounded-md">
+										{stateReverse(
+											manga.chapters?.map((chapter) => {
+												return (
+													<Link
+														key={chapter.slug}
 														href={`/titles/${manga.source}/${manga.slug}/${chapter.slug}`}
-														className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
 													>
-														<span className="text-xs">
-															{chapter.number}
-														</span>
-														<span>
-															{chapter.name}
-														</span>
-													</a>
-												</Link>
-											);
-										}),
-									)}
+														<a
+															href={`/titles/${manga.source}/${manga.slug}/${chapter.slug}`}
+															className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
+														>
+															<span className="text-xs">
+																{chapter.number}
+															</span>
+															<span>
+																{chapter.name}
+															</span>
+														</a>
+													</Link>
+												);
+											}),
+										)}
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
@@ -512,7 +528,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 	const { manga } = data;
 
-	if (manga.aniId)  {
+	if (manga.aniId) {
 		const { data: anilistData } = await anilistClient.query({
 			query: gql`
 				query Media($mediaId: Int, $type: MediaType, $search: String) {
