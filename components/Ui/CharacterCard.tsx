@@ -8,16 +8,15 @@ function CharacterCard({ character }: { character: Character }) {
 			href={`https://anilist.co/character/${character.node.id}/${character.node.name.full}`}
 			target="_blank"
 			rel="noreferrer"
-			className="relative select-none"
+			className="relative select-none w-full h-28"
 		>
 			<Image
 				src={
 					`https://workers.emanga.tk/fetch?url=` +
 					character.node.image.large
 				}
-				className="rounded-md"
-				width={86}
-				height={128}
+				className="rounded-md w-full h-full"
+				layout="fill"
                 objectFit="cover"
 			></Image>
 
