@@ -30,7 +30,7 @@ function ChapterPageLoader({
 		const currentTarget = contRef.current;
 		if (currentTarget) observer.observe(currentTarget);
 		return () => {
-			observer.unobserve(currentTarget);
+			if (currentTarget) observer.unobserve(currentTarget);
 		};
 	}, [contRef]);
 

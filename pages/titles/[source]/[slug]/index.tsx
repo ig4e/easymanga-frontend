@@ -239,7 +239,8 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 
 	return (
 		<>
-			<Navbar></Navbar>
+				<Navbar navClass ="hidden md:block"></Navbar>
+			
 			<div>
 				<Head>
 					<title>{manga.title} Details - Easy Manga</title>

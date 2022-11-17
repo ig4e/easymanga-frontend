@@ -25,7 +25,7 @@ const Home: NextPage<HomePageProps> = ({
 
 	return (
 		<PageLayout>
-			<div className="my-12 space-y-4">
+			<div className="my-4 md:my-12 space-y-4">
 				<Head>
 					<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
 				</Head>

@@ -62,7 +62,7 @@ function SearchBarUi({
 					initial={{ width: noAnimation ? CURRENT_WIDTH : 0 }}
 					animate={{ width: CURRENT_WIDTH }}
 					whileFocus={{ width: MAX_WIDTH }}
-					className={`bg-base-100 h-full w-full pr-2 pl-10 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary ${
+					className={`bg-base-100 h-full w-full ${className} pr-2 pl-10 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary ${
 						active ? "border-primary" : ""
 					}`}
 					type="text"
@@ -114,17 +114,17 @@ function SearchBar() {
 						</Dialog.Trigger>
 						<Dialog.Portal>
 							<Dialog.Overlay className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">
-								<motion.div
-									initial={{ scale: 0.5 }}
-									animate={{ scale: 1 }}
-									exit={{ scale: 0.5 }}
-									transition={{
-										type: "spring",
-										duration: 0.4,
-									}}
-									className="bg-base pb-6 px-6 rounded max-w-7xl w-full"
-								>
-									<Dialog.Content>
+								<Dialog.Content asChild={true}>
+									<motion.div
+										initial={{ scale: 0.5 }}
+										animate={{ scale: 1 }}
+										exit={{ scale: 0.5 }}
+										transition={{
+											type: "spring",
+											duration: 0.4,
+										}}
+										className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full"
+									>
 										<DialogTitle>
 											Search
 											<DialogClose>
@@ -132,7 +132,7 @@ function SearchBar() {
 											</DialogClose>
 										</DialogTitle>
 										<SearchBarUi
-											className="h-12"
+											className="!h-10"
 											setQuery={setQuery}
 											value={query}
 											active={open}
@@ -143,8 +143,8 @@ function SearchBar() {
 										<DialogSecondaryTitle>
 											Manga
 										</DialogSecondaryTitle>
-									</Dialog.Content>
-								</motion.div>
+									</motion.div>
+								</Dialog.Content>
 							</Dialog.Overlay>
 						</Dialog.Portal>
 					</Dialog.Root>

@@ -96,7 +96,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 	}, []);
 
 	return (
-		<div className="bg-[#212121] text-white">
+		<div className="bg-[#212121] text-white min-h-screen">
 			<div className={`bg-black/70 h-12 fixed top-0 inset-x-0 z-50 ${showBars ? "opacity-100" : "-translate-y-24 pointer-events-none opacity-0"} transition duration-500`}>
 				<div className="flex items-center justify-between container h-full w-full">
 					<Link href={"/"}>
@@ -150,7 +150,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 			<button className="fixed inset-0  z-20" onClick={() => setShowBars((state) => !state)}></button>
 
-			<div className="md:container">
+			<div className="">
 				<div
 					className="mx-auto select-none"
 					style={{
@@ -161,15 +161,18 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						}%`,
 					}}
 				>
-					{chapter.pages.map((page, index) => (
-						<ChapterPageLoader
-							quality={quality || "raw"}
-							key={page}
-							src={page}
-							number={index + 1}
-							setProgress={(number) => setProgress(number)}
-						></ChapterPageLoader>
-					))}
+					{chapter.pages.map((page, index) => {
+						if (!quality) return null;
+						return (
+							<ChapterPageLoader
+								quality={quality }
+								key={page}
+								src={page}
+								number={index + 1}
+								setProgress={(number) => setProgress(number)}
+							></ChapterPageLoader>
+						)
+					})}
 				</div>
 			</div>
 
