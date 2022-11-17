@@ -90,78 +90,80 @@ const Home: NextPage<TitlesPageProps> = ({ list, source, genres }) => {
 
 	return (
 		<PageLayout>
-			<div>
-				<Head>
-					<title>Manga List</title>
-				</Head>
-			</div>
-
-			<div className="my-6 flex gap-2 flex-wrap">
-				<div className="bg-base-100 py-2 px-4 flex gap-2 items-center rounded-md border">
-					<span className="text-black">{source}</span>
-					<ChevronDownIcon className="h-5 w-5"></ChevronDownIcon>
+			<div className="mb-16">
+				<div>
+					<Head>
+						<title>Manga List</title>
+					</Head>
 				</div>
-			</div>
 
-			<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
-				{mangaList.map((manga, index) => {
-					return (
-						<Link
-							href={`/titles/${manga.source}/${manga.slug}`}
-							key={manga.slug}
-						>
-							<a
-								href={`/titles/${manga.source}/${manga.slug}`}
-								key={manga.slug}
-								className="flex flex-col gap-2"
-							>
-								<div className="w-full h-auto aspect-[125/178] relative">
-									<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
-									<Image
-										src={manga.cover}
-										layout="fill"
-										className="rounded-md object-cover "
-									></Image>
-								</div>
-
-								<span className="font-medium">
-									{manga.title}
-								</span>
-							</a>
-						</Link>
-					);
-				})}
-
-				<div ref={lastElementRef}></div>
-			</div>
-
-			{loading && (
-				<div className="flex justify-center my-6">
-					<div className="flex items-center gap-4">
-						<svg
-							className="animate-spin w-12 h-12"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-						>
-							<circle
-								className="opacity-25 text-neutral-200"
-								cx="12"
-								cy="12"
-								r="10"
-								stroke="currentColor"
-								strokeWidth="4"
-							></circle>
-							<path
-								className="opacity-75 text-primary"
-								fill="currentColor"
-								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-							></path>
-						</svg>
-						<span>{getRandomEmoji()} Loading....</span>
+				<div className="my-6 flex gap-2 flex-wrap">
+					<div className="bg-base-100 py-2 px-4 flex gap-2 items-center rounded-md border">
+						<span className="text-black">{source}</span>
+						<ChevronDownIcon className="h-5 w-5"></ChevronDownIcon>
 					</div>
 				</div>
-			)}
+
+				<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
+					{mangaList.map((manga, index) => {
+						return (
+							<Link
+								href={`/titles/${manga.source}/${manga.slug}`}
+								key={manga.slug}
+							>
+								<a
+									href={`/titles/${manga.source}/${manga.slug}`}
+									key={manga.slug}
+									className="flex flex-col gap-2"
+								>
+									<div className="w-full h-auto aspect-[125/178] relative">
+										<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
+										<Image
+											src={manga.cover}
+											layout="fill"
+											className="rounded-md object-cover "
+										></Image>
+									</div>
+
+									<span className="font-medium line-clamp-2">
+										{manga.title}
+									</span>
+								</a>
+							</Link>
+						);
+					})}
+
+					<div ref={lastElementRef}></div>
+				</div>
+
+				{loading && (
+					<div className="flex justify-center my-6">
+						<div className="flex items-center gap-4">
+							<svg
+								className="animate-spin w-12 h-12"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+							>
+								<circle
+									className="opacity-25 text-neutral-200"
+									cx="12"
+									cy="12"
+									r="10"
+									stroke="currentColor"
+									strokeWidth="4"
+								></circle>
+								<path
+									className="opacity-75 text-primary"
+									fill="currentColor"
+									d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+								></path>
+							</svg>
+							<span>{getRandomEmoji()} Loading....</span>
+						</div>
+					</div>
+				)}
+			</div>
 		</PageLayout>
 	);
 };

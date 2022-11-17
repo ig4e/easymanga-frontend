@@ -97,7 +97,13 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 	return (
 		<div className="bg-[#212121] text-white min-h-screen">
-			<div className={`bg-black/70 h-12 fixed top-0 inset-x-0 z-50 ${showBars ? "opacity-100" : "-translate-y-24 pointer-events-none opacity-0"} transition duration-500`}>
+			<div
+				className={`bg-black/70 h-12 fixed top-0 inset-x-0 z-50 ${
+					showBars
+						? "opacity-100"
+						: "-translate-y-24 pointer-events-none opacity-0"
+				} transition duration-500 ease-in-out`}
+			>
 				<div className="flex items-center justify-between container h-full w-full">
 					<Link href={"/"}>
 						<a
@@ -120,13 +126,17 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						<Link
 							href={`/titles/${chapter.source}/${chapter.mangaSlug}`}
 						>
-							<ArrowUturnLeftIcon className="h-6 w-6 md:hidden"></ArrowUturnLeftIcon>
+							<div className="p-1 hover:bg-white/25 rounded-md">
+								<ArrowUturnLeftIcon className="h-6 w-6 md:hidden"></ArrowUturnLeftIcon>
+							</div>
 						</Link>
-						<div className="flex flex-col md:flex-row md:items-center md:gap-2">
+						<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2">
 							<Link
 								href={`/titles/${chapter.source}/${chapter.mangaSlug}`}
 							>
-								<span className="">{manga.title}</span>
+								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded-md select-none line-clamp-1">
+									{manga.title}
+								</button>
 							</Link>
 							<ChevronRightIcon className="h-3 w-3 stroke-1.5 hidden md:block"></ChevronRightIcon>
 							<Link
@@ -136,19 +146,21 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 									chapter.slug!,
 								)}`}
 							>
-								<span className="text-xs md:text-base text-white/60">
+								<button className="text-xs text-white/60 md:text-white/60  md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded-md select-none line-clamp-1">
 									{chapter.name}
-								</span>
+								</button>
 							</Link>
 						</div>
 					</div>
 
 					<ArrowUturnLeftIcon className="h-6 w-6 hidden md:block"></ArrowUturnLeftIcon>
-
 				</div>
 			</div>
 
-			<button className="fixed inset-0  z-20" onClick={() => setShowBars((state) => !state)}></button>
+			<div
+				className="fixed inset-0  z-20"
+				onClick={() => setShowBars((state) => !state)}
+			/>
 
 			<div className="">
 				<div
@@ -165,18 +177,24 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						if (!quality) return null;
 						return (
 							<ChapterPageLoader
-								quality={quality }
+								quality={quality}
 								key={page}
 								src={page}
 								number={index + 1}
 								setProgress={(number) => setProgress(number)}
 							></ChapterPageLoader>
-						)
+						);
 					})}
 				</div>
 			</div>
 
-			<div className={`bg-black/70 fixed bottom-0 py-4 inset-x-0 z-50 ${showBars ? "opacity-100" : "translate-y-24 pointer-events-none opacity-0"} transition duration-500`}>
+			<div
+				className={`bg-black/70 fixed bottom-0 py-4 inset-x-0 z-50 ${
+					showBars
+						? "opacity-100"
+						: "translate-y-24 pointer-events-none opacity-0"
+				} transition duration-500 ease-in-out`}
+			>
 				<div className="flex flex-col md:flex-row md:items-center md:justify-between container h-full w-full">
 					<div className="rounded-full border border-white/60 py-2 px-4 items-center gap-4 hidden md:flex">
 						<button
@@ -230,7 +248,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							</Slider.Track>
 							<Slider.Thumb className="block bg-primary hover:bg-primary-hover active:bg-primary-active w-2 h-4 " />
 						</Slider.Root>
-						
+
 						<div className="flex items-center gap-2">
 							{chapter.prevSlug && (
 								<Link
@@ -249,7 +267,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 										)}`}
 									>
 										<ChevronLeftIcon className="h-5 w-5"></ChevronLeftIcon>
-										<span className="hidden md:block">Previous</span>
+										<span className="hidden md:block">
+											Previous
+										</span>
 									</a>
 								</Link>
 							)}
@@ -270,7 +290,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 											chapter.prevSlug!,
 										)}`}
 									>
-										<span className="hidden md:block" >Next</span>
+										<span className="hidden md:block">
+											Next
+										</span>
 										<ChevronRightIcon className="h-5 w-5"></ChevronRightIcon>
 									</a>
 								</Link>

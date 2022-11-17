@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
+import { AnimatePresence, motion } from "framer-motion";
 
 export type Quality = "raw" | "hd" | "sd" | "ld";
 
@@ -12,44 +13,66 @@ function ChapterPageSettingsMenu({
 	quality: Quality;
 	setQuality: (q: Quality) => void;
 }) {
+	const [open, setOpen] = useState(false);
+
 	return (
-		<DropdownMenu.Root>
-			<DropdownMenu.Trigger className="border border-white/60 p-2 px-4 rounded-full flex flex-row items-center gap-2">
+		<DropdownMenu.Root open={open} onOpenChange={setOpen}>
+			<DropdownMenu.Trigger className="border border-white/60 p-2 px-4 rounded-full flex flex-row items-center gap-2 z-50">
 				<Cog6ToothIcon className="h-5 w-5"></Cog6ToothIcon>
 				<span className="text-sm">Settings</span>
 			</DropdownMenu.Trigger>
 
-			<DropdownMenu.Portal>
-				<DropdownMenu.Content className="p-4 text-white rounded-md select-none bg-[#303030] z-50 m-3">
-					<DropdownMenu.Label className="text-lg font-semibold mb-3">
-						Quality
-					</DropdownMenu.Label>
-					<ToggleGroup.Root
-						value={quality}
-						onValueChange={(value: any) => value && setQuality(value)}
-						className="flex gap-2 items-center"
-						type="single"
-						defaultValue="center"
-						aria-label="Text alignment"
-					>
-						{["raw", "hd", "sd", "ld"].map((value) => {
-							return (
-								<ToggleGroup.Item
-                                key={value}
-									className={`uppercase rounded-md border font-semibold p-2 px-4 text-sm ${
-										quality === value
-											? "text-primary border-primary"
-											: "border-white/60"
-									}  `}
-									value={value}
-									aria-label={value}
+			<DropdownMenu.Portal className="absolute inset-0" forceMount={true}>
+				<AnimatePresence>
+					{open && (
+						<DropdownMenu.Content asChild={true}>
+							<motion.div
+								initial={{ scale: 0 }}
+								animate={{ scale: 1 }}
+								exit={{ scale: 0, opacity: 0 }}
+								transition={{ type: "spring", duration: 0.3 }}
+								className=" p-4 pb-6 text-white rounded-md select-none bg-[#303030] z-50 w-screen mb-12 md:m-3 md:w-auto"
+							>
+								<div className="flex items-start justify-between">
+									<DropdownMenu.Label className="text-lg font-semibold mb-3">
+										Quality
+									</DropdownMenu.Label>
+									<DropdownMenu.Item className="p-1.5 rounded-full hover:bg-white/10 focus:bg-white/15 active:bg-white/15">
+										<XMarkIcon className="h-4 w-4 text-white"></XMarkIcon>
+									</DropdownMenu.Item>
+								</div>
+
+								<ToggleGroup.Root
+									value={quality}
+									onValueChange={(value: any) =>
+										value && setQuality(value)
+									}
+									className="flex gap-2 justify-between items-center"
+									type="single"
+									defaultValue="center"
+									aria-label="Text alignment"
 								>
-									{value}
-								</ToggleGroup.Item>
-							);
-						})}
-					</ToggleGroup.Root>
-				</DropdownMenu.Content>
+									{["raw", "hd", "sd", "ld"].map((value) => {
+										return (
+											<ToggleGroup.Item
+												key={value}
+												className={`uppercase rounded-md border font-semibold w-full p-2 px-4 text-sm ${
+													quality === value
+														? "text-primary border-primary"
+														: "border-white/60"
+												}  `}
+												value={value}
+												aria-label={value}
+											>
+												{value}
+											</ToggleGroup.Item>
+										);
+									})}
+								</ToggleGroup.Root>
+							</motion.div>
+						</DropdownMenu.Content>
+					)}
+				</AnimatePresence>
 			</DropdownMenu.Portal>
 		</DropdownMenu.Root>
 	);

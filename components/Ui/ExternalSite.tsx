@@ -18,12 +18,12 @@ function ExternalSite({
 			href={href}
 			target="_blank"
 			rel="noreferrer"
-			className="flex items-center gap-2 hover:bg-neutral-200/25 p-1 rounded-md"
+			className="flex items-center gap-2 hover:bg-neutral-200/25 p-1 rounded-md select-none"
 		>
 			<div className={`w-6 h-6 ${ImageClassName}`}>
 				<Image src={ImageSrc} className="rounded-md"></Image>
 			</div>
-			<span className="font-medium flex items-center gap-4">
+			<span className="font-medium flex items-center gap-4 select-none">
 				{title}
 				<ArrowTopRightOnSquareIcon className="w-4 h-4"></ArrowTopRightOnSquareIcon>
 			</span>
