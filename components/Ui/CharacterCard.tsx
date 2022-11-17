@@ -8,7 +8,7 @@ function CharacterCard({ character }: { character: Character }) {
 			href={`https://anilist.co/character/${character.node.id}/${character.node.name.full}`}
 			target="_blank"
 			rel="noreferrer"
-			className="relative select-none w-full h-28"
+			className="relative select-none w-full h-28 max-w-[6rem]"
 		>
 			<Image
 				src={
