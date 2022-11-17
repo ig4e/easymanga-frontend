@@ -59,9 +59,9 @@ function ChapterPageLoader({
 		>
 			{!isLoaded && (
 				<>
-					<div className="mt-12 absolute inset-0 backdrop-blur-lg select-none bg-neutral-200/20 flex items-center h-[60rem] justify-center rouned-md animate-pulse"></div>
+					<div className="absolute inset-0 backdrop-blur-lg select-none bg-neutral-200/20 flex items-center h-[60rem] justify-center rouned-md animate-pulse"></div>
 
-					<div className="mt-12 absolute inset-0 backdrop-blur-lg select-none flex items-center h-[60rem] justify-center rouned-md">
+					<div className="absolute inset-0 backdrop-blur-lg select-none flex items-center h-[60rem] justify-center rouned-md">
 						<svg
 							className="animate-spin w-36 h-36"
 							xmlns="http://www.w3.org/2000/svg"
