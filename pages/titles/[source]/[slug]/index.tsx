@@ -293,7 +293,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 										<Link
 											href={`/titles/${manga.source}/${
 												manga.slug
-											}/${
+											}/chapter?id=${
 												manga?.chapters?.[
 													manga?.chapters?.length - 1
 												].slug
@@ -305,27 +305,29 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 										</Link>
 									</div>
 
-									<a
-										href={
-											`https://www.youtube.com/watch?v=` +
-											anilistData?.trailer?.id
-										}
-										rel="noreferrer"
-										target="_blank"
-										className="border flex rounded-md relative select-none "
-									>
-										<Image
-											src={manga.cover}
-											className="rounded-md absolute"
-											layout="fill"
-											objectFit="cover"
-										></Image>
-										<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
-										<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
-											<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
-											<span>Watch Trailer</span>
-										</div>
-									</a>
+									{anilistData?.trailer?.id && (
+										<a
+											href={
+												`https://www.youtube.com/watch?v=` +
+												anilistData?.trailer?.id
+											}
+											rel="noreferrer"
+											target="_blank"
+											className="border flex rounded-md relative select-none "
+										>
+											<Image
+												src={manga.cover}
+												className="rounded-md absolute"
+												layout="fill"
+												objectFit="cover"
+											></Image>
+											<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
+											<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
+												<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
+												<span>Watch Trailer</span>
+											</div>
+										</a>
+									)}
 
 									{anilistData &&
 										anilistData?.characters.edges.length >
@@ -347,7 +349,10 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 														)
 														.map((edge) => (
 															<CharacterCard
-															key={edge?.node?.id}
+																key={
+																	edge?.node
+																		?.id
+																}
 																character={edge}
 															></CharacterCard>
 														))}
@@ -447,10 +452,22 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 												return (
 													<Link
 														key={chapter.slug}
-														href={`/titles/${manga.source}/${manga.slug}/${chapter.slug}`}
+														href={`/titles/${
+															manga.source
+														}/${
+															manga.slug
+														}/chapter?id=${encodeURIComponent(
+															chapter.slug!,
+														)}`}
 													>
 														<a
-															href={`/titles/${manga.source}/${manga.slug}/${chapter.slug}`}
+															href={`/titles/${
+																manga.source
+															}/${
+																manga.slug
+															}/chapter?id=${encodeURIComponent(
+																chapter.slug!,
+															)}`}
 															className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
 														>
 															<span className="text-xs">

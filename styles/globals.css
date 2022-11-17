@@ -9,6 +9,10 @@
 		@apply bg-base;
 	}
 
+	.touch-action {
+		touch-action: none;
+	}
+
 	.line-clamp-1 {
 		overflow: hidden;
 		display: -webkit-box;
