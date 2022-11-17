@@ -35,6 +35,7 @@ function ChapterPageSettingsMenu({
 						{["raw", "hd", "sd", "ld"].map((value) => {
 							return (
 								<ToggleGroup.Item
+                                key={value}
 									className={`uppercase rounded-md border font-semibold p-2 px-4 text-sm ${
 										quality === value
 											? "text-primary border-primary"
