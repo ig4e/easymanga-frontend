@@ -54,7 +54,7 @@ function ChapterPageLoader({
 	return (
 		<div
 			id={`pg-` + number}
-			ref={contRef}
+			ref={isLoaded ? contRef : undefined}
 			className="relative w-full select-none"
 		>
 			{!isLoaded && (
