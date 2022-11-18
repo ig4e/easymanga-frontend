@@ -32,17 +32,13 @@ function ChapterPageLoader({
 		return () => {
 			if (currentTarget) observer.unobserve(currentTarget);
 		};
-	}, [contRef]);
+	}, [isLoaded, contRef]);
 
 	useEffect(() => {
 		if (imgRef?.current?.complete) {
 			setIsLoaded(true);
 		}
 	}, [imgRef]);
-
-	useEffect(() => {
-		setProgress(1);
-	}, [isLoaded]);
 
 	function getReQuailtyUrl(src: string, q: Quality) {
 		const qObj = { raw: 100, hd: 80, sd: 50, ld: 10 };
