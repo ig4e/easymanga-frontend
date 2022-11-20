@@ -5,10 +5,17 @@ import axios from "axios";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { url, q } = req.query as { [index: string]: string };
 	const { data } = await axios({ url: url, responseType: "arraybuffer" });
+
 	res.setHeader("content-type", "image/webp");
-	res.status(200).send(
-		await sharp(data)
+	let convert: Buffer;
+
+	try {
+		convert = await sharp(data)
 			.webp({ quality: Number(q) || 100 })
-			.toBuffer(),
-	);
+			.toBuffer();
+	} catch {
+		convert = data;
+	}
+
+	res.status(200).send(convert);
 };
