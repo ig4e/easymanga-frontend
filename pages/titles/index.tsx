@@ -47,7 +47,7 @@ const MANGA_LIST = gql`
 	}
 `;
 
-const Home: NextPage<TitlesPageProps> = ({ list, source, genres }) => {
+const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 	const [fetchMore, { loading, error, data }] = useLazyQuery(MANGA_LIST);
 	const [page, setPage] = useState<number>(1);
 	const [mangaList, setMangaList] = useState<Manga[]>(list);
@@ -176,7 +176,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	console.log(source);
 
 	const { data } = await client.query({
-		query: MANGA_LIST_WITH_GENRES,
+		query: MANGA_LIST,
 		variables: {
 			mangaList: {
 				source,
@@ -196,7 +196,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 		props: {
 			source: data.mangaList[0].source,
 			list: data.mangaList,
-			genres: data.genres,
 		},
 	};
 };
