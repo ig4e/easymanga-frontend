@@ -274,6 +274,8 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 			<div>
 				<Head>
 					<title>{manga.title} Details - Easy Manga</title>
+					<link rel="manifest" href="/manifest.json" />
+					<meta name="theme-color" content="#FFFFFF" />
 				</Head>
 
 				<div>
