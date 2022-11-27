@@ -212,7 +212,6 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 				setWidth(window.innerWidth),
 			);
 	}, []);
-	if (!manga.chapters) return null;
 
 	const chapterRageData = useMemo(() => {
 		let lastValue = 0;
