@@ -434,7 +434,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 											href={`${manga.url}`}
 											ImageSrc={source.image!}
 										/>
-										<div className="flex items-center gap-1">
+										<div className="flex items-center gap-1 select-none">
 											<StarIcon className="h-6 w-6 stroke-1 fill-current text-primary"></StarIcon>
 											<span>{manga.score || "N/A"}</span>
 										</div>

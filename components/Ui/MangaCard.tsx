@@ -6,31 +6,11 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 
 import AnilistLogo from "../../public/images/logos/anilist.png";
 import MDLogo from "../../public/images/logos/mangadex.png";
-import AresLogo from "../../public/images/logos/ares.png";
-import AzoraLogo from "../../public/images/logos/azora.png";
-import MangaSwatLogo from "../../public/images/logos/mangaswat.png";
-import OuzlScansLogo from "../../public/images/logos/ouzlscans.png";
-import FlameScansLogo from "../../public/images/logos/flamescans.png";
 
-import {
-	ArrowTopRightOnSquareIcon,
-	LinkIcon,
-	StarIcon,
-} from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/24/outline";
 import ExternalSite from "./ExternalSite";
 import { AnimatePresence, motion } from "framer-motion";
-
-const sourcesData = {
-	ARES: { name: "Ares Manga", image: AresLogo },
-	GALAXYMANGA: { name: "Galaxy Manga", image: FlameScansLogo },
-	AZORA: { name: "Manga Azora", image: AzoraLogo },
-	MANGASWAT: { name: "Manga Swat", image: MangaSwatLogo },
-	OZULSCANS: { name: "Ozul Scans", image: OuzlScansLogo },
-
-	MANGAAE: { name: "Manga Ae", image: undefined },
-	MANGALEK: { name: "MangaLek", image: undefined },
-	MANGASPARK: { name: "Manga Spark", image: undefined },
-};
+import { sourcesData } from "../../utils/sourcesData";
 
 function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 	const source = sourcesData[manga.source];
@@ -42,12 +22,18 @@ function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 					<Link href={`/titles/${manga.source}/${manga.slug}`}>
 						<a href={`/titles/${manga.source}/${manga.slug}`}>
 							<Tooltip.Trigger>
-								<div className={`${mobile ? "" : "min-h-[180px] min-w-[130px]"} w-full h-full relative`}>
+								<div
+									className={`${
+										mobile
+											? ""
+											: "min-h-[180px] min-w-[130px]"
+									} w-full h-full relative`}
+								>
 									<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
 									<Image
 										src={manga.cover}
-										width={130*2}
-										height={180*2}
+										width={130 * 2}
+										height={180 * 2}
 										className="rounded-md w-full h-full object-cover"
 									></Image>
 								</div>
@@ -85,7 +71,7 @@ function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 												</span>
 											)}
 										</div>
-										<div className="flex items-center gap-1">
+										<div className="flex items-center gap-1 select-none">
 											<StarIcon className="h-5 w-5 stroke-1 fill-current text-primary"></StarIcon>
 											<span>{manga.score || "N/A"}</span>
 										</div>

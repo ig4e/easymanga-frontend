@@ -83,7 +83,13 @@ function SearchBarUi({
 
 function SearchBar() {
 	const queryString = useMemo(() => {
-		const sources = ["ARES", "GALAXYMANGA", "MANGASWAT", "OZULSCANS", "MANGALEK"];
+		const sources = [
+			"ARES",
+			"GALAXYMANGA",
+			"MANGASWAT",
+			"OZULSCANS",
+			"MANGALEK",
+		];
 		const searchQueryGraphql = `   <source>: search(searchInput: { query: $query, source: <source> }) {
 		...MangaFields
 		}`;
@@ -169,7 +175,7 @@ function SearchBar() {
 										transition={{
 											duration: 0.1,
 										}}
-										className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-start z-50"
+										className="md:bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-start z-50"
 									>
 										<Dialog.Content asChild={true}>
 											<motion.div
