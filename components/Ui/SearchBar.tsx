@@ -188,7 +188,7 @@ function SearchBar() {
 												}}
 												className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-24 relative"
 											>
-												<div className="fixed inset-x-0 bg-base z-50  max-w-7xl mx-auto px-6 pb-4">
+												<div className="fixed inset-x-0 bg-base z-50  max-w-7xl mx-auto px-6 pb-4 rounded">
 													<DialogTitle>
 														Search
 														<DialogClose>
