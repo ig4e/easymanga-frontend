@@ -21,7 +21,7 @@ import ChapterPageSettingsMenu, {
 } from "../../../../components/Ui/ChapterPageSettingsMenu";
 
 interface IPageProps {
-	manga: { title: string };
+	manga: { title: string, slug: string };
 	chapter: {
 		url: string;
 		slug: string;
@@ -123,7 +123,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 					<div className="flex items-center gap-2">
 						<Link
-							href={`/titles/${chapter.source}/${chapter.mangaSlug}`}
+							href={`/titles/${chapter.source}/${manga.slug}`}
 						>
 							<div className="p-1 hover:bg-white/25 rounded-md">
 								<ArrowUturnLeftIcon className="h-6 w-6 md:hidden"></ArrowUturnLeftIcon>
@@ -131,7 +131,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						</Link>
 						<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2">
 							<Link
-								href={`/titles/${chapter.source}/${chapter.mangaSlug}`}
+								href={`/titles/${chapter.source}/${manga.slug}`}
 							>
 								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded-md select-none line-clamp-1">
 									{manga.title}
@@ -351,6 +351,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 					source
 				}
 				manga(mangaUniqueInput: $mangaUniqueInput) {
+					slug
 					title
 				}
 			}
