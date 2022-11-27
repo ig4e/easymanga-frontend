@@ -86,10 +86,19 @@ function SearchBar() {
 		const sources = [
 			"ARES",
 			"GALAXYMANGA",
-			"MANGASWAT",
-			"OZULSCANS",
 			"MANGALEK",
+			"MANGASPARK",
+			"AZORA",
+			"MANGASWAT",
+			//"MANGAAE",
+			"OZULSCANS",
+			"TEAMX",
+			"STKISSMANGA",
+			"KISSMANGA",
+			"MANGAPROTM",
+			"ARENASCANS",
 		];
+
 		const searchQueryGraphql = `   <source>: search(searchInput: { query: $query, source: <source> }) {
 		...MangaFields
 		}`;
