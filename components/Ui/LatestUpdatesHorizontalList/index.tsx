@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Manga } from "../../../typings/manga";
 import MangaCardHorizontalList from "./MangaCardHorizontalList";
-import { AnimatePresence, motion } from "framer-motion";
 
 const breakpoints = {
 	sm: 640,
@@ -29,16 +28,11 @@ function Index({ mangaList }: { mangaList: Manga[][] }) {
 				if (i === 2 && width < breakpoints["lg"]) return null;
 				if (i === 1 && width < breakpoints["md"]) return null;
 				return (
-					<motion.div
-						key={i}
-						animate={{ scale: 1 }}
-						initial={{ scale: 0.9 }}
-						transition={{ type: "spring", duration: 0.4 }}
-					>
+					<div key={i}>
 						<MangaCardHorizontalList
 							manga={list}
 						></MangaCardHorizontalList>
-					</motion.div>
+					</div>
 				);
 			})}
 		</div>

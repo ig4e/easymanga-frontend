@@ -47,5 +47,7 @@
 		@apply bg-primary;
 	}
 
-	
+	.SelectScrollButton {
+		@apply flex items-center justify-center w-full py-0.5;
+	}
 }

@@ -72,8 +72,7 @@ function MangaListRow({
 						slidesPerView: 9,
 					},
 					1536: {
-						slidesPerView: 10
-						,
+						slidesPerView: 10,
 					},
 				}}
 				modules={[
@@ -87,7 +86,10 @@ function MangaListRow({
 			>
 				{mangaList.map((manga) => (
 					<SwiperSlide key={manga.slug}>
-						<MangaCard mobile={width < breakpoints["md"]} manga={manga}></MangaCard>
+						<MangaCard
+							mobile={width < breakpoints["md"]}
+							manga={manga}
+						></MangaCard>
 					</SwiperSlide>
 				))}
 			</Swiper>

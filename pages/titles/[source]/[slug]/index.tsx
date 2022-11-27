@@ -1,47 +1,30 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Manga } from "../../../../typings/manga";
 import { anilistClient, client } from "../../../../apollo-client";
 import { gql } from "@apollo/client";
-import { MANGA_FIELDS } from "../../../../apollo/fragments";
 import ShowImageModal from "../../../../components/Ui/ShowImageModal";
-import { getRandomEmoji } from "../../../../utils/getRandomEmoji";
 import ExternalSite from "../../../../components/Ui/ExternalSite";
+import Fuse from "fuse.js";
 
-import AnilistLogo from "../../../../public/images/logos/anilist.png";
-import MDLogo from "../../../../public/images/logos/mangadex.png";
-import AresLogo from "../../../../public/images/logos/ares.png";
-import AzoraLogo from "../../../../public/images/logos/azora.png";
-import MangaSwatLogo from "../../../../public/images/logos/mangaswat.png";
-import OuzlScansLogo from "../../../../public/images/logos/ouzlscans.png";
-import FlameScansLogo from "../../../../public/images/logos/flamescans.png";
 import {
-	ArrowDownIcon,
-	ArrowUpIcon,
+	CheckIcon,
+	ChevronDownIcon,
+	ChevronUpIcon,
 	StarIcon,
 } from "@heroicons/react/24/outline";
 import { PlayCircleIcon } from "@heroicons/react/24/solid";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ANILIST_MEDIA_QUERY } from "../../../../apollo/queries";
 import CharacterCard from "../../../../components/Ui/CharacterCard";
 import { getWorkersUrl } from "../../../../utils/getImageUrl";
 import Navbar from "../../../../components/Navbar";
+import * as Select from "@radix-ui/react-select";
+import { Chapter } from "../../../../typings/chapter";
 
-const sourcesData = {
-	ARES: { name: "Ares Manga", image: AresLogo },
-	GALAXYMANGA: { name: "Galaxy Manga", image: FlameScansLogo },
-	AZORA: { name: "Manga Azora", image: AzoraLogo },
-	MANGASWAT: { name: "Manga Swat", image: MangaSwatLogo },
-	OZULSCANS: { name: "Ozul Scans", image: OuzlScansLogo },
-
-	MANGAAE: { name: "Manga Ae", image: undefined },
-	MANGALEK: { name: "MangaLek", image: undefined },
-	MANGASPARK: { name: "Manga Spark", image: undefined },
-};
+import { sourcesData } from "../../../../utils/sourcesData";
 
 export interface Character {
 	role: "MAIN" | "SUPPORTING" | "BACKGROUND";
@@ -229,18 +212,65 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 				setWidth(window.innerWidth),
 			);
 	}, []);
-	const source = sourcesData[manga.source];
-	const [sort, setSort] = useState<"asc" | "dec">("asc");
+	if (!manga.chapters) return null;
 
-	function stateReverse(arr: any) {
-		if (sort === "asc") return arr;
-		return arr.reverse();
-	}
+	const chapterRageData = useMemo(() => {
+		let lastValue = 0;
+		const range = Math.round((manga.chapters?.length || 100) / 100);
+		return Array.from({
+			length: range > 0 ? range : 1,
+		}).map(() => ({ from: lastValue, to: (lastValue += 100) }));
+	}, [manga]);
+
+	const [chapterRange, setChapterRange] = useState({
+		from: chapterRageData[chapterRageData.length - 1]?.from || 0,
+		to: chapterRageData[chapterRageData.length - 1]?.to || 100,
+	});
+
+	const [displayedChapters, setDisplayedChapters] = useState<Chapter[]>(
+		[...manga.chapters!]
+			.reverse()
+			.slice(chapterRange.from, chapterRange.to)
+			.reverse(),
+	);
+
+	const [searchQuery, setSearchQuery] = useState("");
+
+	useEffect(() => {
+		let searchDelay: any;
+		if (!searchQuery) {
+		} else {
+			const chapterFuse = new Fuse(manga.chapters!, {
+				keys: ["number", "name"],
+			});
+			const result = chapterFuse.search(searchQuery).map((x) => x.item);
+			searchDelay = setTimeout(() => {
+				setDisplayedChapters(result.slice(0, 250));
+			}, 500);
+		}
+
+		return () => {
+			clearTimeout(searchDelay);
+		};
+	}, [searchQuery]);
+
+	useEffect(() => {
+		if (!searchQuery) {
+			const reversedChapters = [...manga.chapters!].reverse();
+			setDisplayedChapters(
+				reversedChapters!
+					.slice(chapterRange.from, chapterRange.to)
+					.reverse(),
+			);
+		}
+	}, [searchQuery, chapterRange]);
+
+	const source = sourcesData[manga.source];
 
 	return (
 		<>
-				<Navbar navClass ="hidden md:block"></Navbar>
-			
+			<Navbar navClass="hidden md:block"></Navbar>
+
 			<div>
 				<Head>
 					<title>{manga.title} Details - Easy Manga</title>
@@ -252,7 +282,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 							className="w-full -z-20"
 							src={
 								anilistData?.bannerImage
-									? getWorkersUrl(anilistData?.bannerImage)
+									? getWorkersUrl(anilistData?.bannerImage!)
 									: manga.cover
 							}
 							layout="fill"
@@ -378,7 +408,9 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 													" ",
 													"-",
 												)}`}
-												ImageSrc={AnilistLogo}
+												ImageSrc={
+													sourcesData.ANILIST.image
+												}
 											/>
 										)}
 
@@ -391,7 +423,9 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 													" ",
 													"-",
 												)}`}
-												ImageSrc={MDLogo}
+												ImageSrc={
+													sourcesData.MANGADEX.image
+												}
 											/>
 										)}
 										<ExternalSite
@@ -428,7 +462,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 										<h3 className="text-2xl ">
 											Chapters List
 										</h3>
-										<button
+										{/*<button
 											className="p-1.5 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
 											onClick={() =>
 												setSort(
@@ -445,23 +479,94 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 														: "rotate-180"
 												}`}
 											></ArrowUpIcon>
-										</button>
+											</button>*/}
 									</div>
-									<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full bg-base-100 p-3 rounded-md">
-										{stateReverse(
-											manga.chapters?.map((chapter) => {
-												return (
-													<Link
-														key={chapter.slug}
-														href={`/titles/${
-															manga.source
-														}/${
-															manga.slug
-														}/chapter?id=${encodeURIComponent(
-															chapter.slug!,
-														)}`}
-													>
-														<a
+									<div className="bg-base-100 p-3 rounded-md space-y-4">
+										<div className="flex items-center gap-4">
+											<input
+												className={`bg-base h-10 w-full pr-2 pl-4 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
+												type="text"
+												placeholder="Chapter Number..."
+												onChange={(e) =>
+													setSearchQuery(
+														e.target.value,
+													)
+												}
+											/>
+
+											<Select.Root
+												onValueChange={(value) => {
+													let [from, to] =
+														value.split("-");
+													setChapterRange({
+														from: Number(from),
+														to: Number(to),
+													});
+												}}
+												defaultValue={`${
+													chapterRageData[
+														chapterRageData.length -
+															1
+													].from
+												}-${
+													chapterRageData[
+														chapterRageData.length -
+															1
+													].to
+												}`}
+											>
+												<Select.Trigger className="bg-base h-10 px-4 rounded-md border flex gap-2 items-center whitespace-nowrap">
+													<Select.Value className="" />
+													<Select.Icon>
+														<ChevronDownIcon className="h-5 w-5"></ChevronDownIcon>
+													</Select.Icon>
+												</Select.Trigger>
+
+												<Select.Portal>
+													<Select.Content className="bg-base p-2 border drop-shadow-md rounded-md z-50">
+														<Select.ScrollUpButton className="SelectScrollButton">
+															<ChevronUpIcon className="h-4 w-4" />
+														</Select.ScrollUpButton>
+														<Select.Viewport>
+															<Select.Group className="space-y-2">
+																<Select.Label />
+																{chapterRageData.map(
+																	({
+																		from,
+																		to,
+																	}) => {
+																		return (
+																			<Select.Item
+																				key={`${from}-${to}`}
+																				className="flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md"
+																				value={`${from}-${to}`}
+																			>
+																				<Select.ItemText>
+																					{`${from}-${to}`}
+																				</Select.ItemText>
+																				<Select.ItemIndicator className="">
+																					<CheckIcon className="h-4 w-4 stroke-2"></CheckIcon>
+																				</Select.ItemIndicator>
+																			</Select.Item>
+																		);
+																	},
+																)}
+															</Select.Group>
+														</Select.Viewport>
+														<Select.ScrollDownButton className="SelectScrollButton">
+															<ChevronDownIcon className="h-4 w-4" />
+														</Select.ScrollDownButton>
+													</Select.Content>
+												</Select.Portal>
+											</Select.Root>
+										</div>
+
+										<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full">
+											{displayedChapters?.map(
+												(chapter: Chapter) => {
+													return (
+														<Link
+															key={chapter.slug}
 															href={`/titles/${
 																manga.source
 															}/${
@@ -469,19 +574,33 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 															}/chapter?id=${encodeURIComponent(
 																chapter.slug!,
 															)}`}
-															className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
 														>
-															<span className="text-xs">
-																{chapter.number}
-															</span>
-															<span>
-																{chapter.name}
-															</span>
-														</a>
-													</Link>
-												);
-											}),
-										)}
+															<a
+																href={`/titles/${
+																	manga.source
+																}/${
+																	manga.slug
+																}/chapter?id=${encodeURIComponent(
+																	chapter.slug!,
+																)}`}
+																className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
+															>
+																<span className="text-xs">
+																	{
+																		chapter.number
+																	}
+																</span>
+																<span className="">
+																	{
+																		chapter.name
+																	}
+																</span>
+															</a>
+														</Link>
+													);
+												},
+											)}
+										</div>
 									</div>
 								</div>
 							</div>

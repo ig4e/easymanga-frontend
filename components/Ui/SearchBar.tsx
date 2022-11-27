@@ -1,8 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
 import tw from "tailwind-styled-components";
+import { Sources } from "../../typings/enums";
+import { Manga } from "../../typings/manga";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { MANGA_FIELDS } from "../../apollo/fragments";
+import { sourcesData } from "../../utils/sourcesData";
+import ExternalSite from "./ExternalSite";
+import MangaCard from "./MangaCard";
 
 function SearchBarUi({
 	active,
@@ -75,16 +82,35 @@ function SearchBarUi({
 }
 
 function SearchBar() {
-	const [query, setQuery] = useState("");
+	const queryString = useMemo(() => {
+		const sources = ["ARES", "GALAXYMANGA", "MANGASWAT", "OZULSCANS", "MANGALEK"];
+		const searchQueryGraphql = `   <source>: search(searchInput: { query: $query, source: <source> }) {
+		...MangaFields
+		}`;
+
+		const queryBody = `query Search($query: String!) {
+			${sources
+				.map((source) => {
+					return searchQueryGraphql.replace(/\<source\>/g, source);
+				})
+				.join("\n")}
+			}`;
+		return gql`
+			${MANGA_FIELDS}
+			${queryBody}
+		`;
+	}, []);
+
 	const [open, setOpen] = useState(false);
 
-	useEffect(() => {
-		const searchTimeout = setTimeout(() => {
-			//setOpen(!!query);
-			console.log(`Stopped typing`);
-		}, 500);
-		return () => clearTimeout(searchTimeout);
-	}, [query]);
+	interface SearchResult {
+		source: Sources;
+		results: Manga[];
+	}
+	const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+	const [searchQuery, setSearchQuery] = useState("");
+	const [getSearchResults, { loading, error, data }] =
+		useLazyQuery(queryString);
 
 	const DialogTitle: any = tw(
 		Dialog.Title,
@@ -97,58 +123,211 @@ function SearchBar() {
 		Dialog.Close,
 	)`p-1.5 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15`;
 
+	useEffect(() => {
+		const searchTimeout = setTimeout(async () => {
+			if (!searchQuery) return;
+			const { data } = await getSearchResults({
+				variables: { query: searchQuery },
+			});
+
+			const sources = Object.keys(data);
+
+			const result: SearchResult[] = sources.map((source) => {
+				return {
+					source: source as any as Sources,
+					results: data[source] as Manga[],
+				};
+			});
+
+			setSearchResults(result);
+		}, 500);
+		return () => clearTimeout(searchTimeout);
+	}, [searchQuery]);
+
 	return (
 		<>
 			<motion.div className="h-full relative">
-				<AnimatePresence>
-					<Dialog.Root open={open} onOpenChange={setOpen}>
-						<Dialog.Trigger className="h-full">
-							<div className="hidden md:block h-full">
-								<SearchBarUi
-									setQuery={setQuery}
-									value={query}
-									active={open}
-								></SearchBarUi>
-							</div>
-							<MagnifyingGlassIcon className="w-6 h-5 text-neutral-200 stroke-2 md:hidden"></MagnifyingGlassIcon>
-						</Dialog.Trigger>
-						<Dialog.Portal>
-							<Dialog.Overlay className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">
-								<Dialog.Content asChild={true}>
+				<Dialog.Root open={open} onOpenChange={setOpen}>
+					<Dialog.Trigger className="h-full">
+						<div className="hidden md:block h-full">
+							<SearchBarUi
+								setQuery={setSearchQuery}
+								value={searchQuery}
+								active={open}
+							></SearchBarUi>
+						</div>
+						<MagnifyingGlassIcon className="w-6 h-5 text-neutral-200 stroke-2 md:hidden"></MagnifyingGlassIcon>
+					</Dialog.Trigger>
+					<AnimatePresence>
+						{open && (
+							<Dialog.Portal forceMount>
+								<Dialog.Overlay asChild>
 									<motion.div
-										initial={{ scale: 0.5 }}
-										animate={{ scale: 1 }}
-										exit={{ scale: 0.5 }}
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
 										transition={{
-											type: "spring",
-											duration: 0.4,
+											duration: 0.1,
 										}}
-										className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full"
+										className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-start z-50"
 									>
-										<DialogTitle>
-											Search
-											<DialogClose>
-												<XIcon />
-											</DialogClose>
-										</DialogTitle>
-										<SearchBarUi
-											className="!h-10"
-											setQuery={setQuery}
-											value={query}
-											active={open}
-											width={"100%"}
-											noAnimation={true}
-										/>
+										<Dialog.Content asChild={true}>
+											<motion.div
+												initial={{ scale: 0 }}
+												animate={{ scale: 1 }}
+												exit={{ scale: 0, opacity: 0 }}
+												transition={{
+													type: "spring",
+													duration: 0.4,
+												}}
+												className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-24 relative"
+											>
+												<div className="fixed inset-x-0 bg-base z-50  max-w-7xl mx-auto px-6 pb-4">
+													<DialogTitle>
+														Search
+														<DialogClose>
+															<XIcon />
+														</DialogClose>
+													</DialogTitle>
+													<SearchBarUi
+														className="!h-10"
+														setQuery={
+															setSearchQuery
+														}
+														value={searchQuery}
+														active={open}
+														width={"100%"}
+														noAnimation={true}
+													/>
+												</div>
+												<div className="h-[124px]"></div>
+												{loading ? (
+													<div className="flex justify-center items-center py-6">
+														<svg
+															className="animate-spin w-24 h-24 text-neutral-200"
+															xmlns="http://www.w3.org/2000/svg"
+															fill="none"
+															viewBox="0 0 24 24"
+														>
+															<circle
+																className="opacity-25"
+																cx="12"
+																cy="12"
+																r="10"
+																stroke="currentColor"
+																strokeWidth="4"
+															></circle>
+															<path
+																className="opacity-75"
+																fill="currentColor"
+																d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+															></path>
+														</svg>
+													</div>
+												) : (
+													searchQuery && (
+														<div>
+															{searchResults.length >
+																0 && (
+																<DialogSecondaryTitle>
+																	Manga
+																</DialogSecondaryTitle>
+															)}
+															<div className="flex flex-col items-start gap-4">
+																{searchResults.filter(
+																	(x) =>
+																		x
+																			.results
+																			.length >
+																		0,
+																).length > 0
+																	? searchResults.map(
+																			({
+																				results,
+																				source,
+																			}) => {
+																				if (
+																					results.length <=
+																					0
+																				)
+																					return null;
 
-										<DialogSecondaryTitle>
-											Manga
-										</DialogSecondaryTitle>
+																				const sourceData =
+																					sourcesData[
+																						source
+																					];
+
+																				return (
+																					<div
+																						key={
+																							source +
+																							"-result"
+																						}
+																						className="flex flex-col items-start gap-4"
+																					>
+																						<ExternalSite
+																							title={
+																								sourceData.name
+																							}
+																							ImageSrc={
+																								sourceData.image!
+																							}
+																							href={
+																								results[0]
+																									?.url ||
+																								"https://aresmanga.com"
+																							}
+																						></ExternalSite>
+
+																						<div className="grid grid-flow-row grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-2">
+																							{results.map(
+																								(
+																									manga,
+																								) => {
+																									return (
+																										<MangaCard
+																											key={
+																												source +
+																												"-result-" +
+																												manga.slug
+																											}
+																											manga={
+																												manga
+																											}
+																											mobile={
+																												true
+																											}
+																										></MangaCard>
+																									);
+																								},
+																							)}
+																						</div>
+																					</div>
+																				);
+																			},
+																	  )
+																	: searchQuery && (
+																			<div className="flex items-center justify-center w-full">
+																				<h1 className="text-xl font-semibold">
+																					No
+																					Search
+																					Results
+																					Found
+																				</h1>
+																			</div>
+																	  )}
+															</div>
+														</div>
+													)
+												)}
+											</motion.div>
+										</Dialog.Content>
 									</motion.div>
-								</Dialog.Content>
-							</Dialog.Overlay>
-						</Dialog.Portal>
-					</Dialog.Root>
-				</AnimatePresence>
+								</Dialog.Overlay>
+							</Dialog.Portal>
+						)}
+					</AnimatePresence>
+				</Dialog.Root>
 			</motion.div>
 		</>
 	);

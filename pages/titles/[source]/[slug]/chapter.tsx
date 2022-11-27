@@ -11,10 +11,9 @@ import {
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { client } from "../../../../apollo-client";
 import ChapterPageLoader from "../../../../components/Ui/ChapterPageLoader";
-import PageLayout from "../../../../components/Ui/PageLayout";
 import Logo from "../../../../public/logo.png";
 import * as Slider from "@radix-ui/react-slider";
 import ChapterPageSettingsMenu, {

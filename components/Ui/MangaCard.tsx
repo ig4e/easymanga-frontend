@@ -42,13 +42,13 @@ function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 					<Link href={`/titles/${manga.source}/${manga.slug}`}>
 						<a href={`/titles/${manga.source}/${manga.slug}`}>
 							<Tooltip.Trigger>
-								<div className="min-h-[180px] min-w-[130px] w-full h-full relative">
+								<div className={`${mobile ? "" : "min-h-[180px] min-w-[130px]"} w-full h-full relative`}>
 									<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
 									<Image
 										src={manga.cover}
-										width={130}
-										height={180}
-										className="rounded-md"
+										width={130*2}
+										height={180*2}
+										className="rounded-md w-full h-full object-cover"
 									></Image>
 								</div>
 							</Tooltip.Trigger>
