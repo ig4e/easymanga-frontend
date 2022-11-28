@@ -215,7 +215,10 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 
 	const chapterRageData = useMemo(() => {
 		let lastValue = 0;
-		const range = Math.round((manga.chapters?.length || 100) / 100);
+
+		const ratio = (manga.chapters?.length || 100) / 100;
+		const range = Math.ceil(ratio);
+
 		return Array.from({
 			length: range > 0 ? range : 1,
 		}).map(() => ({ from: lastValue, to: (lastValue += 100) }));
@@ -328,7 +331,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 											}/chapter?id=${
 												manga?.chapters?.[
 													manga?.chapters?.length - 1
-												].slug
+												]?.slug
 											}`}
 										>
 											<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">

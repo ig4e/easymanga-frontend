@@ -129,11 +129,11 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 								<ArrowUturnLeftIcon className="h-6 w-6 md:hidden"></ArrowUturnLeftIcon>
 							</div>
 						</Link>
-						<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2 self-center place-self-center center">
+						<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2 text-start">
 							<Link
 								href={`/titles/${chapter.source}/${manga.slug}`}
 							>
-								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis w-[90%]">
+								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis">
 									{manga.title}
 								</button>
 							</Link>
@@ -145,7 +145,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 									chapter.slug!,
 								)}`}
 							>
-								<button className="text-xs text-white/60 md:text-white/60 md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis w-[95%]">
+								<button className="text-xs text-white/60 md:text-white/60 md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis">
 									{chapter.name}
 								</button>
 							</Link>
