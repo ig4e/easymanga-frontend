@@ -52,7 +52,7 @@ function ChapterPageSettingsMenu({
 									defaultValue="center"
 									aria-label="Text alignment"
 								>
-									{["raw", "hd", "sd", "ld"].map((value) => {
+									{["raw", "hd", "sd", "ld", "pd"].map((value) => {
 										return (
 											<ToggleGroup.Item
 												key={value}

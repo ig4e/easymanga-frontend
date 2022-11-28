@@ -133,7 +133,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							<Link
 								href={`/titles/${chapter.source}/${manga.slug}`}
 							>
-								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded-md select-none line-clamp-1">
+								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis w-[90%]">
 									{manga.title}
 								</button>
 							</Link>
@@ -145,7 +145,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 									chapter.slug!,
 								)}`}
 							>
-								<button className="text-xs text-white/60 md:text-white/60  md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded-md select-none line-clamp-1">
+								<button className="text-xs text-white/60 md:text-white/60  md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis w-[90%]">
 									{chapter.name}
 								</button>
 							</Link>
