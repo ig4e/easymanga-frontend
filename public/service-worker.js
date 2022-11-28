@@ -1,5 +1,5 @@
 try {
-	const PRECACHE = "precache-v2";
+	const PRECACHE = "precache-v1";
 	const RUNTIME = "runtime";
 
 	// A list of local resources we always want to be cached.
@@ -9,10 +9,6 @@ try {
 		"/logo.png",
 		"/favicon.ico",
 		"/manifest.json",
-		"*/*",
-		"**/*",
-		"**/**",
-		"/*",
 	];
 
 	// The install handler takes care of precaching the resources we always need.
