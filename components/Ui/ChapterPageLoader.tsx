@@ -41,7 +41,7 @@ function ChapterPageLoader({
 	}, [imgRef]);
 
 	function getReQuailtyUrl(src: string, q: Quality) {
-		const qObj = { raw: 100, hd: 80, sd: 50, ld: 25, pd: 0 };
+		const qObj = { raw: 100, hd: 80, sd: 50, ld: 25, pd: 1 };
 		return `/api/requality?url=${encodeURIComponent(src)}&q=${qObj[q]}`;
 	}
 
