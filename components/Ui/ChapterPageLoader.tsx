@@ -52,14 +52,14 @@ function ChapterPageLoader({
 			id={`pg-` + number}
 			ref={isLoaded ? contRef : undefined}
 			className={`relative w-full select-none ${
-				!isLoaded ? "h-[80rem]" : ""
+				!isLoaded ? "h-[60rem]" : ""
 			}`}
 		>
 			{!isLoaded && (
 				<>
-					<div className="absolute inset-0 backdrop-blur-lg select-none bg-neutral-200/20 flex items-center h-[80rem] justify-center rouned-md animate-pulse"></div>
+					<div className="absolute inset-0 backdrop-blur-lg select-none bg-neutral-200/20 flex items-center h-[60rem] justify-center rouned-md animate-pulse"></div>
 					{number === 1 && (
-						<div className="absolute inset-0 backdrop-blur-lg select-none flex items-center h-[80rem] justify-center rouned-md">
+						<div className="absolute inset-0 backdrop-blur-lg select-none flex items-center h-[60rem] justify-center rouned-md">
 							<svg
 								className="animate-spin w-36 h-36"
 								xmlns="http://www.w3.org/2000/svg"
