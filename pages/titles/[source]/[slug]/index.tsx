@@ -594,7 +594,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 																		chapter.number
 																	}
 																</span>
-																<span className="">
+																<span className="truncate line-clamp-1">
 																	{
 																		chapter.name
 																	}
