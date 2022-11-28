@@ -276,7 +276,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							{chapter.nextSlug && (
 								<Link
 									href={`/titles/${chapter.source}/${
-										chapter.mangaSlug
+										manga.slug
 									}/chapter?id=${encodeURIComponent(
 										chapter.nextSlug!,
 									)}`}
@@ -284,7 +284,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 									<a
 										className="flex items-center gap-2 hover:bg-white/25 rounded-md p-2 disabled:opacity-50"
 										href={`/titles/${chapter.source}/${
-											chapter.mangaSlug
+											manga.slug
 										}/chapter?id=${encodeURIComponent(
 											chapter.prevSlug!,
 										)}`}
