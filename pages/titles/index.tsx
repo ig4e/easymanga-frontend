@@ -78,6 +78,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 	const location = useRouter();
 
 	useEffect(() => {
+                setPage(1);
 		setMangaList(list);
 	}, [list]);
 
