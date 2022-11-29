@@ -20,6 +20,7 @@ import { gql, useLazyQuery, useQuery } from "@apollo/client";
 import { getRandomEmoji } from "../../utils/getRandomEmoji";
 import * as Select from "@radix-ui/react-select";
 import { useRouter } from "next/router";
+import { sourcesData } from "../../utils/sourcesData";
 
 interface Genre {
 	id: number;
@@ -78,7 +79,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 	const location = useRouter();
 
 	useEffect(() => {
-                setPage(1);
+		setPage(1);
 		setMangaList(list);
 	}, [list]);
 
@@ -117,6 +118,8 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 		});
 	}, [page]);
 
+	const [isSelectMenuOpen, setSelectMenuOpen] = useState(false);
+
 	return (
 		<PageLayout>
 			<div className="mb-16">
@@ -130,6 +133,12 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 
 				<div className="my-6 flex gap-2 flex-wrap">
 					<Select.Root
+						open={isSelectMenuOpen}
+						onOpenChange={(open) => {
+							if (!open) {
+								setTimeout(() => setSelectMenuOpen(open), 100);
+							} else setSelectMenuOpen(open);
+						}}
 						onValueChange={(value) => {
 							location.push(`/titles?source=${value}`);
 						}}
@@ -150,7 +159,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 								<Select.Viewport>
 									<Select.Group className="space-y-2">
 										<Select.Label />
-										{sources.map((source) => {
+										{sources.map((source: string) => {
 											return (
 												<Select.Item
 													key={source}
@@ -158,7 +167,11 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 													value={source}
 												>
 													<Select.ItemText>
-														{source}
+														{
+															//@ts-ignore
+															sourcesData[source]
+																?.name
+														}
 													</Select.ItemText>
 													<Select.ItemIndicator className="">
 														<CheckIcon className="h-4 w-4 stroke-2"></CheckIcon>
@@ -176,7 +189,11 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 					</Select.Root>
 				</div>
 
-				<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
+				<div
+					className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none ${
+						isSelectMenuOpen ? "pointer-events-none" : ""
+					}`}
+				>
 					{mangaList.map((manga, index) => {
 						return (
 							<Link
