@@ -154,7 +154,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 											return (
 												<Select.Item
 													key={source}
-													className="flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md"
+													className="flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md SelectItem"
 													value={source}
 												>
 													<Select.ItemText>

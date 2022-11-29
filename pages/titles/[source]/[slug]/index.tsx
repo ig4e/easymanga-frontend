@@ -542,7 +542,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 																		return (
 																			<Select.Item
 																				key={`${from}-${to}`}
-																				className="flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md"
+																				className="SelectItem flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md"
 																				value={`${from}-${to}`}
 																			>
 																				<Select.ItemText>

@@ -50,4 +50,8 @@
 	.SelectScrollButton {
 		@apply flex items-center justify-center w-full py-0.5;
 	}
+
+	.SelectItem {
+		user-select: none;
+	}
 }
