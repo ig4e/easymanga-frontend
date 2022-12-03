@@ -2,61 +2,142 @@ import { gql } from "@apollo/client";
 import {
 	ArrowUturnLeftIcon,
 	Bars3Icon,
+	ChevronDownIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
 	Cog6ToothIcon,
 	MinusIcon,
 	PlusIcon,
+	XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { client } from "../../../../apollo-client";
 import ChapterPageLoader from "../../../../components/Ui/ChapterPageLoader";
 import Logo from "../../../../public/logo.png";
 import * as Slider from "@radix-ui/react-slider";
 import ChapterPageSettingsMenu, {
+	ChapterNavigationMode,
 	Quality,
 } from "../../../../components/Ui/ChapterPageSettingsMenu";
+import { Chapter } from "../../../../typings/chapter";
+import { useRouter } from "next/router";
+import { useChapterPageStore, useUserSettingsStore } from "../../../../store";
+import { AnimatePresence, motion } from "framer-motion";
+import { getRandomEmoji } from "../../../../utils/getRandomEmoji";
+
+import SmolImg from "../../../../public/images/smol.png";
+import ChapterPageChaptersMenu from "../../../../components/Ui/ChapterPageChaptersMenu";
 
 interface IPageProps {
-	manga: { title: string, slug: string };
-	chapter: {
-		url: string;
-		slug: string;
-		mangaSlug: string;
-		name: string;
-		number: number;
-		createdAt: Date;
-		nextSlug: string;
-		prevSlug: string;
-		pages: string[];
-		otherChapters: {
-			url: string;
-			slug: string;
-			mangaSlug: string;
-			name: string;
-			number: number;
-			createdAt: Date;
-			nextSlug: string;
-			prevSlug: string;
-			pages: string[];
-			source: string;
-		};
-		source: string;
-	};
+	manga: { title: string; slug: string, chapters: Chapter[] };
+	chapter: Chapter;
 }
 const breakpoints = {
 	sm: 640,
 	md: 768,
 };
 const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
-	const [progress, setProgress] = useState(1);
-	const [pageScale, setPageScale] = useState(0);
 	const [width, setWidth] = useState(0);
-	const [quality, setQuality] = useState<"raw" | "hd" | "sd" | "ld">();
 	const [showBars, setShowBars] = useState(true);
+	const [currentPageId, setCurrentPageId] = useState<string>("");
+	const router = useRouter();
+
+	const chapterPageQuality = useUserSettingsStore(
+		(state) => state.chapterPageQuality,
+	);
+	const chapterPageScale = useUserSettingsStore(
+		(state) => state.chapterPageScale,
+	);
+	const chapterPageNavigationMode = useUserSettingsStore(
+		(state) => state.chapterPageNavigationMode,
+	);
+	const setChapterPageNavigationMode = useUserSettingsStore(
+		(state) => state.setChapterPageNavigationMode,
+	);
+	const setChapterPageQuality = useUserSettingsStore(
+		(state) => state.setChapterPageQuality,
+	);
+	const setChapterPageScale = useUserSettingsStore(
+		(state) => state.setChapterPageScale,
+	);
+
+	const loading = useChapterPageStore((state) => state.loading);
+	const allChapters = useChapterPageStore((state) => state.allChapters);
+	const currentChapter = useChapterPageStore((state) => state.currentChapter);
+	const setAllChapters = useChapterPageStore((state) => state.setAllChapters);
+	const setCurrentChapter = useChapterPageStore(
+		(state) => state.setCurrentChapter,
+	);
+	const addChapter = useChapterPageStore((state) => state.addChapter);
+	const addPrevChapter = useChapterPageStore((state) => state.addPrevChapter);
+
+	const currentChapterProgress = useChapterPageStore(
+		(state) => state.currentChapterProgress,
+	);
+	const setCurrentChapterProgress = useChapterPageStore(
+		(state) => state.setCurrentChapterProgress,
+	);
+
+	const setLoading = useChapterPageStore((state) => state.setLoading);
+
+	useEffect(() => {
+		console.log(currentChapter.slug);
+		const [chapterSlug, pageNumber] = currentPageId.split("[]");
+		if (currentChapter && chapterSlug) {
+			const pageNumberNumber = Number(pageNumber);
+			setCurrentChapterProgress(pageNumberNumber);
+
+			if (
+				chapterPageNavigationMode === "scroll" &&
+				pageNumberNumber === currentChapter.pages?.length
+			) {
+				setLoading(true);
+				if (currentChapter.nextSlug)
+					router.push(
+						`/titles/${currentChapter.source}/${
+							manga.slug
+						}/chapter?id=${encodeURIComponent(
+							currentChapter.nextSlug,
+						)}`,
+						undefined,
+						{ scroll: false },
+					);
+			} else if (
+				chapterPageNavigationMode === "scroll" &&
+				pageNumberNumber === 0
+			) {
+				setLoading(true);
+				if (currentChapter.prevSlug)
+					router.push(
+						`/titles/${currentChapter.source}/${
+							manga.slug
+						}/chapter?id=${encodeURIComponent(
+							currentChapter.prevSlug,
+						)}`,
+						undefined,
+						{ scroll: false },
+					);
+			}
+
+			if (chapterSlug !== currentChapter.slug) {
+				const chapterData = allChapters.find(
+					(x) => x.slug === chapterSlug,
+				);
+
+				if (chapterData) {
+					setCurrentChapter(chapterData);
+					setCurrentChapterProgress(1);
+				}
+			}
+		}
+	}, [currentPageId]);
+
+	function setPageProgress(id: string) {
+		setCurrentPageId(id);
+	}
 
 	useEffect(() => {
 		setWidth(window.innerWidth);
@@ -68,31 +149,24 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 	}, []);
 
 	useEffect(() => {
-		if (width === 0) return;
-		if (width > breakpoints["md"])
-			setPageScale(Number(localStorage.getItem("userPageScale")) || 100);
-	}, [width]);
-
-	useEffect(() => {
-		if (pageScale === 0) return;
-		localStorage.setItem("userPageScale", String(pageScale));
-	}, [pageScale]);
-
-	useEffect(() => {
-		if (width > breakpoints["md"])
-			setPageScale(Number(localStorage.getItem("userPageScale")) || 100);
-	}, [pageScale]);
-
-	useEffect(() => {
-		if (!quality) return;
-		localStorage.setItem("userChapterQuality", quality);
-	}, [quality]);
-
-	useEffect(() => {
-		setQuality(
-			(localStorage.getItem("userChapterQuality") as Quality) || "raw",
-		);
+		setCurrentChapter(chapter);
 	}, []);
+
+	useEffect(() => {
+		if (chapterPageNavigationMode === "scroll") {
+			if (!allChapters.find((xC) => xC.slug === chapter.slug)) {
+				setLoading(false);
+				if (allChapters.find((x) => x.prevSlug === chapter.slug)) {
+					addPrevChapter(chapter);
+				} else {
+					addChapter(chapter);
+				}
+			}
+		} else {
+			setCurrentChapter(chapter);
+			setAllChapters([chapter]);
+		}
+	}, [chapter.slug]);
 
 	return (
 		<div className="bg-[#212121] text-white min-h-screen">
@@ -123,7 +197,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 					<div className="flex items-center gap-2">
 						<Link
-							href={`/titles/${chapter.source}/${manga.slug}`}
+							href={`/titles/${currentChapter.source}/${manga.slug}`}
 						>
 							<div className="p-1 hover:bg-white/25 rounded-md">
 								<ArrowUturnLeftIcon className="h-6 w-6 md:hidden"></ArrowUturnLeftIcon>
@@ -131,22 +205,22 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						</Link>
 						<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2 text-start">
 							<Link
-								href={`/titles/${chapter.source}/${manga.slug}`}
+								href={`/titles/${currentChapter.source}/${manga.slug}`}
 							>
-								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis">
+								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none overflow-hidden whitespace-nowrap text-ellipsis">
 									{manga.title}
 								</button>
 							</Link>
 							<ChevronRightIcon className="h-3 w-3 stroke-1.5 hidden md:block"></ChevronRightIcon>
 							<Link
-								href={`/titles/${chapter.source}/${
-									chapter.mangaSlug
+								href={`/titles/${currentChapter.source}/${
+									currentChapter.mangaSlug
 								}/chapter?id=${encodeURIComponent(
-									chapter.slug!,
+									currentChapter.slug!,
 								)}`}
 							>
-								<button className="text-xs text-white/60 md:text-white/60 md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded-md select-none overflow-hidden whitespace-nowrap text-ellipsis">
-									{chapter.name}
+								<button className="text-xs text-white/60 md:text-white/60 md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded select-none overflow-hidden whitespace-nowrap text-ellipsis">
+									{currentChapter.name}
 								</button>
 							</Link>
 						</div>
@@ -168,22 +242,151 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						maxWidth: `${
 							(width < breakpoints["md"]
 								? 200
-								: pageScale || 100) / 2
+								: chapterPageScale || 100) / 2
 						}%`,
 					}}
 				>
-					{chapter.pages.map((page, index) => {
-						if (!quality) return null;
-						return (
-							<ChapterPageLoader
-								quality={quality}
-								key={page}
-								src={page}
-								number={index + 1}
-								setProgress={(number) => setProgress(number)}
-							></ChapterPageLoader>
-						);
-					})}
+					<AnimatePresence>
+						{loading && (
+							<motion.div
+								initial={{ scale: 0 }}
+								animate={{ scale: 1 }}
+								exit={{ scale: 0 }}
+								className="flex justify-center py-4"
+							>
+								<div className="flex items-center gap-4">
+									{!currentChapter.nextSlug ? (
+										<>
+											<span>
+												{getRandomEmoji()} No Next
+												Chapter, so sad....
+											</span>
+										</>
+									) : (
+										<>
+											<svg
+												className="animate-spin w-12 h-12"
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+											>
+												<circle
+													className="opacity-25 text-neutral-200"
+													cx="12"
+													cy="12"
+													r="10"
+													stroke="currentColor"
+													strokeWidth="4"
+												></circle>
+												<path
+													className="opacity-75 text-primary"
+													fill="currentColor"
+													d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+												></path>
+											</svg>
+											<span>
+												{getRandomEmoji()} Loading....
+											</span>
+										</>
+									)}
+								</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
+					{
+						allChapters!.map((chapter, chapterIndex) => {
+							const lastChapter = allChapters.find(
+								(x) => x.slug === chapter.prevSlug,
+							);
+
+							return (
+								<div
+									key={`${chapter.slug}[]pages`}
+									className="relative"
+								>
+									{chapterIndex !== 0 && (
+										<div className="py-4 flex flex-col items-center justify-center gap-2">
+											<div className="flex flex-col items-start gap-2">
+												<span>
+													Previous:{" "}
+													{lastChapter?.name}
+												</span>
+												<ChevronDownIcon className="w-5 h-5 self-center"></ChevronDownIcon>
+												<span>
+													Next: {chapter?.name}
+												</span>
+											</div>
+										</div>
+									)}
+
+									{chapter.pages!.map((page, index) => {
+										if (!chapterPageQuality) return null;
+										const pageId = `${chapter.slug}[]${
+											index + 1
+										}`;
+										return (
+											<ChapterPageLoader
+												quality={chapterPageQuality}
+												key={pageId}
+												src={page}
+												id={pageId}
+												setProgress={(id) =>
+													setPageProgress(id)
+												}
+											></ChapterPageLoader>
+										);
+									})}
+								</div>
+							);
+						}, []) as any
+					}
+					<AnimatePresence>
+						{loading && (
+							<motion.div
+								initial={{ scale: 0 }}
+								animate={{ scale: 1 }}
+								exit={{ scale: 0 }}
+								className="flex justify-center py-4"
+							>
+								<div className="flex items-center gap-4">
+									{!currentChapter.nextSlug ? (
+										<>
+											<span>
+												{getRandomEmoji()} No Next
+												Chapter, so sad....
+											</span>
+										</>
+									) : (
+										<>
+											<svg
+												className="animate-spin w-12 h-12"
+												xmlns="http://www.w3.org/2000/svg"
+												fill="none"
+												viewBox="0 0 24 24"
+											>
+												<circle
+													className="opacity-25 text-neutral-200"
+													cx="12"
+													cy="12"
+													r="10"
+													stroke="currentColor"
+													strokeWidth="4"
+												></circle>
+												<path
+													className="opacity-75 text-primary"
+													fill="currentColor"
+													d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+												></path>
+											</svg>
+											<span>
+												{getRandomEmoji()} Loading....
+											</span>
+										</>
+									)}
+								</div>
+							</motion.div>
+						)}
+					</AnimatePresence>
 				</div>
 			</div>
 
@@ -198,8 +401,10 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 					<div className="rounded-full border border-white/60 py-2 px-4 items-center gap-4 hidden md:flex">
 						<button
 							onClick={() =>
-								setPageScale((scale) =>
-									scale <= 50 ? 50 : scale - 10,
+								setChapterPageScale(
+									chapterPageScale <= 25
+										? 50
+										: chapterPageScale - 10,
 								)
 							}
 						>
@@ -207,13 +412,15 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						</button>
 
 						<span className="text-sm text-white/60">
-							{pageScale}%
+							{chapterPageScale}%
 						</span>
 
 						<button
 							onClick={() =>
-								setPageScale((scale) =>
-									scale >= 200 ? 200 : scale + 10,
+								setChapterPageScale(
+									chapterPageScale >= 300
+										? 200
+										: chapterPageScale + 10,
 								)
 							}
 						>
@@ -223,24 +430,30 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 					<div className="flex items-center gap-4">
 						<span className="text-white/60 whitespace-nowrap">
-							{progress} / {chapter.pages.length}
+							{currentChapterProgress} /{" "}
+							{currentChapter.pages?.length}
 						</span>
 						<Slider.Root
 							onValueChange={(value) => {
 								const [progress] = value;
 								if (document)
 									document
-										.getElementById(`pg-` + progress)
+										.getElementById(
+											`pg-${currentChapter.slug}[]` +
+												progress,
+										)
 										?.scrollIntoView();
-								setProgress(progress);
+								setCurrentChapterProgress(progress);
 							}}
-							value={[progress]}
-							className="relative flex items-center w-full md:w-96 touch-action"
-							max={chapter.pages.length}
+							value={[currentChapterProgress]}
+							className={`relative flex items-center w-full md:w-96 touch-action ${
+								chapterPageNavigationMode === "scroll" && "my-4"
+							}`}
+							max={currentChapter.pages?.length}
 							defaultValue={[1]}
 							min={1}
 							step={1}
-							aria-label="Volume"
+							aria-label="Page"
 						>
 							<Slider.Track className="bg-white/40 relative flex-grow rounded h-0.5">
 								<Slider.Range className="absolute h-full " />
@@ -248,62 +461,82 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							<Slider.Thumb className="block bg-primary hover:bg-primary-hover active:bg-primary-active w-2 h-4 " />
 						</Slider.Root>
 
-						<div className="flex items-center gap-2">
-							{chapter.prevSlug && (
-								<Link
-									href={`/titles/${chapter.source}/${
-										manga.slug
-									}/chapter?id=${encodeURIComponent(
-										chapter.prevSlug!,
-									)}`}
-								>
-									<a
-										className={`flex items-center gap-2 hover:bg-white/25 rounded-md p-2`}
-										href={`/titles/${chapter.source}/${
+						{chapterPageNavigationMode !== "scroll" && (
+							<div className="flex items-center gap-2">
+								{currentChapter.prevSlug && (
+									<Link
+										href={`/titles/${
+											currentChapter.source
+										}/${
 											manga.slug
 										}/chapter?id=${encodeURIComponent(
-											chapter.prevSlug,
+											currentChapter.prevSlug!,
 										)}`}
 									>
-										<ChevronLeftIcon className="h-5 w-5"></ChevronLeftIcon>
-										<span className="hidden md:block">
-											Previous
-										</span>
-									</a>
-								</Link>
-							)}
+										<a
+											className={`flex items-center gap-2 hover:bg-white/25 rounded-md p-2`}
+											href={`/titles/${
+												currentChapter.source
+											}/${
+												manga.slug
+											}/chapter?id=${encodeURIComponent(
+												currentChapter.prevSlug,
+											)}`}
+										>
+											<ChevronLeftIcon className="h-5 w-5"></ChevronLeftIcon>
+											<span className="hidden md:block">
+												Previous
+											</span>
+										</a>
+									</Link>
+								)}
 
-							{chapter.nextSlug && (
-								<Link
-									href={`/titles/${chapter.source}/${
-										manga.slug
-									}/chapter?id=${encodeURIComponent(
-										chapter.nextSlug!,
-									)}`}
-								>
-									<a
-										className="flex items-center gap-2 hover:bg-white/25 rounded-md p-2 disabled:opacity-50"
-										href={`/titles/${chapter.source}/${
+								{currentChapter.nextSlug && (
+									<Link
+										href={`/titles/${
+											currentChapter.source
+										}/${
 											manga.slug
 										}/chapter?id=${encodeURIComponent(
-											chapter.prevSlug!,
+											currentChapter.nextSlug!,
 										)}`}
 									>
-										<span className="hidden md:block">
-											Next
-										</span>
-										<ChevronRightIcon className="h-5 w-5"></ChevronRightIcon>
-									</a>
-								</Link>
-							)}
-						</div>
+										<a
+											className="flex items-center gap-2 hover:bg-white/25 rounded-md p-2 disabled:opacity-50"
+											href={`/titles/${
+												currentChapter.source
+											}/${
+												manga.slug
+											}/chapter?id=${encodeURIComponent(
+												currentChapter.prevSlug!,
+											)}`}
+										>
+											<span className="hidden md:block">
+												Next
+											</span>
+											<ChevronRightIcon className="h-5 w-5"></ChevronRightIcon>
+										</a>
+									</Link>
+								)}
+							</div>
+						)}
 					</div>
 
-					<div className="self-center">
+					<div className="self-center flex gap-4 items-center">
 						<ChapterPageSettingsMenu
-							setQuality={setQuality}
-							quality={quality || "raw"}
+							setQuality={setChapterPageQuality}
+							quality={chapterPageQuality || "raw"}
+							chapterNavigationMode={
+								chapterPageNavigationMode || "scroll"
+							}
+							setChapterNavigationMode={
+								setChapterPageNavigationMode
+							}
 						></ChapterPageSettingsMenu>
+						{/*<ChapterPageChaptersMenu
+							chapters={manga.chapters}
+						></ChapterPageChaptersMenu>*/}
+						
 					</div>
 				</div>
 			</div>
@@ -319,6 +552,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 	const { id } = query as { [index: string]: string };
 
 	console.log(source, mangaSlug, id);
+
+	/*
+
+	*/
 
 	const { data } = await client.query({
 		query: gql`
@@ -336,7 +573,12 @@ export const getServerSideProps: GetServerSideProps = async ({
 					nextSlug
 					prevSlug
 					pages
-					otherChapters {
+					source
+				}
+				manga(mangaUniqueInput: $mangaUniqueInput) {
+					slug
+					title
+					chapters {
 						url
 						slug
 						mangaSlug
@@ -348,11 +590,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 						pages
 						source
 					}
-					source
-				}
-				manga(mangaUniqueInput: $mangaUniqueInput) {
-					slug
-					title
 				}
 			}
 		`,

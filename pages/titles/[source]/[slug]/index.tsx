@@ -25,6 +25,7 @@ import * as Select from "@radix-ui/react-select";
 import { Chapter } from "../../../../typings/chapter";
 
 import { sourcesData } from "../../../../utils/sourcesData";
+import { useChapterPageStore } from "../../../../store";
 
 export interface Character {
 	role: "MAIN" | "SUPPORTING" | "BACKGROUND";
@@ -203,8 +204,11 @@ const breakpoints = {
 };
 
 const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
+	const { resetState } = useChapterPageStore();
+
 	const [width, setWidth] = useState(0);
 	useEffect(() => {
+		resetState();
 		setWidth(window.innerWidth);
 		window.addEventListener("resize", () => setWidth(window.innerWidth));
 		return () =>

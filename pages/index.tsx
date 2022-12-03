@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { Manga } from "../typings/manga";
 import { gql } from "@apollo/client";
@@ -60,8 +60,8 @@ const Home: NextPage<HomePageProps> = ({
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-	let { source } = query;
+export const getStaticProps: GetStaticProps = async ({}) => {
+	let { source } = { source: "ARES" };
 
 	console.log(source);
 
@@ -123,6 +123,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 			popularMangaList: data.popularManga,
 			recentlyAddedMangaList: data.recentlyAddedManga,
 		},
+
+		revalidate: 900,
 	};
 };
 

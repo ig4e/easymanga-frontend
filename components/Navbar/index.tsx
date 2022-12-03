@@ -16,7 +16,7 @@ function Navbar({ navClass }: {navClass?: string}) {
 
 	return (
 		<>
-			<div className={`${navClass} h-12 md:h-14 `}>
+			<div className={`${navClass} h-12 md:h-14`}>
 				<nav className={`bg-base backdrop-blur-md my-0 py-2.5 md:shadow-md fixed w-screen h-12 md:h-14 z-50`}>
 					<div className="flex items-center justify-between container h-full w-full">
 						<div className="flex items-center space-x-16">

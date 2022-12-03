@@ -14,6 +14,12 @@ import { sourcesData } from "../../utils/sourcesData";
 
 function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 	const source = sourcesData[manga.source];
+	const Wrapper = ({ children }: any) =>
+		mobile ? (
+			<div>{children}</div>
+		) : (
+			<Tooltip.Trigger>{children}</Tooltip.Trigger>
+		);
 
 	return (
 		<AnimatePresence>
@@ -21,7 +27,7 @@ function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 				<Tooltip.Root>
 					<Link href={`/titles/${manga.source}/${manga.slug}`}>
 						<a href={`/titles/${manga.source}/${manga.slug}`}>
-							<Tooltip.Trigger>
+							<Wrapper>
 								<div
 									className={`${
 										mobile
@@ -37,7 +43,7 @@ function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 										className="rounded-md w-full h-full object-cover"
 									></Image>
 								</div>
-							</Tooltip.Trigger>
+							</Wrapper>
 							<h1
 								title={manga.title}
 								className="text-left text-sm font-medium line-clamp-2"

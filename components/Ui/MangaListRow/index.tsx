@@ -53,9 +53,11 @@ function MangaListRow({
 				spaceBetween={10}
 				speed={500}
 				freeMode={true}
+				longSwipesRatio={0.2}
+				slidesPerView={"auto"}
+				slideToClickedSlide={false}
 				breakpoints={{
 					0: {
-						longSwipesRatio: 0.2,
 						slidesPerView: 2.7,
 					},
 					520: {
