@@ -7,8 +7,8 @@ export const client = new ApolloClient({
 		process.env.NODE_ENV === "development"
 			? useDevServer
 				? "http://localhost:3000/graphql"
-				: "https://fr.emanga.tk/graphql"
-			: "https://fr.emanga.tk/graphql", //"https://api.emanga.tk/graphql",
+				: "https://us.emanga.tk/graphql"
+			: "https://us.emanga.tk/graphql", //"https://api.emanga.tk/graphql",
 	cache: new InMemoryCache(),
 });
 
