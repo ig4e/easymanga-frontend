@@ -215,7 +215,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 			window.removeEventListener("resize", () =>
 				setWidth(window.innerWidth),
 			);
-	}, []);
+	}, [manga]);
 
 	const chapterRageData = useMemo(() => {
 		let lastValue = 0;
@@ -239,6 +239,13 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 			.slice(chapterRange.from, chapterRange.to)
 			.reverse(),
 	);
+        
+       useEffect (() => {
+         setDisplayedChapters([...manga.chapters!]
+			.reverse()
+			.slice(chapterRange.from, chapterRange.to)
+			.reverse())
+       }, [manga]);
 
 	const [searchQuery, setSearchQuery] = useState("");
 	const [chapterRangeSelectOpen, setChapterRangeSelectOpen] = useState(false);
