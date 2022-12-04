@@ -305,7 +305,7 @@ function SearchBar() {
 																								(
 																									manga,
 																								) => {
-																									return (<Dialog.Close key={
+																									return (<Dialog.Close onClick={() => setOpen(false)} key={
 																												source +
 																												"-result-" +
 																												manga.slug
