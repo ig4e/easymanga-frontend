@@ -368,8 +368,8 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						<button
 							onClick={() =>
 								setChapterPageScale(
-									chapterPageScale <= 25
-										? 25
+									chapterPageScale <= 20
+										? 20
 										: chapterPageScale - 10,
 								)
 							}
