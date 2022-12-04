@@ -33,21 +33,7 @@ interface TitlesPageProps {
 	genres: Genre[];
 }
 
-const sources = [
-	"ARES",
-	"GALAXYMANGA",
-	"MANGALEK",
-	"MANGASPARK",
-	"AZORA",
-	"MANGASWAT",
-	//"MANGAAE",
-	"OZULSCANS",
-	"TEAMX",
-	"STKISSMANGA",
-	"KISSMANGA",
-	"MANGAPROTM",
-	"ARENASCANS",
-];
+const sources = Object.keys(sourcesData);
 
 const MANGA_LIST_WITH_GENRES = gql`
 	${MANGA_FIELDS}

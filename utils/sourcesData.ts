@@ -20,7 +20,7 @@ export const sourcesData = {
 	AZORA: { name: "Manga Azora (AR)", image: AzoraLogo },
 	MANGASWAT: { name: "Manga Swat (AR)", image: MangaSwatLogo },
 	OZULSCANS: { name: "Ozul Scans (AR)", image: OuzlScansLogo },
-	MANGAAE: { name: "Manga Ae (AR)", image: ArenaScansLogo },
+	//MANGAAE: { name: "Manga Ae (AR)", image: ArenaScansLogo },
 	MANGALEK: { name: "MangaLek (AR)", image: MangaLekLogo },
 	MANGASPARK: { name: "Manga Spark (AR)", image: MangaSparkLogo },
 	ANILIST: { name: "AniList (EN)", image: AnilistLogo },
