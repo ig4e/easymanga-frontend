@@ -28,9 +28,6 @@ const Home: NextPage<HomePageProps> = ({
 			<div className="my-4 mb-16 md:my-12 space-y-4">
 				<Head>
 					<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
-					<link rel="manifest" href="/manifest.json" />
-					<link rel="apple-touch-icon" href="/logo.png"></link>
-					<meta name="theme-color" content="#FFFFFF" />
 				</Head>
 
 				<div className="flex flex-col">

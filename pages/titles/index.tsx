@@ -114,8 +114,6 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 				<div>
 					<Head>
 						<title>Manga List</title>
-						<link rel="manifest" href="/manifest.json" />
-						<meta name="theme-color" content="#FFFFFF" />
 					</Head>
 				</div>
 
