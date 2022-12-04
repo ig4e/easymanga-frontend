@@ -13,14 +13,15 @@ import ArenaScansLogo from "../public/images/logos/arenascans.png";
 import MangaProTmLogo from "../public/images/logos/mangaprotm.png";
 import MangaSparkLogo from "../public/images/logos/mangaspark.png";
 import TeamXLogo from "../public/images/logos/teamx.png";
+import { StaticImageData } from "next/image";
+import { Sources } from "../typings/enums";
 
-export const sourcesData = {
+export const sourcesData: SourcesData = {
 	ARES: { name: "Ares Manga (AR)", image: AresLogo },
 	GALAXYMANGA: { name: "Galaxy Manga (AR)", image: GalaxyMangaLogo },
 	AZORA: { name: "Manga Azora (AR)", image: AzoraLogo },
 	MANGASWAT: { name: "Manga Swat (AR)", image: MangaSwatLogo },
 	OZULSCANS: { name: "Ozul Scans (AR)", image: OuzlScansLogo },
-	//MANGAAE: { name: "Manga Ae (AR)", image: ArenaScansLogo },
 	MANGALEK: { name: "MangaLek (AR)", image: MangaLekLogo },
 	MANGASPARK: { name: "Manga Spark (AR)", image: MangaSparkLogo },
 	ANILIST: { name: "AniList (EN)", image: AnilistLogo },
@@ -31,5 +32,15 @@ export const sourcesData = {
 	MANGAPROTM: { name: "Manga Pro TM (AR)", image: MangaProTmLogo },
 	ARENASCANS: { name: "Arena Scams (AR)", image: ArenaScansLogo },
 	ASHQ: { name: "3asq (AR)", image: ArenaScansLogo },
-	MANGAKAKALOT: { name: "Mangakakalot (EN)", image: ArenaScansLogo }
+	MANGAKAKALOT: { name: "Mangakakalot (EN)", image: ArenaScansLogo },
 };
+
+
+export type SourcesData = {
+	[key in Sources]: SourceData;
+};
+
+export interface SourceData {
+	name: string;
+	image: StaticImageData;
+}

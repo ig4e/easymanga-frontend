@@ -33,7 +33,9 @@ interface TitlesPageProps {
 	genres: Genre[];
 }
 
-const sources = Object.keys(sourcesData);
+const sources = Object.keys(sourcesData).filter(
+	(x) => !["MANGADEX", "ANILIST"].includes(x),
+);
 
 const MANGA_LIST_WITH_GENRES = gql`
 	${MANGA_FIELDS}

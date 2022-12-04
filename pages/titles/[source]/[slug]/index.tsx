@@ -24,7 +24,7 @@ import Navbar from "../../../../components/Navbar";
 import * as Select from "@radix-ui/react-select";
 import { Chapter } from "../../../../typings/chapter";
 
-import { sourcesData } from "../../../../utils/sourcesData";
+import { SourceData, sourcesData } from "../../../../utils/sourcesData";
 import { useChapterPageStore } from "../../../../store";
 
 export interface Character {
@@ -272,7 +272,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 		}
 	}, [searchQuery, chapterRange]);
 
-	const source = sourcesData[manga.source];
+	const source: SourceData = sourcesData[manga.source];
 
 	return (
 		<>
