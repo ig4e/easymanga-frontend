@@ -1,5 +1,5 @@
 try {
-	const PRECACHE = "precache-v11";
+	const PRECACHE = "precache-v12";
 	const RUNTIME = "runtime";
 
 	// A list of local resources we always want to be cached.
