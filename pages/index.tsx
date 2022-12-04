@@ -29,6 +29,7 @@ const Home: NextPage<HomePageProps> = ({
 				<Head>
 					<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
 					<link rel="manifest" href="/manifest.json" />
+					<link rel="apple-touch-icon" href="/logo.png"></link>
 					<meta name="theme-color" content="#FFFFFF" />
 				</Head>
 
