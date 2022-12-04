@@ -440,7 +440,10 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 													},
 												].map(({ title, value }) => {
 													return (
-														<div className="flex flex-col w-full">
+														<div
+															key={title}
+															className="flex flex-col w-full"
+														>
 															<span>{title}</span>
 															<span className="text-sm text-neutral-200">
 																{value}
