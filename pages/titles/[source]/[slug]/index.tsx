@@ -400,7 +400,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 											)}
 
 										{anilistData && (
-											<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 max-w-[85vw]">
+											<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 max-w-[85vw] md:max-w-[200px]">
 												{[
 													{
 														title: "Format",
