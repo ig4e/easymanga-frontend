@@ -369,7 +369,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 										</a>
 									)}
 
-									<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px]">
+									{anilistData && <div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px]">
 										{anilistData &&
 											anilistData?.characters.edges
 												.length > 0 && (
@@ -453,7 +453,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 												})}
 											</div>
 										)}
-									</div>
+									</div>}
 								</div>
 							</div>
 							<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
