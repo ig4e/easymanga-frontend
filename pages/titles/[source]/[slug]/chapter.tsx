@@ -266,8 +266,8 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 							return (
 								<div
-									id={`${chapter.slug}[]pages`}
-									key={`${chapter.slug}[]pages`}
+									id={`${chapter.slug}[P]pages`}
+									key={`${chapter.slug}[P]pages`}
 									className="relative"
 								>
 									{chapterIndex !== 0 && (
@@ -287,7 +287,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 									{chapter.pages!.map((page, index) => {
 										if (!chapterPageQuality) return null;
-										const pageId = `${chapter.slug}[]${
+										const pageId = `${chapter.slug}[P]${
 											index + 1
 										}`;
 										return (
