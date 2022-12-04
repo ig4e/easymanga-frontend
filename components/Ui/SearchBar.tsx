@@ -309,7 +309,7 @@ function SearchBar() {
 																												source +
 																												"-result-" +
 																												manga.slug
-																											}>
+																											} asChild>
 																										<MangaCard
 																											key={
 																												source +
