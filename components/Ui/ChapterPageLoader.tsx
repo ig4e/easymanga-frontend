@@ -14,6 +14,8 @@ function ChapterPageLoader({
 	quality: Quality;
 }) {
 	const [isLoaded, setIsLoaded] = useState(false);
+	const [isErrored, setIsErrored] = useState(false);
+	const [imgSrc, setImgSrc] = useState("");
 
 	const imgRef = useRef<any>(null);
 	const contRef = useRef<any>(null);
@@ -45,17 +47,20 @@ function ChapterPageLoader({
 		return `/api/requality?url=${encodeURIComponent(src)}&q=${qObj[q]}`;
 	}
 
-	const imgSrc = quality === "raw" ? src : getReQuailtyUrl(src, quality);
+	useEffect(() => {
+		setImgSrc(quality === "raw" ? src : getReQuailtyUrl(src, quality));
+	}, [quality]);
 
 	return (
 		<div
 			id={`pg-` + id}
 			ref={isLoaded ? contRef : undefined}
 			className={`relative w-full select-none ${
-				!isLoaded ? "h-[60rem]" : ""
+				isErrored || !isLoaded ? "h-[60rem]" : ""
 			}`}
 		>
-			{!isLoaded && (
+			{(isErrored || !isLoaded) && <div className="h-[60rem]"></div>}
+			{!isLoaded && !isErrored && (
 				<>
 					<div className="absolute inset-0 backdrop-blur-lg select-none bg-neutral-200/20 flex items-center h-[60rem] justify-center rouned-md animate-pulse"></div>
 					<div className="absolute inset-0 backdrop-blur-lg select-none flex items-center h-[60rem] justify-center rouned-md">
@@ -82,15 +87,46 @@ function ChapterPageLoader({
 					</div>
 				</>
 			)}
-
-			<img
-				ref={imgRef}
-				onLoad={() => setIsLoaded(true)}
-				src={imgSrc}
-				className={`${
-					isLoaded ? "opacity-100" : "opacity-0"
-				} ${src.includes("discordapp") && "h-1"} select-none w-full`}
-			></img>
+			{isErrored && isLoaded && (
+				<>
+					<div className="absolute inset-0 backdrop-blur-lg select-none flex items-center h-[60rem] justify-center z-30">
+						<div className="relative">
+							<button
+								onClick={() => {
+									setImgSrc(src);
+									setIsLoaded(false);
+									setIsErrored(false);
+								}}
+								className="bg-primary py-2 px-4 text-center hover:bg-primary-hover active:bg-primary-active transition z-50 rounded"
+							>
+								Retry To Load
+							</button>
+						</div>
+					</div>
+				</>
+			)}
+			{imgSrc && (
+				<img
+					alt={`Chapter Page ${id}`}
+					ref={imgRef}
+					onLoad={() => {
+						setIsLoaded(true);
+						setIsErrored(false);
+					}}
+					onError={() => {
+						if (!!imgSrc) {
+							setIsErrored(true);
+							setIsLoaded(true);
+						}
+					}}
+					src={imgSrc}
+					className={`${
+						!isErrored || isLoaded ? "opacity-100" : "opacity-0"
+					} ${
+						src.includes("discordapp") && "h-1"
+					} select-none w-full`}
+				/>
+			)}
 		</div>
 	);
 }

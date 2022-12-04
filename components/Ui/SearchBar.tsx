@@ -97,6 +97,8 @@ function SearchBar() {
 			"KISSMANGA",
 			"MANGAPROTM",
 			"ARENASCANS",
+			"ASHQ",
+			"MANGAKAKALOT",
 		];
 
 		const searchQueryGraphql = `   <source>: search(searchInput: { query: $query, source: <source> }) {
@@ -127,6 +129,8 @@ function SearchBar() {
 	const [getSearchResults, { loading, error, data }] =
 		useLazyQuery(queryString);
 
+	const [typing, setTyping] = useState(false);
+
 	const DialogTitle: any = tw(
 		Dialog.Title,
 	)`text-3xl font-medium my-4 flex items-center justify-between`;
@@ -139,7 +143,9 @@ function SearchBar() {
 	)`p-1.5 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15`;
 
 	useEffect(() => {
+		setTyping(true);
 		const searchTimeout = setTimeout(async () => {
+			setTyping(false);
 			if (!searchQuery) return;
 			const { data } = await getSearchResults({
 				variables: { query: searchQuery },
@@ -171,7 +177,7 @@ function SearchBar() {
 								active={open}
 							></SearchBarUi>
 						</div>
-						<MagnifyingGlassIcon className="w-6 h-5 text-neutral-200 stroke-2 md:hidden"></MagnifyingGlassIcon>
+						<MagnifyingGlassIcon className="w-6 h-5 stroke-2 md:hidden"></MagnifyingGlassIcon>
 					</Dialog.Trigger>
 					<AnimatePresence>
 						{open && (
@@ -195,7 +201,7 @@ function SearchBar() {
 													type: "spring",
 													duration: 0.4,
 												}}
-												className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-24 relative"
+												className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-16 relative"
 											>
 												<div className="fixed inset-x-0 bg-base z-50  max-w-7xl mx-auto px-6 pb-4 rounded">
 													<DialogTitle>
@@ -321,7 +327,8 @@ function SearchBar() {
 																				);
 																			},
 																	  )
-																	: searchQuery && (
+																	: searchQuery &&
+																	  !typing && (
 																			<div className="flex items-center justify-center w-full">
 																				<h1 className="text-xl font-semibold">
 																					No

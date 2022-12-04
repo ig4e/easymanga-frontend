@@ -79,7 +79,6 @@ function ChapterPageSettingsMenu({
 										},
 									)}
 								</ToggleGroup.Root>
-
 								<DropdownMenu.Label className="text-lg font-semibold my-3">
 									Chapter Navigation Mode
 								</DropdownMenu.Label>

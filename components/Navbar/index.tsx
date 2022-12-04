@@ -11,13 +11,13 @@ import Logo from "../../public/logo.png";
 import NavLink from "../Ui/NavLink";
 import SearchBar from "../Ui/SearchBar";
 
-function Navbar({ navClass }: {navClass?: string}) {
+function Navbar({ navClass, mode }: {navClass?: string, mode?: "transparent"}) {
 	const location = useRouter();
 
 	return (
 		<>
-			<div className={`${navClass} h-12 md:h-14`}>
-				<nav className={`bg-base backdrop-blur-md my-0 py-2.5 md:shadow-md fixed w-screen h-12 md:h-14 z-50`}>
+			<div className={`${navClass} h-12 md:h-14 ${mode === "transparent" && "h-0"} `}>
+				<nav className={`bg-base backdrop-blur-sm my-0 py-2.5 md:shadow-md fixed w-screen h-12 md:h-14 z-50 ${navClass} ${mode === "transparent" && "bg-black/20 rounded-b-md text-white md:text-neutral md:bg-base"}`}>
 					<div className="flex items-center justify-between container h-full w-full">
 						<div className="flex items-center space-x-16">
 							<Link href={"/"}>

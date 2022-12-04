@@ -241,6 +241,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 	);
 
 	const [searchQuery, setSearchQuery] = useState("");
+	const [chapterRangeSelectOpen, setChapterRangeSelectOpen] = useState(false);
 
 	useEffect(() => {
 		let searchDelay: any;
@@ -275,7 +276,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 
 	return (
 		<>
-			<Navbar navClass="hidden md:block"></Navbar>
+			<Navbar navClass="" mode="transparent"></Navbar>
 
 			<div>
 				<Head>
@@ -285,7 +286,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 				</Head>
 
 				<div>
-					<div className="relative w-full h-60">
+					<div className="relative w-full h-[16.6rem]">
 						<Image
 							className="w-full -z-20"
 							src={
@@ -295,12 +296,12 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 							}
 							layout="fill"
 							objectFit="cover"
-							objectPosition="center"
+							objectPosition={"left"}
 						></Image>
 						<div
 							className={`absolute bg-black/25 inset-0 ${
 								anilistData?.bannerImage
-									? "backdrop-blur-sm"
+									? "backdrop-blur-[2px]"
 									: "backdrop-blur"
 							}  -z-10`}
 						></div>
@@ -325,7 +326,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 													></Image>
 												</div>
 											</ShowImageModal>
-											<h1 className="text-2xl font-bold text-white z-50 md:hidden">
+											<h1 className="text-lg md:text-2xl font-bold text-white z-50 md:hidden">
 												{manga.title}
 											</h1>
 										</div>
@@ -490,7 +491,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 											</button>*/}
 									</div>
 									<div className="bg-base-100 p-3 rounded-md space-y-4">
-										<div className="flex items-center gap-4">
+										<div className="flex items-center gap-2 md:gap-4">
 											<input
 												className={`bg-base h-10 w-full pr-2 pl-4 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
 												type="text"
@@ -503,6 +504,22 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 											/>
 
 											<Select.Root
+												open={chapterRangeSelectOpen}
+												onOpenChange={(open) => {
+													if (open) {
+														setChapterRangeSelectOpen(
+															open,
+														);
+													} else {
+														setTimeout(
+															() =>
+																setChapterRangeSelectOpen(
+																	open,
+																),
+															100,
+														);
+													}
+												}}
 												onValueChange={(value) => {
 													let [from, to] =
 														value.split("-");
@@ -569,7 +586,12 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 											</Select.Root>
 										</div>
 
-										<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full">
+										<div
+											className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full ${
+												chapterRangeSelectOpen &&
+												"select-none"
+											}`}
+										>
 											{displayedChapters?.map(
 												(chapter: Chapter) => {
 													return (

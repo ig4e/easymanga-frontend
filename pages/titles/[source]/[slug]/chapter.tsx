@@ -32,7 +32,7 @@ import SmolImg from "../../../../public/images/smol.png";
 import ChapterPageChaptersMenu from "../../../../components/Ui/ChapterPageChaptersMenu";
 
 interface IPageProps {
-	manga: { title: string; slug: string, chapters: Chapter[] };
+	manga: { title: string; slug: string; chapters: Chapter[] };
 	chapter: Chapter;
 }
 const breakpoints = {
@@ -85,7 +85,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 	useEffect(() => {
 		console.log(currentChapter.slug);
-		const [chapterSlug, pageNumber] = currentPageId.split("[]");
+		const [chapterSlug, pageNumber] = currentPageId.split("[P]");
 		if (currentChapter && chapterSlug) {
 			const pageNumberNumber = Number(pageNumber);
 			setCurrentChapterProgress(pageNumberNumber);
@@ -169,7 +169,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 	}, [chapter.slug]);
 
 	return (
-		<div className="bg-[#212121] text-white min-h-screen">
+		<div className="bg-[#212121] text-white min-h-screen ">
 			<div
 				className={`bg-black/70 h-12 fixed top-0 inset-x-0 z-50 ${
 					showBars
@@ -177,8 +177,11 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						: "-translate-y-24 pointer-events-none opacity-0"
 				} transition duration-500 ease-in-out`}
 			>
-				<div className="flex items-center justify-between container h-full w-full">
-					<Link href={"/"}>
+				<div className="flex items-center container h-full w-full">
+					<Link
+						href={"/"}
+						className="mr-auto flex-1 flex justify-center"
+					>
 						<a
 							href={"/"}
 							className="items-center space-x-2 hidden md:flex"
@@ -195,43 +198,52 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						</a>
 					</Link>
 
-					<div className="flex items-center gap-2">
-						<Link
-							href={`/titles/${currentChapter.source}/${manga.slug}`}
-						>
-							<div className="p-1 hover:bg-white/25 rounded-md">
-								<ArrowUturnLeftIcon className="h-6 w-6 md:hidden"></ArrowUturnLeftIcon>
-							</div>
-						</Link>
-						<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2 text-start">
+					<div className="flex-1 flex md:justify-center">
+						<div className="flex items-center gap-2 self-center justify-self-center ">
 							<Link
 								href={`/titles/${currentChapter.source}/${manga.slug}`}
 							>
-								<button className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none overflow-hidden whitespace-nowrap text-ellipsis">
-									{manga.title}
-								</button>
+								<div className="p-1 hover:bg-white/25 rounded-md">
+									<ArrowUturnLeftIcon className="h-6 w-6 md:hidden"></ArrowUturnLeftIcon>
+								</div>
 							</Link>
-							<ChevronRightIcon className="h-3 w-3 stroke-1.5 hidden md:block"></ChevronRightIcon>
-							<Link
-								href={`/titles/${currentChapter.source}/${
-									currentChapter.mangaSlug
-								}/chapter?id=${encodeURIComponent(
-									currentChapter.slug!,
-								)}`}
-							>
-								<button className="text-xs text-white/60 md:text-white/60 md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded select-none overflow-hidden whitespace-nowrap text-ellipsis">
-									{currentChapter.name}
-								</button>
-							</Link>
+							<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2 text-start">
+								<Link
+									href={`/titles/${currentChapter.source}/${manga.slug}`}
+								>
+									<button className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
+										{manga.title}
+									</button>
+								</Link>
+								<ChevronRightIcon className="h-3 w-3 stroke-1.5 hidden md:block"></ChevronRightIcon>
+								<Link
+									href={`/titles/${currentChapter.source}/${
+										currentChapter.mangaSlug
+									}/chapter?id=${encodeURIComponent(
+										currentChapter.slug!,
+									)}`}
+								>
+									<button className="text-xs text-white/60 md:text-white/60 md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
+										{currentChapter.name}
+									</button>
+								</Link>
+							</div>
 						</div>
 					</div>
 
-					<ArrowUturnLeftIcon className="h-6 w-6 hidden md:block"></ArrowUturnLeftIcon>
+					<Link
+						href={`/titles/${currentChapter.source}/${manga.slug}`}
+						className="ml-auto flex-1 flex justify-center"
+					>
+						<button className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
+							<ArrowUturnLeftIcon className="h-6 w-6 hidden md:block"></ArrowUturnLeftIcon>
+						</button>
+					</Link>
 				</div>
 			</div>
 
 			<div
-				className="fixed inset-0  z-20"
+				className="fixed inset-0 z-20"
 				onClick={() => setShowBars((state) => !state)}
 			/>
 
@@ -254,18 +266,19 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 							return (
 								<div
+									id={`${chapter.slug}[]pages`}
 									key={`${chapter.slug}[]pages`}
 									className="relative"
 								>
 									{chapterIndex !== 0 && (
 										<div className="py-4 flex flex-col items-center justify-center gap-2">
 											<div className="flex flex-col items-start gap-2">
-												<span>
+												<span className=" text-ellipsis">
 													Previous:{" "}
 													{lastChapter?.name}
 												</span>
 												<ChevronDownIcon className="w-5 h-5 self-center"></ChevronDownIcon>
-												<span>
+												<span className=" text-ellipsis">
 													Next: {chapter?.name}
 												</span>
 											</div>
@@ -301,7 +314,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 								exit={{ scale: 0 }}
 								className="flex justify-center py-4"
 							>
-								<div className="flex items-center gap-4 text-sm">
+								<div className="flex items-center gap-4 text-sm ">
 									{!currentChapter.nextSlug ? (
 										<>
 											<span>
@@ -312,7 +325,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 									) : (
 										<>
 											<svg
-												className="animate-spin w-10 h-10"
+												className="animate-spin w-8 h-8"
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"
 												viewBox="0 0 24 24"
@@ -356,7 +369,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							onClick={() =>
 								setChapterPageScale(
 									chapterPageScale <= 25
-										? 50
+										? 25
 										: chapterPageScale - 10,
 								)
 							}
@@ -371,7 +384,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						<button
 							onClick={() =>
 								setChapterPageScale(
-									chapterPageScale >= 300
+									chapterPageScale >= 200
 										? 200
 										: chapterPageScale + 10,
 								)
@@ -392,7 +405,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 								if (document)
 									document
 										.getElementById(
-											`pg-${currentChapter.slug}[]` +
+											`pg-${currentChapter.slug}[P]` +
 												progress,
 										)
 										?.scrollIntoView();
@@ -414,7 +427,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							<Slider.Thumb className="block bg-primary hover:bg-primary-hover active:bg-primary-active w-2 h-4 " />
 						</Slider.Root>
 
-						{chapterPageNavigationMode !== "scroll" && (
+						{(typeof window !== "undefined"
+							? chapterPageNavigationMode
+							: "buttons") === "buttons" && (
 							<div className="flex items-center gap-2">
 								{currentChapter.prevSlug && (
 									<Link
@@ -426,21 +441,14 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 											currentChapter.prevSlug!,
 										)}`}
 									>
-										<a
+										<div
 											className={`flex items-center gap-2 hover:bg-white/25 rounded-md p-2`}
-											href={`/titles/${
-												currentChapter.source
-											}/${
-												manga.slug
-											}/chapter?id=${encodeURIComponent(
-												currentChapter.prevSlug,
-											)}`}
 										>
 											<ChevronLeftIcon className="h-5 w-5"></ChevronLeftIcon>
 											<span className="hidden md:block">
 												Previous
 											</span>
-										</a>
+										</div>
 									</Link>
 								)}
 
@@ -453,22 +461,16 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 										}/chapter?id=${encodeURIComponent(
 											currentChapter.nextSlug!,
 										)}`}
+										className="flex items-center gap-2 hover:bg-white/25 rounded-md p-2 disabled:opacity-50"
 									>
-										<a
-											className="flex items-center gap-2 hover:bg-white/25 rounded-md p-2 disabled:opacity-50"
-											href={`/titles/${
-												currentChapter.source
-											}/${
-												manga.slug
-											}/chapter?id=${encodeURIComponent(
-												currentChapter.prevSlug!,
-											)}`}
+										<div
+											className={`flex items-center gap-2 hover:bg-white/25 rounded-md p-2`}
 										>
 											<span className="hidden md:block">
 												Next
 											</span>
 											<ChevronRightIcon className="h-5 w-5"></ChevronRightIcon>
-										</a>
+										</div>
 									</Link>
 								)}
 							</div>
@@ -489,7 +491,6 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 						{/*<ChapterPageChaptersMenu
 							chapters={manga.chapters}
 						></ChapterPageChaptersMenu>*/}
-						
 					</div>
 				</div>
 			</div>
