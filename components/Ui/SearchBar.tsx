@@ -305,7 +305,7 @@ function SearchBar() {
 																								(
 																									manga,
 																								) => {
-																									return (
+																									return (<Dialog.Close>
 																										<MangaCard
 																											key={
 																												source +
@@ -318,7 +318,7 @@ function SearchBar() {
 																											mobile={
 																												true
 																											}
-																										></MangaCard>
+																										></MangaCard></Dialog.Close>
 																									);
 																								},
 																							)}
