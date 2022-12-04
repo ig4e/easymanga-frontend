@@ -369,10 +369,10 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 										</a>
 									)}
 
-									{anilistData &&
-										anilistData?.characters.edges.length >
-											0 && (
-											<div className="bg-base-100 border p-2 rounded-md">
+									<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse">
+										{anilistData &&
+											anilistData?.characters.edges
+												.length > 0 && (
 												<div className="flex md:grid md:grid-flow-row md:grid-cols-2 gap-1.5">
 													{anilistData?.characters.edges
 														.slice(
@@ -397,8 +397,60 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 															></CharacterCard>
 														))}
 												</div>
+											)}
+
+										{anilistData && (
+											<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 max-w-[85vw]">
+												{[
+													{
+														title: "Format",
+														value: `${anilistData.format} (${anilistData.countryOfOrigin})`,
+													},
+													{
+														title: "Status",
+														value: `${anilistData.status}`,
+													},
+													{
+														title: "Start Year",
+														value: `${anilistData.startDate.year}`,
+													},
+													{
+														title: "Average Score",
+														value: `${anilistData.averageScore}`,
+													},
+													{
+														title: "Source",
+														value: `${anilistData.source}`,
+													},
+													{
+														title: "Title (Romaji)",
+														value: `${anilistData.title.romaji}`,
+													},
+													{
+														title: "Title (English)",
+														value: `${anilistData.title.english}`,
+													},
+													{
+														title: "Title (Native)",
+														value: `${anilistData.title.native}`,
+													},
+													{
+														title: "Title Synonyms",
+														value: `${anilistData.synonyms}`,
+													},
+												].map(({ title, value }) => {
+													return (
+														<div className="flex flex-col w-full">
+															<span>{title}</span>
+															<span className="text-sm text-neutral-200">
+																{value}
+															</span>
+														</div>
+													);
+												})}
 											</div>
 										)}
+									</div>
 								</div>
 							</div>
 							<div className="py-4 -translate-y-40 md:translate-y-0 w-full">

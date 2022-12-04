@@ -20,7 +20,7 @@ export const sourcesData = {
 	AZORA: { name: "Manga Azora (AR)", image: AzoraLogo },
 	MANGASWAT: { name: "Manga Swat (AR)", image: MangaSwatLogo },
 	OZULSCANS: { name: "Ozul Scans (AR)", image: OuzlScansLogo },
-	MANGAAE: { name: "Manga Ae (AR)", image: undefined },
+	MANGAAE: { name: "Manga Ae (AR)", image: ArenaScansLogo },
 	MANGALEK: { name: "MangaLek (AR)", image: MangaLekLogo },
 	MANGASPARK: { name: "Manga Spark (AR)", image: MangaSparkLogo },
 	ANILIST: { name: "AniList (EN)", image: AnilistLogo },
@@ -30,6 +30,6 @@ export const sourcesData = {
 	KISSMANGA: { name: "Kiss Manga (EN)", image: KissMangaLogo },
 	MANGAPROTM: { name: "Manga Pro TM (AR)", image: MangaProTmLogo },
 	ARENASCANS: { name: "Arena Scams (AR)", image: ArenaScansLogo },
-	ASHQ: { name: "3asq (AR)", image: undefined },
-	MANGAKAKALOT: { name: "Mangakakalot (EN)", image: undefined }
+	ASHQ: { name: "3asq (AR)", image: ArenaScansLogo },
+	MANGAKAKALOT: { name: "Mangakakalot (EN)", image: ArenaScansLogo }
 };
