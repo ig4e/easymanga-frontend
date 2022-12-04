@@ -416,7 +416,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 													},
 													{
 														title: "Average Score",
-														value: `${anilistData.averageScore}`,
+														value: `${anilistData.averageScore / 10}`,
 													},
 													{
 														title: "Source",
