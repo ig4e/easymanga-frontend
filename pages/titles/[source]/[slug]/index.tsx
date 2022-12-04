@@ -369,7 +369,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 										</a>
 									)}
 
-									<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse">
+									<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse md:max-w-[200px]">
 										{anilistData &&
 											anilistData?.characters.edges
 												.length > 0 && (
@@ -400,7 +400,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 											)}
 
 										{anilistData && (
-											<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 md:pb-2 max-w-[85vw] md:max-w-[200px]">
+											<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 md:pb-2 max-w-[85vw]">
 												{[
 													{
 														title: "Format",
