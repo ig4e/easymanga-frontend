@@ -345,7 +345,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 												></path>
 											</svg>
 											<span>
-												{getRandomEmoji()} Loading....
+ Loading....
 											</span>
 										</>
 									)}
