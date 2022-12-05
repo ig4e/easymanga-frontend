@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 	try {
 		convert = await sharp(data)
-			.webp({ quality: Number(q) || 100, effort: 2 })
+			.webp({ quality: Number(q) || 100, effort: 0 })
 			.toBuffer();
 	} catch {
 		convert = data;
