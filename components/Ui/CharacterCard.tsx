@@ -20,7 +20,7 @@ function CharacterCard({ character }: { character: Character }) {
 					layout="fill"
 					objectFit="cover"
 				></Image>
-				<div className="absolute flex bottom-2 inset-x-2">
+				<div className="absolute flex bottom-1 inset-x-2">
 					<span className="p-0.5 px-1 rounded-md text-center text-[0.65rem] flex items-center justify-center md:text-xs w-full bg-base">
 						{character.role
 							.replace(/./g, (str) => str.toLocaleLowerCase())

@@ -30,6 +30,7 @@ import { getRandomEmoji } from "../../../../utils/getRandomEmoji";
 
 import SmolImg from "../../../../public/images/smol.png";
 import ChapterPageChaptersMenu from "../../../../components/Ui/ChapterPageChaptersMenu";
+import Head from "next/head";
 
 interface IPageProps {
 	manga: { title: string; slug: string; chapters: Chapter[] };
@@ -170,6 +171,17 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 	return (
 		<div className="bg-[#212121] text-white min-h-screen ">
+			<Head>
+				<title>
+					{manga.title} Chapter {chapter.name} - Easy Manga
+				</title>
+				<meta property="og:title" content={manga.title} />
+				<meta
+					property="og:description"
+					content={`${manga.title} Chapter ${chapter.name}`}
+				/>
+				<meta property="og:image" content={chapter?.pages?.[0]} />
+			</Head>
 			<div
 				className={`bg-black/70 h-12 fixed top-0 inset-x-0 z-50 ${
 					showBars
@@ -189,7 +201,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							<div className="h-8 w-8 rounded-md">
 								<Image
 									className="rounded-md"
-									src={Logo}
+									src={"/assets/logo-128x128.png"}
+									width={128}
+									height={128}
 								></Image>
 							</div>
 							<h1 className="font-semibold text-lg mt-1">
@@ -344,9 +358,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 													d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 												></path>
 											</svg>
-											<span>
- Loading....
-											</span>
+											<span>Loading....</span>
 										</>
 									)}
 								</div>
@@ -513,10 +525,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	const { data } = await client.query({
 		query: gql`
-			query Chapter(
-				$chapterUniqueInput: ChapterUniqueInput!
-				$mangaUniqueInput: MangaUniqueInput!
-			) {
+			query Chapter($chapterUniqueInput: ChapterUniqueInput!) {
 				chapter(chapterUniqueInput: $chapterUniqueInput) {
 					url
 					slug
@@ -529,6 +538,19 @@ export const getServerSideProps: GetServerSideProps = async ({
 					pages
 					source
 				}
+			}
+		`,
+		variables: {
+			chapterUniqueInput: {
+				source: source,
+				slug: id,
+			},
+		},
+	});
+
+	const { data: mangaData } = await client.query({
+		query: gql`
+			query Manga($mangaUniqueInput: MangaUniqueInput!) {
 				manga(mangaUniqueInput: $mangaUniqueInput) {
 					slug
 					title
@@ -548,10 +570,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 			}
 		`,
 		variables: {
-			chapterUniqueInput: {
-				source: source,
-				slug: id,
-			},
 			mangaUniqueInput: {
 				source: source,
 				slug: mangaSlug,
@@ -562,7 +580,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	return {
 		props: {
 			chapter: data.chapter,
-			manga: data.manga,
+			manga: mangaData.manga,
 		},
 	};
 };

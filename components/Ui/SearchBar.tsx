@@ -305,24 +305,34 @@ function SearchBar() {
 																								(
 																									manga,
 																								) => {
-																									return (<Dialog.Close onClick={() => setOpen(false)} key={
-																												source +
-																												"-result-" +
-																												manga.slug
-																											} asChild>
-																										<MangaCard
+																									return (
+																										<Dialog.Close
 																											key={
 																												source +
 																												"-result-" +
 																												manga.slug
 																											}
-																											manga={
-																												manga
-																											}
-																											mobile={
-																												true
-																											}
-																										></MangaCard></Dialog.Close>
+																											asChild
+																										>
+																											<MangaCard
+																												onClick={() => {
+																													console.log(
+																														"close please!!",
+																													);
+																												}}
+																												key={
+																													source +
+																													"-result-" +
+																													manga.slug
+																												}
+																												manga={
+																													manga
+																												}
+																												mobile={
+																													true
+																												}
+																											></MangaCard>
+																										</Dialog.Close>
 																									);
 																								},
 																							)}

@@ -12,7 +12,15 @@ import ExternalSite from "./ExternalSite";
 import { AnimatePresence, motion } from "framer-motion";
 import { sourcesData } from "../../utils/sourcesData";
 
-function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
+function MangaCard({
+	manga,
+	mobile,
+	onClick,
+}: {
+	manga: Manga;
+	mobile: boolean;
+	onClick?: any;
+}) {
 	const source = sourcesData[manga.source];
 	const Wrapper = ({ children }: any) =>
 		mobile ? (
@@ -25,8 +33,8 @@ function MangaCard({ manga, mobile }: { manga: Manga; mobile: boolean }) {
 		<AnimatePresence>
 			<Tooltip.Provider delayDuration={350} skipDelayDuration={100}>
 				<Tooltip.Root>
-					<Link href={`/titles/${manga.source}/${manga.slug}`}>
-						<a href={`/titles/${manga.source}/${manga.slug}`}>
+					<Link href={`/titles/${manga.source}/${manga.slug}`} >
+						<a href={`/titles/${manga.source}/${manga.slug}`} onClick={onClick}>
 							<Wrapper>
 								<div
 									className={`${

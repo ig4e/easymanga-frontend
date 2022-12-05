@@ -114,6 +114,18 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 				<div>
 					<Head>
 						<title>Manga List</title>
+						<meta
+							property="og:title"
+							content={`${source} Manga List`}
+						/>
+						<meta
+							property="og:description"
+							content={list.map((x) => x.title).join("\n")}
+						/>
+						<meta
+							property="og:image"
+							content={"/assets/logo-1024x1024.png"}
+						/>
 					</Head>
 				</div>
 
@@ -253,7 +265,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	let { source } = query;
 
-	console.log(source);
+	//console.log(source);
 
 	const { data } = await client.query({
 		query: MANGA_LIST,

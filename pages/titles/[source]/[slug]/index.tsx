@@ -239,13 +239,15 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 			.slice(chapterRange.from, chapterRange.to)
 			.reverse(),
 	);
-        
-       useEffect (() => {
-         setDisplayedChapters([...manga.chapters!]
-			.reverse()
-			.slice(chapterRange.from, chapterRange.to)
-			.reverse())
-       }, [manga]);
+
+	useEffect(() => {
+		setDisplayedChapters(
+			[...manga.chapters!]
+				.reverse()
+				.slice(chapterRange.from, chapterRange.to)
+				.reverse(),
+		);
+	}, [manga]);
 
 	const [searchQuery, setSearchQuery] = useState("");
 	const [chapterRangeSelectOpen, setChapterRangeSelectOpen] = useState(false);
@@ -288,12 +290,16 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 			<div>
 				<Head>
 					<title>{manga.title} Details - Easy Manga</title>
-					<link rel="manifest" href="/manifest.json" />
-					<meta name="theme-color" content="#FFFFFF" />
+					<meta property="og:title" content={manga.title} />
+					<meta property="og:description" content={manga.synopsis} />
+					<meta
+						property="og:image"
+						content={anilistData?.bannerImage || manga.cover}
+					/>
 				</Head>
 
 				<div>
-					<div className="relative w-full h-[16.6rem]">
+					<div className="relative w-full h-[16.8rem]">
 						<Image
 							className="w-full -z-20"
 							src={
@@ -303,7 +309,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 							}
 							layout="fill"
 							objectFit="cover"
-							objectPosition={"left"}
+							objectPosition={"center"}
 						></Image>
 						<div
 							className={`absolute bg-black/25 inset-0 ${
@@ -317,7 +323,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 					</div>
 					<div className="container z-50">
 						<div className="md:flex gap-6">
-							<div className="-translate-y-52 min-w-max">
+							<div className="-translate-y-52 md:-translate-y-60 min-w-max">
 								<div className="flex flex-col gap-4">
 									<div>
 										<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
@@ -376,95 +382,107 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 										</a>
 									)}
 
-									{anilistData && <div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px]">
-										{anilistData &&
-											anilistData?.characters.edges
-												.length > 0 && (
-												<div className="flex md:grid md:grid-flow-row md:grid-cols-2 gap-1.5">
-													{anilistData?.characters.edges
-														.slice(
-															0,
-															width <
-																breakpoints[
-																	"md"
-																]
-																? 4
-																: anilistData
-																		?.characters
-																		.edges
-																		.length,
-														)
-														.map((edge) => (
-															<CharacterCard
-																key={
-																	edge?.node
-																		?.id
-																}
-																character={edge}
-															></CharacterCard>
-														))}
+									{anilistData && (
+										<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px]">
+											{anilistData &&
+												anilistData?.characters.edges
+													.length > 0 && (
+													<div className="flex md:grid md:grid-flow-row md:grid-cols-2 gap-1.5">
+														{anilistData?.characters.edges
+															.slice(
+																0,
+																width <
+																	breakpoints[
+																		"md"
+																	]
+																	? 4
+																	: anilistData
+																			?.characters
+																			.edges
+																			.length,
+															)
+															.map((edge) => (
+																<CharacterCard
+																	key={
+																		edge
+																			?.node
+																			?.id
+																	}
+																	character={
+																		edge
+																	}
+																></CharacterCard>
+															))}
+													</div>
+												)}
+
+											{anilistData && (
+												<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 md:pb-2">
+													{[
+														{
+															title: "Format",
+															value: `${anilistData.format} (${anilistData.countryOfOrigin})`,
+														},
+														{
+															title: "Status",
+															value: `${anilistData.status}`,
+														},
+														{
+															title: "Start Year",
+															value: `${anilistData.startDate.year}`,
+														},
+														{
+															title: "Average Score",
+															value: `${
+																anilistData.averageScore /
+																10
+															}`,
+														},
+														{
+															title: "Source",
+															value: `${anilistData.source}`,
+														},
+														{
+															title: "Title (Romaji)",
+															value: `${anilistData.title.romaji}`,
+														},
+														{
+															title: "Title (English)",
+															value: `${anilistData.title.english}`,
+														},
+														{
+															title: "Title (Native)",
+															value: `${anilistData.title.native}`,
+														},
+														{
+															title: "Title Synonyms",
+															value: `${anilistData.synonyms}`,
+														},
+													].map(
+														({ title, value }) => {
+															return (
+																<div
+																	key={title}
+																	className="flex flex-col w-full"
+																>
+																	<span>
+																		{title}
+																	</span>
+																	<span className="text-sm text-neutral-200">
+																		{value}
+																	</span>
+																</div>
+															);
+														},
+													)}
 												</div>
 											)}
-
-										{anilistData && (
-											<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 md:pb-2">
-												{[
-													{
-														title: "Format",
-														value: `${anilistData.format} (${anilistData.countryOfOrigin})`,
-													},
-													{
-														title: "Status",
-														value: `${anilistData.status}`,
-													},
-													{
-														title: "Start Year",
-														value: `${anilistData.startDate.year}`,
-													},
-													{
-														title: "Average Score",
-														value: `${anilistData.averageScore / 10}`,
-													},
-													{
-														title: "Source",
-														value: `${anilistData.source}`,
-													},
-													{
-														title: "Title (Romaji)",
-														value: `${anilistData.title.romaji}`,
-													},
-													{
-														title: "Title (English)",
-														value: `${anilistData.title.english}`,
-													},
-													{
-														title: "Title (Native)",
-														value: `${anilistData.title.native}`,
-													},
-													{
-														title: "Title Synonyms",
-														value: `${anilistData.synonyms}`,
-													},
-												].map(({ title, value }) => {
-													return (
-														<div
-															key={title}
-															className="flex flex-col w-full"
-														>
-															<span>{title}</span>
-															<span className="text-sm text-neutral-200">
-																{value}
-															</span>
-														</div>
-													);
-												})}
-											</div>
-										)}
-									</div>}
+										</div>
+									)}
 								</div>
 							</div>
 							<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
-								<h1 className="text-4xl font-bold text-white -translate-y-52 hidden md:block">
+								<h1 className="text-4xl font-bold text-white -translate-y-52 md:-translate-y-64 hidden md:block">
 									{manga.title}
 								</h1>
 
@@ -524,7 +542,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 									<div>
 										<span>
 											{manga.synopsis ||
-												"لا يوجد ملخص للأن, نعتذر منكم!"}
+												"لا يوجد ملخص للأن , نعتذر منكم!"}
 										</span>
 									</div>
 								</div>
@@ -713,8 +731,6 @@ export default MangaPage;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 	let { source, slug } = params! as { [index: string]: string };
-
-	console.log(params);
 
 	const { data } = await client.query({
 		query: gql`

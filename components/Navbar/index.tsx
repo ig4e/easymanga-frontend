@@ -7,17 +7,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import Logo from "../../public/logo.png";
 import NavLink from "../Ui/NavLink";
 import SearchBar from "../Ui/SearchBar";
 
-function Navbar({ navClass, mode }: {navClass?: string, mode?: "transparent"}) {
+function Navbar({
+	navClass,
+	mode,
+}: {
+	navClass?: string;
+	mode?: "transparent";
+}) {
 	const location = useRouter();
 
 	return (
 		<>
-			<div className={`${navClass} h-12 md:h-14 ${mode === "transparent" && "h-0"} `}>
-				<nav className={`bg-base backdrop-blur-sm my-0 py-2.5 md:shadow-md fixed w-screen h-12 md:h-14 z-50 ${navClass} ${mode === "transparent" && "bg-black/20 rounded-b-md text-white md:text-neutral md:bg-base"}`}>
+			<div
+				className={`${navClass} h-12 md:h-14 ${
+					mode === "transparent" && "h-0"
+				} `}
+			>
+				<nav
+					className={`bg-base backdrop-blur-sm my-0 py-2.5 md:shadow-md fixed w-screen h-12 md:h-14 z-50 ${navClass} ${
+						mode === "transparent" &&
+						"bg-black/20 rounded-b-md text-white md:text-neutral md:bg-base"
+					}`}
+				>
 					<div className="flex items-center justify-between container h-full w-full">
 						<div className="flex items-center space-x-16">
 							<Link href={"/"}>
@@ -28,7 +42,9 @@ function Navbar({ navClass, mode }: {navClass?: string, mode?: "transparent"}) {
 									<div className="md:h-8 md:w-8 w-6 h-6 rounded-md">
 										<Image
 											className="rounded-md"
-											src={Logo}
+											src={"/assets/logo-128x128.png"}
+											width={128}
+											height={128}
 										></Image>
 									</div>
 									<h1 className="md:font-semibold mt-1 uppercase">
@@ -57,14 +73,26 @@ function Navbar({ navClass, mode }: {navClass?: string, mode?: "transparent"}) {
 					<div className="flex items-center justify-between container">
 						<Link href={"/"}>
 							<button className="flex flex-col items-center w-full py-2 select-none">
-								<HomeIcon className={`h-5 w-5 fill-current ${location.pathname === "/" ? "text-primary" : "text-black/60"}`}></HomeIcon>
+								<HomeIcon
+									className={`h-5 w-5 fill-current ${
+										location.pathname === "/"
+											? "text-primary"
+											: "text-black/60"
+									}`}
+								></HomeIcon>
 								<span className="text-xs ">Home</span>
 							</button>
 						</Link>
 
 						<Link href={"/titles"}>
 							<button className="flex flex-col items-center w-full py-2 select-none">
-								<ListBulletIcon className={`h-5 w-5 fill-current ${location.pathname === "/titles" ? "text-primary" : "text-black/60"}`}></ListBulletIcon>
+								<ListBulletIcon
+									className={`h-5 w-5 fill-current ${
+										location.pathname === "/titles"
+											? "text-primary"
+											: "text-black/60"
+									}`}
+								></ListBulletIcon>
 								<span className="text-xs stroke-2 ">
 									Titles
 								</span>
@@ -73,7 +101,13 @@ function Navbar({ navClass, mode }: {navClass?: string, mode?: "transparent"}) {
 
 						<Link href={"/"}>
 							<button className="flex flex-col items-center w-full py-2 select-none">
-								<ArrowPathRoundedSquareIcon className={`h-5 w-5 ${location.pathname === "/random" ? "text-primary" : "text-black/60"} `}></ArrowPathRoundedSquareIcon>
+								<ArrowPathRoundedSquareIcon
+									className={`h-5 w-5 ${
+										location.pathname === "/random"
+											? "text-primary"
+											: "text-black/60"
+									} `}
+								></ArrowPathRoundedSquareIcon>
 								<span className="text-xs stroke-2 ">
 									Random
 								</span>

@@ -27,7 +27,17 @@ const Home: NextPage<HomePageProps> = ({
 		<PageLayout>
 			<div className="my-4 mb-16 md:my-12 space-y-4">
 				<Head>
-					<title>أفضل وأسهل طريقة لقرائة المانجا - Easy Manga</title>
+					<title>
+						Easiest way to read manga for free! - Easy Manga
+					</title>
+					<meta
+						property="og:title"
+						content={`Easiest way to read manga for free! - Easy Manga`}
+					/>
+					<meta
+						property="og:description"
+						content={`Easiest way to read manga for free! - Easy Manga`}
+					/>
 				</Head>
 
 				<div className="flex flex-col">
@@ -61,7 +71,7 @@ const Home: NextPage<HomePageProps> = ({
 export const getStaticProps: GetStaticProps = async ({}) => {
 	let { source } = { source: "ARES" };
 
-	console.log(source);
+	//console.log(source);
 
 	const { data } = await client.query({
 		query: gql`
