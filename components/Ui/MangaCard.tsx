@@ -58,9 +58,10 @@ function MangaCard({
 							</Wrapper>
 							<h1
 								title={manga.title}
+                                                                dangerouslySetInnerHTML={{ __html: manga.title }}
 								className="text-left text-sm font-medium line-clamp-2"
 							>
-								{manga.title}
+							
 							</h1>
 						</a>
 					</Link>
