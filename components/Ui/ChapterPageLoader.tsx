@@ -50,6 +50,8 @@ function ChapterPageLoader({
 		setImgSrc(quality === "raw" ? src : getReQuailtyUrl(src, quality));
 	}, [quality]);
 
+	const isCompressed = quality !== "raw";
+
 	return (
 		<div
 			id={`pg-` + id}
@@ -116,10 +118,12 @@ function ChapterPageLoader({
 						if (!!imgSrc) {
 							setIsErrored(true);
 							setIsLoaded(true);
-						} else {
-							setImgSrc(src);
-							setIsLoaded(false);
-							setIsErrored(false);
+
+							if (isCompressed) {
+								setImgSrc(src);
+								setIsLoaded(false);
+								setIsErrored(false);
+							}
 						}
 					}}
 					src={imgSrc}
