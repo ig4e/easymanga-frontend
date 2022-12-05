@@ -310,6 +310,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 							layout="fill"
 							objectFit="cover"
 							objectPosition={"center"}
+							alt={manga.title}
 						></Image>
 						<div
 							className={`absolute bg-black/25 inset-0 ${
@@ -336,6 +337,7 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 														width={200}
 														height={280}
 														className="rounded-md object-cover"
+														alt={manga.title}
 													></Image>
 												</div>
 											</ShowImageModal>
@@ -373,6 +375,8 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 												className="rounded-md absolute"
 												layout="fill"
 												objectFit="cover"
+												alt={manga.title}
+
 											></Image>
 											<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
 											<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">

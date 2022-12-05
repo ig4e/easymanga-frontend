@@ -204,6 +204,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 									src={"/assets/logo-128x128.png"}
 									width={128}
 									height={128}
+									alt={"easy manga logo"}
 								></Image>
 							</div>
 							<h1 className="font-semibold text-lg mt-1">

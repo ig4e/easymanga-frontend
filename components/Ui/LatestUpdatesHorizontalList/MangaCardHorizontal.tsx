@@ -23,6 +23,8 @@ function MangaCardHorizontal({ manga }: { manga: Manga }) {
 						width={70}
 						quality={90}
 						className="rounded object-cover z-20"
+						alt={manga.title}
+
 					></Image>
 				</div>
 				<div className="flex flex-col justify-evenly">

@@ -1,4 +1,3 @@
-import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Quality } from "./ChapterPageSettingsMenu";
 

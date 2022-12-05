@@ -33,8 +33,11 @@ function MangaCard({
 		<AnimatePresence>
 			<Tooltip.Provider delayDuration={350} skipDelayDuration={100}>
 				<Tooltip.Root>
-					<Link href={`/titles/${manga.source}/${manga.slug}`} >
-						<a href={`/titles/${manga.source}/${manga.slug}`} onClick={onClick}>
+					<Link href={`/titles/${manga.source}/${manga.slug}`}>
+						<a
+							href={`/titles/${manga.source}/${manga.slug}`}
+							onClick={onClick}
+						>
 							<Wrapper>
 								<div
 									className={`${
@@ -49,6 +52,7 @@ function MangaCard({
 										width={130 * 2}
 										height={180 * 2}
 										className="rounded-md w-full h-full object-cover"
+										alt={manga.title}
 									></Image>
 								</div>
 							</Wrapper>

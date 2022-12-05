@@ -45,6 +45,7 @@ function Navbar({
 											src={"/assets/logo-128x128.png"}
 											width={128}
 											height={128}
+											alt={"Easy Manga"}
 										></Image>
 									</div>
 									<h1 className="md:font-semibold mt-1 uppercase">

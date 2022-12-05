@@ -21,7 +21,7 @@ function ExternalSite({
 			className="flex items-center gap-2 hover:bg-neutral-200/25 p-1 rounded-md select-none"
 		>
 			<div className={`w-6 h-6 ${ImageClassName}`}>
-				<Image src={ImageSrc} className="rounded-md"></Image>
+				<Image src={ImageSrc} className="rounded-md" title={title}></Image>
 			</div>
 			<span className="font-medium flex items-center gap-4 select-none">
 				{title}

@@ -209,6 +209,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 											src={manga.cover}
 											layout="fill"
 											className="rounded-md object-cover "
+											alt={manga.title}
 										></Image>
 									</div>
 

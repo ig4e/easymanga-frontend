@@ -19,6 +19,7 @@ function CharacterCard({ character }: { character: Character }) {
 					className="rounded-md w-full h-full"
 					layout="fill"
 					objectFit="cover"
+					alt={character.node.name.full}
 				></Image>
 				<div className="absolute flex bottom-1 inset-x-2">
 					<span className="p-0.5 px-1 rounded-md text-center text-[0.65rem] flex items-center justify-center md:text-xs w-full bg-base">

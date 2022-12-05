@@ -59,6 +59,7 @@ function ShowImageModal({
 													? "opacity-100"
 													: "opacity-0"
 											} rounded-md`}
+											alt={"manga cover"}
 										></Image>
 									</a>
 								</Dialog.Content>
