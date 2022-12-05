@@ -116,6 +116,10 @@ function ChapterPageLoader({
 						if (!!imgSrc) {
 							setIsErrored(true);
 							setIsLoaded(true);
+						} else {
+							setImgSrc(src);
+							setIsLoaded(false);
+							setIsErrored(false);
 						}
 					}}
 					src={imgSrc}
