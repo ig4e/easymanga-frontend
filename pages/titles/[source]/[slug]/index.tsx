@@ -222,34 +222,26 @@ const MangaPage: NextPage<MangaPageProps> = ({
 	>(nextCurrentTab);
 
 	useEffect(() => {
-		if (!router.asPath.includes(`tab=${currentTab}`)) {
-			if (router.asPath.includes("tab")) {
-				router.push(
-					router.pathname,
-					router.asPath.replace(/tab\=(.+)/, `tab=${currentTab}`),
-					{ shallow: true },
-				);
-			} else {
-				router.push(
-					router.pathname,
-					router.asPath + `?tab=${currentTab}`,
-					{ shallow: true },
-				);
+		if (["chapters", "characters", "art"].includes(currentTab)) {
+			if (!router.asPath.includes(`tab=${currentTab}`)) {
+				if (router.asPath.includes("tab")) {
+					router.push(
+						router.pathname,
+						router.asPath.replace(/tab\=(.+)/, `tab=${currentTab}`),
+						{ shallow: true },
+					);
+				} else {
+					router.push(
+						router.pathname,
+						router.asPath + `?tab=${currentTab}`,
+						{ shallow: true },
+					);
+				}
 			}
+		} else {
+			setCurrentTab("chapters");
 		}
 	}, [currentTab]);
-
-	const [width, setWidth] = useState(0);
-
-	useEffect(() => {
-		resetState();
-		setWidth(window.innerWidth);
-		window.addEventListener("resize", () => setWidth(window.innerWidth));
-		return () =>
-			window.removeEventListener("resize", () =>
-				setWidth(window.innerWidth),
-			);
-	}, [manga]);
 
 	const chapterRageData = useMemo(() => {
 		let lastValue = 0;
@@ -526,7 +518,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 									</h1>
 
 									<div className="-translate-y-12 space-y-2 ">
-										<Tabs.List className="bg-base-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2">
+										<Tabs.List className="bg-base-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
 											{[
 												{
 													title: "Chapters",
@@ -646,7 +638,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 										<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
 											{manga.covers?.map((cover) => {
 												return (
-													<div>
+													<div key={cover.url}>
 														<ShowImageModal
 															imgSrc={cover.url}
 														>
@@ -684,7 +676,12 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											{anilistData?.characters.edges?.map(
 												({ node, role }) => {
 													return (
-														<div className="w-full">
+														<div
+															className="w-full"
+															key={
+																node.image.large
+															}
+														>
 															<ShowImageModal
 																imgSrc={
 																	`https://workers.emanga.tk/fetch?url=` +
@@ -1177,7 +1174,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 			props: {
 				anilistData: anilistData.Media,
 				manga,
-				currentTab: tab || "chapters",
+				currentTab: ["chapters", "characters", "art"].includes(tab)
+					? tab
+					: "chapters",
 			},
 		};
 	}
