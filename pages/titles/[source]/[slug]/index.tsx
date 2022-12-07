@@ -439,15 +439,15 @@ const MangaPage: NextPage<MangaPageProps> = ({
 														{[
 															{
 																title: "Title (English)",
-																value: `${anilistData.title.english}`,
+																value: `${anilistData.title.english || manga.title}`,
 															},
 															{
 																title: "Title (Romaji)",
-																value: `${anilistData.title.romaji}`,
+																value: `${anilistData.title.romaji || manga.title}`,
 															},
 															{
 																title: "Title (Native)",
-																value: `${anilistData.title.native}`,
+																value: `${anilistData.title.native || manga.title}`,
 															},
 															{
 																title: "Format",
@@ -455,11 +455,11 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															},
 															{
 																title: "Status",
-																value: `${anilistData.status}`,
+																value: `${anilistData.status || "RELEASING"}`,
 															},
 															{
 																title: "Start Year",
-																value: `${anilistData.startDate.year}`,
+																value: `${anilistData.startDate.year || 2022}`,
 															},
 															{
 																title: "Average Score",
@@ -470,7 +470,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															},
 															{
 																title: "Source",
-																value: `${anilistData.source}`,
+																value: `${anilistData.source || "ORIGINAL"}`,
 															},
 															{
 																title: "Title Synonyms",
@@ -513,8 +513,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 									</div>
 								</div>
 								<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
-									<h1 className="text-5xl font-black text-white -translate-y-52 md:-translate-y-64 hidden md:block">
-										{manga.title}
+									<h1 className="text-5xl font-black text-white -translate-y-52 h-12 md:-translate-y-64 hidden md:block relative">
+										<span className="absolute">{manga.title}</span>
 									</h1>
 
 									<div className="-translate-y-12 space-y-2 ">
