@@ -28,25 +28,25 @@ export default function Document() {
 					property="og:image"
 					content="/assets/logo-1024x1024.png"
 				/>
+				<Script
+					src="https://www.googletagmanager.com/gtag/js?id=G-5B28VN7941"
+					strategy="afterInteractive"
+				/>
+
+				<Script id="google-analytics" strategy="afterInteractive">
+					{`
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					
+					gtag('config', 'G-5B28VN7941');
+				`}
+				</Script>
 			</Head>
 			<body>
 				<Main />
 				<NextScript />
 			</body>
-			<Script
-				src="https://www.googletagmanager.com/gtag/js?id=G-5B28VN7941"
-				strategy="afterInteractive"
-			/>
-
-			<Script id="google-analytics" strategy="afterInteractive">
-				{`
-          window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
-		
-		  gtag('config', 'G-5B28VN7941');
-        `}
-			</Script>
 		</Html>
 	);
 }
