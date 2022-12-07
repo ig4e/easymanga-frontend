@@ -8,6 +8,7 @@ export interface Manga {
 	slug: string;
 	url: string;
 	cover: string;
+	covers?: MangaCover[];
 	title: string;
 	altTitles: string[];
 	genres: string[];
@@ -20,4 +21,10 @@ export interface Manga {
 	score?: number;
 	chapters?: Chapter[];
 	source: Sources;
+}
+
+
+interface MangaCover {
+    url: string;
+    volume: string;
 }

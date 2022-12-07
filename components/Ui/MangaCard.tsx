@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Manga } from "../../typings/manga";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
@@ -9,8 +9,10 @@ import MDLogo from "../../public/images/logos/mangadex.png";
 
 import { StarIcon } from "@heroicons/react/24/outline";
 import ExternalSite from "./ExternalSite";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView, useScroll } from "framer-motion";
 import { sourcesData } from "../../utils/sourcesData";
+
+import NoImagePlaceHolder from "../../public/assets/no-img.png";
 
 function MangaCard({
 	manga,
@@ -21,13 +23,48 @@ function MangaCard({
 	mobile: boolean;
 	onClick?: any;
 }) {
+	const [coverError, setCoverError] = useState(false);
 	const source = sourcesData[manga.source];
+
 	const Wrapper = ({ children }: any) =>
 		mobile ? (
 			<div>{children}</div>
 		) : (
 			<Tooltip.Trigger>{children}</Tooltip.Trigger>
 		);
+
+	return (
+		<Link href={`/titles/${manga.source}/${manga.slug}`}>
+			<a href={`/titles/${manga.source}/${manga.slug}`} onClick={onClick}>
+				<div>
+					<motion.div
+						animate={{ scale: 0.8, opacity: 0.9 }}
+						whileInView={{ scale: 1, opacity: 1 }}
+						className={`${
+							mobile ? "" : "min-h-[180px] min-w-[130px]"
+						} w-full h-full max-w-full relative`}
+					>
+						<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
+						<Image
+							src={coverError ? NoImagePlaceHolder : manga.cover}
+							width={130 * 2}
+							height={180 * 2}
+							className="rounded-md w-full h-full object-cover"
+							alt={manga.title}
+							onError={() => setCoverError(true)}
+						></Image>
+					</motion.div>
+				</div>
+				<h1
+					title={manga.title}
+					dangerouslySetInnerHTML={{
+						__html: manga.title,
+					}}
+					className="text-left text-sm font-medium line-clamp-2"
+				></h1>
+			</a>
+		</Link>
+	);
 
 	return (
 		<AnimatePresence>
@@ -40,14 +77,13 @@ function MangaCard({
 						>
 							<Wrapper>
 								<motion.div
-									initial={{ scale: 0.9 }}
+									animate={{ scale: 0.8 }}
 									whileInView={{ scale: 1 }}
-									
 									className={`${
 										mobile
 											? ""
 											: "min-h-[180px] min-w-[130px]"
-									} w-full h-full relative`}
+									} w-full h-full max-w-full relative`}
 								>
 									<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
 									<Image

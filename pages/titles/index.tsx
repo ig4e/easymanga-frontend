@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import PageLayout from "../../components/Ui/PageLayout";
 import { MANGA_FIELDS } from "../../apollo/fragments";
 import { client } from "../../apollo-client";
@@ -188,47 +188,49 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 					</Select.Root>
 				</div>
 
-				<div
-					className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none ${
-						isSelectMenuOpen ? "pointer-events-none" : ""
-					}`}
-				>
-					{mangaList.map((manga, index) => {
-						return (
-							<MangaCard
-								key={manga.slug}
-								manga={manga}
-								mobile={false}
-							></MangaCard>
-							// <Link
-							// 	href={`/titles/${manga.source}/${manga.slug}`}
-							// 	key={manga.slug}
-							// >
-							// 	<a
-							// 		href={`/titles/${manga.source}/${manga.slug}`}
-							// 		key={manga.slug}
-							// 		className="flex flex-col gap-2"
-							// 	>
-							// 		<div className="w-full h-auto aspect-[125/178] relative">
-							// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
-							// 			<Image
-							// 				src={manga.cover}
-							// 				layout="fill"
-							// 				className="rounded-md object-cover "
-							// 				alt={manga.title}
-							// 			></Image>
-							// 		</div>
+				<LayoutGroup id="mangaCover">
+					<div
+						key={"titles-grid"}
+						className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none ${
+							isSelectMenuOpen ? "pointer-events-none" : ""
+						}`}
+					>
+						{mangaList.map((manga, index) => {
+							return (
+								<MangaCard
+									key={manga.slug + index}
+									manga={manga}
+									mobile={true}
+								></MangaCard>
+								// <Link
+								// 	href={`/titles/${manga.source}/${manga.slug}`}
+								// 	key={manga.slug}
+								// >
+								// 	<a
+								// 		href={`/titles/${manga.source}/${manga.slug}`}
+								// 		key={manga.slug}
+								// 		className="flex flex-col gap-2"
+								// 	>
+								// 		<div className="w-full h-auto aspect-[125/178] relative">
+								// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
+								// 			<Image
+								// 				src={manga.cover}
+								// 				layout="fill"
+								// 				className="rounded-md object-cover "
+								// 				alt={manga.title}
+								// 			></Image>
+								// 		</div>
 
-							// 		<span className="font-medium line-clamp-2">
-							// 			{manga.title}
-							// 		</span>
-							// 	</a>
-							// </Link>
-						);
-					})}
-
-					<div ref={lastElementRef}></div>
-				</div>
+								// 		<span className="font-medium line-clamp-2">
+								// 			{manga.title}
+								// 		</span>
+								// 	</a>
+								// </Link>
+							);
+						})}
+						<div ref={lastElementRef}></div>
+					</div>
+				</LayoutGroup>
 
 				<AnimatePresence>
 					{loading && (

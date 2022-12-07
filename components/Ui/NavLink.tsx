@@ -24,7 +24,7 @@ function NavLink({ href, title }: { href: string; title: string }) {
 
 					{active ? (
 						<motion.div
-							layoutId="underline"
+							layoutId="underlineNav"
 							initial={{ x: -1, width: 3 }}
 							animate={{ x: 0, opacity: 1, width: 15 }}
 							exit={{ x: 1, width: 3 }}

@@ -26,6 +26,11 @@ import { Chapter } from "../../../../typings/chapter";
 
 import { SourceData, sourcesData } from "../../../../utils/sourcesData";
 import { useChapterPageStore } from "../../../../store";
+import { LayoutGroup, motion } from "framer-motion";
+import * as Tabs from "@radix-ui/react-tabs";
+
+import NoImagePlaceholder from "../../../../public/assets/no-img.png";
+import { useRouter } from "next/router";
 
 export interface Character {
 	role: "MAIN" | "SUPPORTING" | "BACKGROUND";
@@ -59,6 +64,7 @@ export interface Character {
 
 interface MangaPageProps {
 	manga: Manga;
+	currentTab: "chapters" | "characters" | "art";
 	anilistData?: {
 		volumes: number | null;
 		updatedAt: number;
@@ -203,10 +209,38 @@ const breakpoints = {
 	md: 768,
 };
 
-const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
+const MangaPage: NextPage<MangaPageProps> = ({
+	manga,
+	anilistData,
+	currentTab: nextCurrentTab,
+}) => {
+	const router = useRouter();
 	const { resetState } = useChapterPageStore();
+	const [coverError, setCoverError] = useState(false);
+	const [currentTab, setCurrentTab] = useState<
+		"chapters" | "characters" | "art"
+	>(nextCurrentTab);
+
+	useEffect(() => {
+		if (!router.asPath.includes(`tab=${currentTab}`)) {
+			if (router.asPath.includes("tab")) {
+				router.push(
+					router.pathname,
+					router.asPath.replace(/tab\=(.+)/, `tab=${currentTab}`),
+					{ shallow: true },
+				);
+			} else {
+				router.push(
+					router.pathname,
+					router.asPath + `?tab=${currentTab}`,
+					{ shallow: true },
+				);
+			}
+		}
+	}, [currentTab]);
 
 	const [width, setWidth] = useState(0);
+
 	useEffect(() => {
 		resetState();
 		setWidth(window.innerWidth);
@@ -286,276 +320,449 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 	return (
 		<>
 			<Navbar navClass="" mode="transparent"></Navbar>
-
-			<div>
-				<Head>
-					<title>{manga.title} Details - Easy Manga</title>
-					<meta property="og:title" content={manga.title} />
-					<meta property="og:description" content={manga.synopsis} />
-					<meta
-						property="og:image"
-						content={anilistData?.bannerImage || manga.cover}
-					/>
-				</Head>
-
+			<Tabs.Root
+				value={currentTab}
+				onValueChange={(value: any) => setCurrentTab(value)}
+			>
 				<div>
-					<div className="relative w-full h-[16.8rem]">
-						<Image
-							className="w-full -z-20"
-							src={
-								anilistData?.bannerImage
-									? getWorkersUrl(anilistData?.bannerImage!)
-									: manga.cover
-							}
-							layout="fill"
-							objectFit="cover"
-							objectPosition={"center"}
-							alt={manga.title}
-						></Image>
-						<div
-							className={`absolute bg-black/25 inset-0 ${
-								anilistData?.bannerImage
-									? "backdrop-blur-[2px]"
-									: "backdrop-blur"
-							}  -z-10`}
-						></div>
+					<Head>
+						<title>{manga.title} Details - Easy Manga</title>
+						<meta property="og:title" content={manga.title} />
+						<meta
+							property="og:description"
+							content={manga.synopsis}
+						/>
+						<meta
+							property="og:image"
+							content={anilistData?.bannerImage || manga.cover}
+						/>
+					</Head>
 
-						<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
-					</div>
-					<div className="container z-50">
-						<div className="md:flex gap-6">
-							<div className="-translate-y-52 md:-translate-y-60 min-w-max">
-								<div className="flex flex-col gap-4">
-									<div>
-										<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
-											<ShowImageModal
-												imgSrc={manga.cover}
-											>
-												<div className="w-32 md:w-auto">
-													<Image
-														src={manga.cover}
-														width={200}
-														height={280}
-														className="rounded-md object-cover"
-														alt={manga.title}
-													></Image>
-												</div>
-											</ShowImageModal>
-											<h1 className="text-lg md:text-2xl font-bold text-white z-50 md:hidden">
-												{manga.title}
-											</h1>
-										</div>
-										<Link
-											href={`/titles/${manga.source}/${
-												manga.slug
-											}/chapter?id=${
-												manga?.chapters?.[
-													manga?.chapters?.length - 1
-												]?.slug
-											}`}
-										>
-											<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
-												Start Reading
-											</button>
-										</Link>
-									</div>
+					<div>
+						<div className="relative w-full h-[16.8rem]">
+							<Image
+								className="w-full -z-20"
+								src={
+									anilistData?.bannerImage
+										? getWorkersUrl(
+												anilistData?.bannerImage!,
+										  )
+										: manga.cover
+								}
+								layout="fill"
+								objectFit="cover"
+								objectPosition={"center"}
+								alt={manga.title}
+							></Image>
+							<div
+								className={`absolute bg-black/25 inset-0 ${
+									anilistData?.bannerImage
+										? "backdrop-blur-[2px]"
+										: "backdrop-blur"
+								}  -z-10`}
+							></div>
 
-									{anilistData?.trailer?.id && (
-										<a
-											href={
-												`https://www.youtube.com/watch?v=` +
-												anilistData?.trailer?.id
-											}
-											rel="noreferrer"
-											target="_blank"
-											className="border flex rounded-md relative select-none "
-										>
-											<Image
-												src={manga.cover}
-												className="rounded-md absolute"
-												layout="fill"
-												objectFit="cover"
-												alt={manga.title}
-
-											></Image>
-											<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
-											<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
-												<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
-												<span>Watch Trailer</span>
+							<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
+						</div>
+						<div className="container z-50">
+							<div className="md:flex gap-6">
+								<div className="-translate-y-52 md:-translate-y-60 min-w-max">
+									<div className="flex flex-col gap-4">
+										<div>
+											<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
+												<ShowImageModal
+													imgSrc={manga.cover}
+												>
+													<motion.div
+														layoutId="mangaCoverTrans"
+														className="w-32 md:w-auto"
+													>
+														<Image
+															onError={() =>
+																setCoverError(
+																	true,
+																)
+															}
+															src={
+																coverError
+																	? NoImagePlaceholder
+																	: manga.cover
+															}
+															width={200}
+															height={280}
+															className="rounded-md object-cover"
+															alt={manga.title}
+														></Image>
+													</motion.div>
+												</ShowImageModal>
+												<h1 className="text-lg md:text-2xl font-bold text-white z-50 md:hidden">
+													{manga.title}
+												</h1>
 											</div>
-										</a>
-									)}
+											<Link
+												href={`/titles/${
+													manga.source
+												}/${manga.slug}/chapter?id=${
+													manga?.chapters?.[
+														manga?.chapters
+															?.length - 1
+													]?.slug
+												}`}
+											>
+												<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
+													Start Reading
+												</button>
+											</Link>
+										</div>
 
-									{anilistData && (
-										<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px]">
-											{anilistData &&
-												anilistData?.characters.edges
-													.length > 0 && (
-													<div className="flex md:grid md:grid-flow-row md:grid-cols-2 gap-1.5">
-														{anilistData?.characters.edges
-															.slice(
-																0,
-																width <
-																	breakpoints[
-																		"md"
-																	]
-																	? 4
-																	: anilistData
-																			?.characters
-																			.edges
-																			.length,
-															)
-															.map((edge) => (
-																<CharacterCard
-																	key={
-																		edge
-																			?.node
-																			?.id
-																	}
-																	character={
-																		edge
-																	}
-																></CharacterCard>
-															))}
+										{anilistData?.trailer?.id && (
+											<a
+												href={
+													`https://www.youtube.com/watch?v=` +
+													anilistData?.trailer?.id
+												}
+												rel="noreferrer"
+												target="_blank"
+												className="border flex rounded-md relative select-none "
+											>
+												<Image
+													src={manga.cover}
+													className="rounded-md absolute"
+													layout="fill"
+													objectFit="cover"
+													alt={manga.title}
+												></Image>
+												<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
+												<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
+													<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
+													<span>Watch Trailer</span>
+												</div>
+											</a>
+										)}
+
+										{anilistData && (
+											<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
+												{anilistData && (
+													<div className="flex items-start gap-6 overflow-scroll scrollbar-hide md:flex-col md:gap-2">
+														{[
+															{
+																title: "Title (English)",
+																value: `${anilistData.title.english}`,
+															},
+															{
+																title: "Title (Romaji)",
+																value: `${anilistData.title.romaji}`,
+															},
+															{
+																title: "Title (Native)",
+																value: `${anilistData.title.native}`,
+															},
+															{
+																title: "Format",
+																value: `${anilistData.format} (${anilistData.countryOfOrigin})`,
+															},
+															{
+																title: "Status",
+																value: `${anilistData.status}`,
+															},
+															{
+																title: "Start Year",
+																value: `${anilistData.startDate.year}`,
+															},
+															{
+																title: "Average Score",
+																value: `${
+																	anilistData.averageScore /
+																	10
+																}`,
+															},
+															{
+																title: "Source",
+																value: `${anilistData.source}`,
+															},
+															{
+																title: "Title Synonyms",
+																value: `${[
+																	...(anilistData.synonyms ||
+																		[]),
+																	manga.title,
+																]}`,
+															},
+														].map(
+															({
+																title,
+																value,
+															}) => {
+																return (
+																	<div
+																		key={
+																			title
+																		}
+																		className="flex flex-col w-full whitespace-nowrap md:whitespace-normal"
+																	>
+																		<span>
+																			{
+																				title
+																			}
+																		</span>
+																		<span className="text-sm text-neutral-200">
+																			{
+																				value
+																			}
+																		</span>
+																	</div>
+																);
+															},
+														)}
 													</div>
 												)}
+											</div>
+										)}
+									</div>
+								</div>
+								<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
+									<h1 className="text-5xl font-black text-white -translate-y-52 md:-translate-y-64 hidden md:block">
+										{manga.title}
+									</h1>
 
-											{anilistData && (
-												<div className="grid grid-flow-row grid-cols-2 md:flex md:flex-col gap-y-2 pt-2 md:pb-2">
-													{[
-														{
-															title: "Format",
-															value: `${anilistData.format} (${anilistData.countryOfOrigin})`,
-														},
-														{
-															title: "Status",
-															value: `${anilistData.status}`,
-														},
-														{
-															title: "Start Year",
-															value: `${anilistData.startDate.year}`,
-														},
-														{
-															title: "Average Score",
-															value: `${
-																anilistData.averageScore /
-																10
-															}`,
-														},
-														{
-															title: "Source",
-															value: `${anilistData.source}`,
-														},
-														{
-															title: "Title (Romaji)",
-															value: `${anilistData.title.romaji}`,
-														},
-														{
-															title: "Title (English)",
-															value: `${anilistData.title.english}`,
-														},
-														{
-															title: "Title (Native)",
-															value: `${anilistData.title.native}`,
-														},
-														{
-															title: "Title Synonyms",
-															value: `${anilistData.synonyms}`,
-														},
-													].map(
-														({ title, value }) => {
+									<div className="-translate-y-12 space-y-2 ">
+										<Tabs.List className="bg-base-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2">
+											{[
+												{
+													title: "Chapters",
+													value: "chapters",
+													render: true,
+												},
+												{
+													title: "Characters",
+													value: "characters",
+													render:
+														(anilistData?.characters
+															.edges?.length ||
+															0) > 0,
+												},
+												{
+													title: "Art",
+													value: "art",
+													render: !!manga.dexId,
+												},
+											]
+												.filter((x) => x.render)
+												.map(({ title, value }) => {
+													return (
+														<Tabs.Trigger
+															key={title}
+															value={value}
+															className={`p-1 px-4 rounded-md transition w-full ${
+																value ===
+																currentTab
+																	? "bg-primary text-white"
+																	: "bg-base"
+															}`}
+														>
+															{title}
+														</Tabs.Trigger>
+													);
+												})}
+										</Tabs.List>
+
+										{currentTab === "chapters" && (
+											<>
+												<div className="flex items-center flex-wrap gap-2">
+													{manga.aniId && (
+														<ExternalSite
+															title="Anilist"
+															href={`https://anilist.co/manga/${
+																manga.aniId
+															}/${manga.title.replaceAll(
+																" ",
+																"-",
+															)}`}
+															ImageSrc={
+																sourcesData
+																	.ANILIST
+																	.image
+															}
+														/>
+													)}
+
+													{manga.dexId && (
+														<ExternalSite
+															title="MangaDex"
+															href={`https://mangadex.org/title/${
+																manga.dexId
+															}/${manga.title.replaceAll(
+																" ",
+																"-",
+															)}`}
+															ImageSrc={
+																sourcesData
+																	.MANGADEX
+																	.image
+															}
+														/>
+													)}
+													<ExternalSite
+														title={source.name}
+														href={`${manga.url}`}
+														ImageSrc={source.image!}
+													/>
+													<div className="flex items-center gap-1 select-none">
+														<StarIcon className="h-6 w-6 stroke-1 fill-current text-primary"></StarIcon>
+														<span>
+															{manga.score ||
+																"N/A"}
+														</span>
+													</div>
+												</div>
+												<div className="flex items-center flex-wrap gap-2">
+													{manga.genres.map(
+														(genre) => {
 															return (
 																<div
-																	key={title}
-																	className="flex flex-col w-full"
+																	key={genre}
+																	className="bg-base-100 border  select-none p-1 px-2 text-xs font-bold uppercase rounded"
 																>
-																	<span>
-																		{title}
-																	</span>
-																	<span className="text-sm text-neutral-200">
-																		{value}
-																	</span>
+																	{genre}
 																</div>
 															);
 														},
 													)}
 												</div>
+												<div>
+													<span>
+														{manga.synopsis ||
+															"لا يوجد ملخص للأن , نعتذر منكم!"}
+													</span>
+												</div>
+											</>
+										)}
+									</div>
+
+									<Tabs.Content value="art">
+										<h3 className="text-2xl mb-4">
+											Manga Covers
+										</h3>
+										<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
+											{manga.covers?.map((cover) => {
+												return (
+													<div>
+														<ShowImageModal
+															imgSrc={cover.url}
+														>
+															<div className="md:w-auto relative">
+																<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
+
+																<Image
+																	src={
+																		cover.url
+																	}
+																	width={200}
+																	height={280}
+																	className="rounded-md object-cover"
+																	alt={
+																		manga.title +
+																		cover.volume
+																	}
+																></Image>
+															</div>
+														</ShowImageModal>
+														<span>
+															Volume{" "}
+															{cover.volume}
+														</span>
+													</div>
+												);
+											})}
+										</div>
+									</Tabs.Content>
+									<Tabs.Content value="characters">
+										<h3 className="text-2xl mb-4">
+											Manga Characters
+										</h3>
+										<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
+											{anilistData?.characters.edges?.map(
+												({ node, role }) => {
+													return (
+														<div className="w-full">
+															<ShowImageModal
+																imgSrc={
+																	`https://workers.emanga.tk/fetch?url=` +
+																	node.image
+																		.large
+																}
+															>
+																<div className="md:w-auto relative">
+																	<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
+
+																	<span className="bg-base p-1 px-2 absolute z-20 rounded-md bottom-3 left-2 text-sm">
+																		{role
+																			.replace(
+																				/./g,
+																				(
+																					str,
+																				) =>
+																					str.toLocaleLowerCase(),
+																			)
+																			.replace(
+																				/./,
+																				(
+																					str,
+																				) =>
+																					str.toLocaleUpperCase(),
+																			)}
+																	</span>
+
+																	<Image
+																		src={
+																			`https://workers.emanga.tk/fetch?url=` +
+																			node
+																				.image
+																				.large
+																		}
+																		width={
+																			200
+																		}
+																		height={
+																			280
+																		}
+																		className="rounded-md object-cover"
+																		alt={
+																			manga.title +
+																			node
+																				.name
+																				.full
+																		}
+																	></Image>
+																</div>
+															</ShowImageModal>
+															<a
+																href={`https://anilist.co/character/${node.id}/${node.name.full}`}
+																target="_blank"
+																rel="noreferrer"
+																className="hover:text-primary"
+															>
+																<span>
+																	{
+																		node
+																			.name
+																			.full
+																	}
+																</span>
+															</a>
+														</div>
+													);
+												},
 											)}
 										</div>
-									)}
-								</div>
-							</div>
-							<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
-								<h1 className="text-4xl font-bold text-white -translate-y-52 md:-translate-y-64 hidden md:block">
-									{manga.title}
-								</h1>
-
-								<div className="-translate-y-12 space-y-2">
-									<div className="flex items-center flex-wrap gap-2">
-										{manga.aniId && (
-											<ExternalSite
-												title="Anilist"
-												href={`https://anilist.co/manga/${
-													manga.aniId
-												}/${manga.title.replaceAll(
-													" ",
-													"-",
-												)}`}
-												ImageSrc={
-													sourcesData.ANILIST.image
-												}
-											/>
-										)}
-
-										{manga.dexId && (
-											<ExternalSite
-												title="MangaDex"
-												href={`https://mangadex.org/title/${
-													manga.dexId
-												}/${manga.title.replaceAll(
-													" ",
-													"-",
-												)}`}
-												ImageSrc={
-													sourcesData.MANGADEX.image
-												}
-											/>
-										)}
-										<ExternalSite
-											title={source.name}
-											href={`${manga.url}`}
-											ImageSrc={source.image!}
-										/>
-										<div className="flex items-center gap-1 select-none">
-											<StarIcon className="h-6 w-6 stroke-1 fill-current text-primary"></StarIcon>
-											<span>{manga.score || "N/A"}</span>
-										</div>
-									</div>
-									<div className="flex items-center flex-wrap gap-2">
-										{manga.genres.map((genre) => {
-											return (
-												<div
-													key={genre}
-													className="bg-base-100 border  select-none p-1 px-2 text-xs font-bold uppercase rounded"
-												>
-													{genre}
-												</div>
-											);
-										})}
-									</div>
-									<div>
-										<span>
-											{manga.synopsis ||
-												"لا يوجد ملخص للأن , نعتذر منكم!"}
-										</span>
-									</div>
-								</div>
-								<div className="pt-6 space-y-4 -translate-y-12 w-full">
-									<div className="flex justify-between items-center">
-										<h3 className="text-2xl ">
-											Chapters List
-										</h3>
-										{/*<button
+									</Tabs.Content>
+									<Tabs.Content value="chapters">
+										<div className="pt-6 space-y-4 -translate-y-12 w-full">
+											<div className="flex justify-between items-center">
+												<h3 className="text-2xl ">
+													Chapters List
+												</h3>
+												{/*<button
 											className="p-1.5 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
 											onClick={() =>
 												setSort(
@@ -573,155 +780,169 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 												}`}
 											></ArrowUpIcon>
 											</button>*/}
-									</div>
-									<div className="bg-base-100 p-3 rounded-md space-y-4">
-										<div className="flex items-center gap-2 md:gap-4">
-											<input
-												className={`bg-base h-10 w-full pr-2 pl-4 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
-												type="text"
-												placeholder="Chapter Number..."
-												onChange={(e) =>
-													setSearchQuery(
-														e.target.value,
-													)
-												}
-											/>
+											</div>
+											<div className="bg-base-100 p-3 rounded-md space-y-4">
+												<div className="flex items-center gap-2 md:gap-4">
+													<input
+														className={`bg-base h-10 w-full pr-2 pl-4 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
+														type="text"
+														placeholder="Chapter Number..."
+														onChange={(e) =>
+															setSearchQuery(
+																e.target.value,
+															)
+														}
+													/>
 
-											<Select.Root
-												open={chapterRangeSelectOpen}
-												onOpenChange={(open) => {
-													if (open) {
-														setChapterRangeSelectOpen(
+													<Select.Root
+														open={
+															chapterRangeSelectOpen
+														}
+														onOpenChange={(
 															open,
-														);
-													} else {
-														setTimeout(
-															() =>
+														) => {
+															if (open) {
 																setChapterRangeSelectOpen(
 																	open,
+																);
+															} else {
+																setTimeout(
+																	() =>
+																		setChapterRangeSelectOpen(
+																			open,
+																		),
+																	100,
+																);
+															}
+														}}
+														onValueChange={(
+															value,
+														) => {
+															let [from, to] =
+																value.split(
+																	"-",
+																);
+															setChapterRange({
+																from: Number(
+																	from,
 																),
-															100,
-														);
-													}
-												}}
-												onValueChange={(value) => {
-													let [from, to] =
-														value.split("-");
-													setChapterRange({
-														from: Number(from),
-														to: Number(to),
-													});
-												}}
-												defaultValue={`${
-													chapterRageData[
-														chapterRageData.length -
-															1
-													].from
-												}-${
-													chapterRageData[
-														chapterRageData.length -
-															1
-													].to
-												}`}
-											>
-												<Select.Trigger className="bg-base h-10 px-4 rounded-md border flex gap-2 items-center whitespace-nowrap">
-													<Select.Value className="" />
-													<Select.Icon>
-														<ChevronDownIcon className="h-5 w-5"></ChevronDownIcon>
-													</Select.Icon>
-												</Select.Trigger>
+																to: Number(to),
+															});
+														}}
+														defaultValue={`${
+															chapterRageData[
+																chapterRageData.length -
+																	1
+															].from
+														}-${
+															chapterRageData[
+																chapterRageData.length -
+																	1
+															].to
+														}`}
+													>
+														<Select.Trigger className="bg-base h-10 px-4 rounded-md border flex gap-2 items-center whitespace-nowrap">
+															<Select.Value className="" />
+															<Select.Icon>
+																<ChevronDownIcon className="h-5 w-5"></ChevronDownIcon>
+															</Select.Icon>
+														</Select.Trigger>
 
-												<Select.Portal>
-													<Select.Content className="bg-base p-2 border drop-shadow-md rounded-md z-50">
-														<Select.ScrollUpButton className="SelectScrollButton">
-															<ChevronUpIcon className="h-4 w-4" />
-														</Select.ScrollUpButton>
-														<Select.Viewport>
-															<Select.Group className="space-y-2">
-																<Select.Label />
-																{chapterRageData.map(
-																	({
-																		from,
-																		to,
-																	}) => {
-																		return (
-																			<Select.Item
-																				key={`${from}-${to}`}
-																				className="SelectItem flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md"
-																				value={`${from}-${to}`}
-																			>
-																				<Select.ItemText>
-																					{`${from}-${to}`}
-																				</Select.ItemText>
-																				<Select.ItemIndicator className="">
-																					<CheckIcon className="h-4 w-4 stroke-2"></CheckIcon>
-																				</Select.ItemIndicator>
-																			</Select.Item>
-																		);
-																	},
-																)}
-															</Select.Group>
-														</Select.Viewport>
-														<Select.ScrollDownButton className="SelectScrollButton">
-															<ChevronDownIcon className="h-4 w-4" />
-														</Select.ScrollDownButton>
-													</Select.Content>
-												</Select.Portal>
-											</Select.Root>
-										</div>
+														<Select.Portal>
+															<Select.Content className="bg-base p-2 border drop-shadow-md rounded-md z-50">
+																<Select.ScrollUpButton className="SelectScrollButton">
+																	<ChevronUpIcon className="h-4 w-4" />
+																</Select.ScrollUpButton>
+																<Select.Viewport>
+																	<Select.Group className="space-y-2">
+																		<Select.Label />
+																		{chapterRageData.map(
+																			({
+																				from,
+																				to,
+																			}) => {
+																				return (
+																					<Select.Item
+																						key={`${from}-${to}`}
+																						className="SelectItem flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md"
+																						value={`${from}-${to}`}
+																					>
+																						<Select.ItemText>
+																							{`${from}-${to}`}
+																						</Select.ItemText>
+																						<Select.ItemIndicator className="">
+																							<CheckIcon className="h-4 w-4 stroke-2"></CheckIcon>
+																						</Select.ItemIndicator>
+																					</Select.Item>
+																				);
+																			},
+																		)}
+																	</Select.Group>
+																</Select.Viewport>
+																<Select.ScrollDownButton className="SelectScrollButton">
+																	<ChevronDownIcon className="h-4 w-4" />
+																</Select.ScrollDownButton>
+															</Select.Content>
+														</Select.Portal>
+													</Select.Root>
+												</div>
 
-										<div
-											className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full ${
-												chapterRangeSelectOpen &&
-												"select-none"
-											}`}
-										>
-											{displayedChapters?.map(
-												(chapter: Chapter) => {
-													return (
-														<Link
-															key={chapter.slug}
-															href={`/titles/${
-																manga.source
-															}/${
-																manga.slug
-															}/chapter?id=${encodeURIComponent(
-																chapter.slug!,
-															)}`}
-														>
-															<a
-																href={`/titles/${
-																	manga.source
-																}/${
-																	manga.slug
-																}/chapter?id=${encodeURIComponent(
-																	chapter.slug!,
-																)}`}
-																className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
-															>
-																<span className="text-xs">
-																	{
-																		chapter.number
+												<div
+													className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full ${
+														chapterRangeSelectOpen &&
+														"select-none"
+													}`}
+												>
+													{displayedChapters?.map(
+														(chapter: Chapter) => {
+															return (
+																<Link
+																	key={
+																		chapter.slug
 																	}
-																</span>
-																<span className="truncate line-clamp-1">
-																	{
-																		chapter.name
-																	}
-																</span>
-															</a>
-														</Link>
-													);
-												},
-											)}
+																	href={`/titles/${
+																		manga.source
+																	}/${
+																		manga.slug
+																	}/chapter?id=${encodeURIComponent(
+																		chapter.slug!,
+																	)}`}
+																>
+																	<a
+																		href={`/titles/${
+																			manga.source
+																		}/${
+																			manga.slug
+																		}/chapter?id=${encodeURIComponent(
+																			chapter.slug!,
+																		)}`}
+																		className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
+																	>
+																		<span className="text-xs">
+																			{
+																				chapter.number
+																			}
+																		</span>
+																		<span className="truncate line-clamp-1">
+																			{
+																				chapter.name
+																			}
+																		</span>
+																	</a>
+																</Link>
+															);
+														},
+													)}
+												</div>
+											</div>
 										</div>
-									</div>
+									</Tabs.Content>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</Tabs.Root>
 		</>
 	);
 };
@@ -733,8 +954,12 @@ const MangaPage: NextPage<MangaPageProps> = ({ manga, anilistData }) => {
 
 export default MangaPage;
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+	params,
+	query,
+}) => {
 	let { source, slug } = params! as { [index: string]: string };
+	let { tab } = query! as { [index: string]: string };
 
 	const { data } = await client.query({
 		query: gql`
@@ -753,6 +978,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 					genres
 					dexId
 					cover
+					covers {
+						url
+						volume
+					}
 					chapters {
 						url
 						source
@@ -948,6 +1177,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 			props: {
 				anilistData: anilistData.Media,
 				manga,
+				currentTab: tab || "chapters",
 			},
 		};
 	}

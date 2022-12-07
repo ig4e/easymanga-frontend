@@ -3,6 +3,7 @@ import {
 	ListBulletIcon,
 } from "@heroicons/react/24/outline";
 import { HomeIcon } from "@heroicons/react/24/solid";
+import { LayoutGroup } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -53,13 +54,15 @@ function Navbar({
 									</h1>
 								</a>
 							</Link>
-							<div className="hidden items-center space-x-6 mt-1.5 md:flex">
-								<NavLink href="/" title="Home"></NavLink>
-								<NavLink
-									href="/titles"
-									title="Titles"
-								></NavLink>
-							</div>
+							<LayoutGroup id="underlineNav">
+								<div className="hidden items-center space-x-6 mt-1.5 md:flex">
+									<NavLink href="/" title="Home"></NavLink>
+									<NavLink
+										href="/titles"
+										title="Titles"
+									></NavLink>
+								</div>
+							</LayoutGroup>
 						</div>
 
 						<div className="flex items-center space-x-2 h-full">

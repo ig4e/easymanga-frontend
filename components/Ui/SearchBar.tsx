@@ -199,11 +199,11 @@ function SearchBar() {
 												exit={{ scale: 0, opacity: 0 }}
 												transition={{
 													type: "spring",
-													duration: 0.4,
+													duration: 0.5,
 												}}
 												className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-16 relative"
 											>
-												<div className="fixed inset-x-0 bg-base z-50  max-w-7xl mx-auto px-6 pb-4 rounded">
+												<div className="fixed inset-x-0 bg-base z-50 w-full max-w-7xl mx-auto px-6 pb-4 rounded">
 													<DialogTitle>
 														Search
 														<DialogClose>
