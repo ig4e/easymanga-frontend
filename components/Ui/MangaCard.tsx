@@ -39,7 +39,10 @@ function MangaCard({
 							onClick={onClick}
 						>
 							<Wrapper>
-								<div
+								<motion.div
+									initial={{ scale: 0.9 }}
+									whileInView={{ scale: 1 }}
+									
 									className={`${
 										mobile
 											? ""
@@ -54,15 +57,15 @@ function MangaCard({
 										className="rounded-md w-full h-full object-cover"
 										alt={manga.title}
 									></Image>
-								</div>
+								</motion.div>
 							</Wrapper>
 							<h1
 								title={manga.title}
-                                                                dangerouslySetInnerHTML={{ __html: manga.title }}
+								dangerouslySetInnerHTML={{
+									__html: manga.title,
+								}}
 								className="text-left text-sm font-medium line-clamp-2"
-							>
-							
-							</h1>
+							></h1>
 						</a>
 					</Link>
 					{!mobile && (

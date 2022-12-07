@@ -21,6 +21,7 @@ import { getRandomEmoji } from "../../utils/getRandomEmoji";
 import * as Select from "@radix-ui/react-select";
 import { useRouter } from "next/router";
 import { sourcesData } from "../../utils/sourcesData";
+import MangaCard from "../../components/Ui/MangaCard";
 
 interface Genre {
 	id: number;
@@ -194,30 +195,35 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 				>
 					{mangaList.map((manga, index) => {
 						return (
-							<Link
-								href={`/titles/${manga.source}/${manga.slug}`}
+							<MangaCard
 								key={manga.slug}
-							>
-								<a
-									href={`/titles/${manga.source}/${manga.slug}`}
-									key={manga.slug}
-									className="flex flex-col gap-2"
-								>
-									<div className="w-full h-auto aspect-[125/178] relative">
-										<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
-										<Image
-											src={manga.cover}
-											layout="fill"
-											className="rounded-md object-cover "
-											alt={manga.title}
-										></Image>
-									</div>
+								manga={manga}
+								mobile={false}
+							></MangaCard>
+							// <Link
+							// 	href={`/titles/${manga.source}/${manga.slug}`}
+							// 	key={manga.slug}
+							// >
+							// 	<a
+							// 		href={`/titles/${manga.source}/${manga.slug}`}
+							// 		key={manga.slug}
+							// 		className="flex flex-col gap-2"
+							// 	>
+							// 		<div className="w-full h-auto aspect-[125/178] relative">
+							// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
+							// 			<Image
+							// 				src={manga.cover}
+							// 				layout="fill"
+							// 				className="rounded-md object-cover "
+							// 				alt={manga.title}
+							// 			></Image>
+							// 		</div>
 
-									<span className="font-medium line-clamp-2">
-										{manga.title}
-									</span>
-								</a>
-							</Link>
+							// 		<span className="font-medium line-clamp-2">
+							// 			{manga.title}
+							// 		</span>
+							// 	</a>
+							// </Link>
 						);
 					})}
 
