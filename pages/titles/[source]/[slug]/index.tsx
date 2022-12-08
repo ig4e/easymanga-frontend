@@ -357,164 +357,237 @@ const MangaPage: NextPage<MangaPageProps> = ({
 							<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
 						</div>
 						<div className="container z-50">
-							<div className="md:flex gap-6">
-								<div className="-translate-y-52 md:-translate-y-60 min-w-max">
-									<div className="flex flex-col gap-4">
-										<div>
-											<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
-												<ShowImageModal
-													imgSrc={manga.cover}
-												>
-													<motion.div
-														layoutId="mangaCoverTrans"
-														className="w-32 md:w-auto"
+							<div className="md:flex gap-6 ">
+								<div className="w-full max-w-[90.99vw] md:max-w-[200px]">
+									<div className="-translate-y-52 md:-translate-y-60 min-w-max md:fixed overflow-y-scroll scrollbar-hide">
+										<div className="flex flex-col gap-4 ">
+											<div>
+												<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
+													<ShowImageModal
+														imgSrc={manga.cover}
 													>
-														<Image
-															onError={() =>
-																setCoverError(
-																	true,
-																)
-															}
-															src={
-																coverError
-																	? NoImagePlaceholder
-																	: manga.cover
-															}
-															width={200}
-															height={280}
-															className="rounded-md object-cover"
-															alt={manga.title}
-														></Image>
-													</motion.div>
-												</ShowImageModal>
-												<h1 className="text-lg md:text-2xl font-bold text-white z-50 md:hidden">
-													{manga.title}
-												</h1>
-											</div>
-											<Link
-												href={`/titles/${
-													manga.source
-												}/${manga.slug}/chapter?id=${
-													manga?.chapters?.[
-														manga?.chapters
-															?.length - 1
-													]?.slug
-												}`}
-											>
-												<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
-													Start Reading
-												</button>
-											</Link>
-										</div>
+														<motion.div
+															layoutId="mangaCoverTrans"
+															className="w-32 md:w-auto"
+														>
+															<Image
+																onError={() =>
+																	setCoverError(
+																		true,
+																	)
+																}
+																src={
+																	coverError
+																		? NoImagePlaceholder
+																		: manga.cover
+																}
+																width={200}
+																height={280}
+																className="rounded-md object-cover"
+																alt={
+																	manga.title
+																}
+															></Image>
+														</motion.div>
+													</ShowImageModal>
+													<h1 className="text-lg md:text-2xl font-bold text-white z-50 flex flex-col md:hidden">
+														<span>
+															{manga.title}
+														</span>
 
-										{anilistData?.trailer?.id && (
-											<a
-												href={
-													`https://www.youtube.com/watch?v=` +
-													anilistData?.trailer?.id
-												}
-												rel="noreferrer"
-												target="_blank"
-												className="border flex rounded-md relative select-none "
-											>
-												<Image
-													src={manga.cover}
-													className="rounded-md absolute"
-													layout="fill"
-													objectFit="cover"
-													alt={manga.title}
-												></Image>
-												<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
-												<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
-													<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
-													<span>Watch Trailer</span>
+														{anilistData && (
+															<>
+																<span className="font-normal text-sm">
+																	{
+																		anilistData
+																			.title
+																			.romaji
+																	}
+																</span>
+																<span className="font-normal text-sm">
+																	{
+																		anilistData
+																			.title
+																			.native
+																	}
+																</span>
+															</>
+														)}
+													</h1>
 												</div>
-											</a>
-										)}
+												<Link
+													href={`/titles/${
+														manga.source
+													}/${
+														manga.slug
+													}/chapter?id=${
+														manga?.chapters?.[
+															manga?.chapters
+																?.length - 1
+														]?.slug
+													}`}
+												>
+													<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
+														Start Reading
+													</button>
+												</Link>
+											</div>
 
-										{anilistData && (
-											<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
-												{anilistData && (
-													<div className="flex items-start gap-6 overflow-scroll scrollbar-hide md:flex-col md:gap-2">
-														{[
-															{
-																title: "Title (English)",
-																value: `${anilistData.title.english || manga.title}`,
-															},
-															{
-																title: "Title (Romaji)",
-																value: `${anilistData.title.romaji || manga.title}`,
-															},
-															{
-																title: "Title (Native)",
-																value: `${anilistData.title.native || manga.title}`,
-															},
-															{
-																title: "Format",
-																value: `${anilistData.format} (${anilistData.countryOfOrigin})`,
-															},
-															{
-																title: "Status",
-																value: `${anilistData.status || "RELEASING"}`,
-															},
-															{
-																title: "Start Year",
-																value: `${anilistData.startDate.year || 2022}`,
-															},
-															{
-																title: "Average Score",
-																value: `${
-																	anilistData.averageScore /
-																	10
-																}`,
-															},
-															{
-																title: "Source",
-																value: `${anilistData.source || "ORIGINAL"}`,
-															},
-															{
-																title: "Title Synonyms",
-																value: `${[
-																	...(anilistData.synonyms ||
-																		[]),
-																	manga.title,
-																]}`,
-															},
-														].map(
-															({
-																title,
-																value,
-															}) => {
-																return (
-																	<div
-																		key={
-																			title
-																		}
-																		className="flex flex-col w-full whitespace-nowrap md:whitespace-normal"
-																	>
-																		<span>
-																			{
+											{anilistData?.trailer?.id && (
+												<a
+													href={
+														`https://www.youtube.com/watch?v=` +
+														anilistData?.trailer?.id
+													}
+													rel="noreferrer"
+													target="_blank"
+													className="border flex rounded-md relative select-none "
+												>
+													<Image
+														src={manga.cover}
+														className="rounded-md absolute"
+														layout="fill"
+														objectFit="cover"
+														alt={manga.title}
+													></Image>
+													<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
+													<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
+														<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
+														<span>
+															Watch Trailer
+														</span>
+													</div>
+												</a>
+											)}
+
+											{anilistData && (
+												<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
+													{anilistData && (
+														<div className="flex items-start gap-6 overflow-scroll scrollbar-hide md:flex-col md:gap-2">
+															{[
+																{
+																	title: "Title (English)",
+																	value: `${
+																		anilistData
+																			.title
+																			.english ||
+																		manga.title
+																	}`,
+																},
+																{
+																	title: "Title (Romaji)",
+																	value: `${
+																		anilistData
+																			.title
+																			.romaji ||
+																		manga.title
+																	}`,
+																},
+																{
+																	title: "Title (Native)",
+																	value: `${
+																		anilistData
+																			.title
+																			.native ||
+																		manga.title
+																	}`,
+																},
+																{
+																	title: "Format",
+																	value: `${anilistData.format} (${anilistData.countryOfOrigin})`,
+																},
+																{
+																	title: "Status",
+																	value: `${
+																		anilistData.status ||
+																		"RELEASING"
+																	}`,
+																},
+																{
+																	title: "Start Year",
+																	value: `${
+																		anilistData
+																			.startDate
+																			.year ||
+																		2022
+																	}`,
+																},
+																{
+																	title: "Average Score",
+																	value: `${
+																		anilistData.averageScore /
+																		10
+																	}`,
+																},
+																{
+																	title: "Source",
+																	value: `${
+																		anilistData.source ||
+																		"ORIGINAL"
+																	}`,
+																},
+																{
+																	title: "Title Synonyms",
+																	value: `${[
+																		...(anilistData.synonyms ||
+																			[]),
+																		manga.title,
+																	]}`,
+																},
+															].map(
+																({
+																	title,
+																	value,
+																}) => {
+																	return (
+																		<div
+																			key={
 																				title
 																			}
-																		</span>
-																		<span className="text-sm text-neutral-200">
-																			{
-																				value
-																			}
-																		</span>
-																	</div>
-																);
-															},
-														)}
-													</div>
-												)}
-											</div>
-										)}
+																			className="flex flex-col w-full whitespace-nowrap md:whitespace-normal"
+																		>
+																			<span>
+																				{
+																					title
+																				}
+																			</span>
+																			<span className="text-sm text-neutral-200 line-clamp-1">
+																				{
+																					value
+																				}
+																			</span>
+																		</div>
+																	);
+																},
+															)}
+														</div>
+													)}
+												</div>
+											)}
+										</div>
 									</div>
 								</div>
 								<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
 									<h1 className="text-5xl font-black text-white -translate-y-52 h-12 md:-translate-y-64 hidden md:block relative">
-										<span className="absolute">{manga.title}</span>
+										<span className="absolute flex flex-col">
+											<span>{manga.title}</span>
+											{anilistData && (
+												<>
+													<span className="font-normal text-lg">
+														{
+															anilistData.title
+																.romaji
+														}
+													</span>
+													<span className="font-normal text-lg">
+														{
+															anilistData.title
+																.native
+														}
+													</span>
+												</>
+											)}
+										</span>
 									</h1>
 
 									<div className="-translate-y-12 space-y-2 ">
