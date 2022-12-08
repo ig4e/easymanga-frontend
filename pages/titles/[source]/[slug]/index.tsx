@@ -31,6 +31,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 
 import NoImagePlaceholder from "../../../../public/assets/no-img.png";
 import { useRouter } from "next/router";
+import SearchBar from "../../../../components/Ui/SearchBar";
 
 export interface Character {
 	role: "MAIN" | "SUPPORTING" | "BACKGROUND";
@@ -415,22 +416,30 @@ const MangaPage: NextPage<MangaPageProps> = ({
 														)}
 													</h1>
 												</div>
-												<Link
-													href={`/titles/${
-														manga.source
-													}/${
-														manga.slug
-													}/chapter?id=${
-														manga?.chapters?.[
-															manga?.chapters
-																?.length - 1
-														]?.slug
-													}`}
-												>
-													<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
-														Start Reading
-													</button>
-												</Link>
+												<div className="flex items-center gap-2">
+													<Link
+														href={`/titles/${
+															manga.source
+														}/${
+															manga.slug
+														}/chapter?id=${
+															manga?.chapters?.[
+																manga?.chapters
+																	?.length - 1
+															]?.slug
+														}`}
+													>
+														<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
+															Start Reading
+														</button>
+													</Link>
+													<SearchBar
+														noBar={true}
+														initalSearchQuery={
+															manga.title
+														}
+													></SearchBar>
+												</div>
 											</div>
 
 											{anilistData?.trailer?.id && (

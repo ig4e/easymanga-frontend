@@ -28,10 +28,10 @@ function Navbar({
 				} `}
 			>
 				<nav
-					className={`bg-base backdrop-blur-sm my-0 py-2.5 md:shadow-md fixed w-screen h-12 md:h-14 z-50 ${navClass} ${
+					className={`bg-base backdrop-blur-sm my-0 py-2.5 shadow md:shadow-md fixed w-screen h-12 md:h-14 z-50 ${navClass} ${
 						mode === "transparent" &&
-						"bg-black/20 rounded-b-md text-white md:text-neutral md:bg-base"
-					}`}
+						"bg-black/20 text-white md:text-neutral md:bg-base"
+					} rounded-b-md md:rounded-b-none`}
 				>
 					<div className="flex items-center justify-between container h-full w-full">
 						<div className="flex items-center space-x-16">
@@ -73,7 +73,7 @@ function Navbar({
 			</div>
 
 			<footer className="md:hidden">
-				<div className="fixed bottom-0 z-50 border-t-2 inset-x-0 bg-base">
+				<div className="fixed bottom-0 z-50 shadow-inner border-t-[1px] border-t-black/25 inset-x-0 bg-base">
 					<div className="flex items-center justify-between container">
 						<Link href={"/"}>
 							<button className="flex flex-col items-center w-full py-2 select-none">

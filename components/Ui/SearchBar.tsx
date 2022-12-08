@@ -35,7 +35,7 @@ function SearchBarUi({
 				<div className="absolute inset-0 left-2 pointer-events-none z-50 flex w-full items-center">
 					{active ? (
 						<svg
-							className="animate-spin w-6 h-5 text-neutral-200"
+							className="animate-spin w-6 h-5 text-primary"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -55,7 +55,7 @@ function SearchBarUi({
 							></path>
 						</svg>
 					) : (
-						<MagnifyingGlassIcon className="w-6 h-5 text-neutral-200"></MagnifyingGlassIcon>
+						<MagnifyingGlassIcon className="w-6 h-6 text-neutral-200"></MagnifyingGlassIcon>
 					)}
 				</div>
 				<motion.input
@@ -81,7 +81,13 @@ function SearchBarUi({
 	);
 }
 
-function SearchBar() {
+function SearchBar({
+	initalSearchQuery,
+	noBar = false,
+}: {
+	initalSearchQuery?: string;
+	noBar?: boolean;
+}) {
 	const queryString = useMemo(() => {
 		const sources = [
 			"ARES",
@@ -125,7 +131,7 @@ function SearchBar() {
 		results: Manga[];
 	}
 	const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-	const [searchQuery, setSearchQuery] = useState("");
+	const [searchQuery, setSearchQuery] = useState(initalSearchQuery || "");
 	const [getSearchResults, { loading, error, data }] =
 		useLazyQuery(queryString);
 
@@ -169,15 +175,23 @@ function SearchBar() {
 		<>
 			<motion.div className="h-full relative">
 				<Dialog.Root open={open} onOpenChange={setOpen}>
-					<Dialog.Trigger className="h-full">
-						<div className="hidden md:block h-full">
-							<SearchBarUi
-								setQuery={setSearchQuery}
-								value={searchQuery}
-								active={open}
-							></SearchBarUi>
-						</div>
-						<MagnifyingGlassIcon className="w-6 h-5 stroke-2 md:hidden"></MagnifyingGlassIcon>
+					<Dialog.Trigger className="h-full flex items-center">
+						{noBar ? (
+							<div className="p-2.5 bg-primary hover:bg-primary-hover active:bg-primary-active rounded-md h-full text-white text-lg font-medium transition">
+								<MagnifyingGlassIcon className="w-6 h-6 text-white"></MagnifyingGlassIcon>
+							</div>
+						) : (
+							<div className="h-full">
+								<div className="hidden md:block h-full">
+									<SearchBarUi
+										setQuery={setSearchQuery}
+										value={searchQuery}
+										active={open}
+									></SearchBarUi>
+								</div>
+								<MagnifyingGlassIcon className="w-6 h-6 text-current md:hidden"></MagnifyingGlassIcon>
+							</div>
+						)}
 					</Dialog.Trigger>
 					<AnimatePresence>
 						{open && (
@@ -188,13 +202,14 @@ function SearchBar() {
 										animate={{ opacity: 1 }}
 										exit={{ opacity: 0 }}
 										transition={{
+											reducedMotion: "user",
 											duration: 0.1,
 										}}
 										className="md:bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-start z-50"
 									>
 										<Dialog.Content asChild={true}>
 											<motion.div
-												initial={{ scale: 0 }}
+												initial={{ scale: 0.8 }}
 												animate={{ scale: 1 }}
 												exit={{ scale: 0, opacity: 0 }}
 												transition={{
