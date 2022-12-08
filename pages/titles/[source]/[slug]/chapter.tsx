@@ -192,12 +192,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 				<div className="flex items-center container h-full w-full">
 					<Link
 						href={"/"}
-						className="mr-auto flex-1 flex justify-center"
+						className="mr-auto flex-1 md:flex justify-start hidden"
 					>
-						<a
-							href={"/"}
-							className="items-center space-x-2 hidden md:flex"
-						>
+						<div className="items-center space-x-2 flex">
 							<div className="h-8 w-8 rounded-md">
 								<Image
 									className="rounded-md"
@@ -210,11 +207,11 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							<h1 className="font-semibold text-lg mt-1">
 								Easy Manga
 							</h1>
-						</a>
+						</div>
 					</Link>
 
-					<div className="flex-1 flex md:justify-center">
-						<div className="flex items-center gap-2 self-center justify-self-center ">
+					<div className="flex-1 flex justify-start md:justify-center">
+						<div className="flex items-center gap-2">
 							<Link
 								href={`/titles/${currentChapter.source}/${manga.slug}`}
 							>
@@ -248,9 +245,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 
 					<Link
 						href={`/titles/${currentChapter.source}/${manga.slug}`}
-						className="ml-auto flex-1 flex justify-center"
+						className="ml-auto flex-1 md:flex justify-end hidden"
 					>
-						<button className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
+						<button className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none whitespace-nowrap text-ellipsis">
 							<ArrowUturnLeftIcon className="h-6 w-6 hidden md:block"></ArrowUturnLeftIcon>
 						</button>
 					</Link>

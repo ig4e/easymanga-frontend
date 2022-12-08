@@ -9,7 +9,21 @@ import Link from "next/link";
 import MangaListRow from "../components/Ui/MangaListRow";
 import tw from "tailwind-styled-components";
 import PageLayout from "../components/Ui/PageLayout";
-
+import "swiper/css/bundle";
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+	A11y,
+	EffectCube,
+	FreeMode,
+	Keyboard,
+	Manipulation,
+	Mousewheel,
+	Virtual,
+} from "swiper";
+import Image from "next/image";
+import { BookOpenIcon, StarIcon } from "@heroicons/react/24/outline";
+import ExternalSite from "../components/Ui/ExternalSite";
+import { sourcesData } from "../utils/sourcesData";
 interface HomePageProps {
 	latestUpdatesList: Manga[][];
 	popularMangaList: Manga[];
@@ -21,7 +35,7 @@ const Home: NextPage<HomePageProps> = ({
 	popularMangaList,
 	recentlyAddedMangaList,
 }: HomePageProps) => {
-	const Header: any = tw.h1`text-2xl font-semibold mb-6`;
+	const Header: any = tw.h1`text-2xl font-semibold mb-2`;
 
 	return (
 		<PageLayout>
@@ -40,27 +54,223 @@ const Home: NextPage<HomePageProps> = ({
 					/>
 				</Head>
 
-				<div className="flex flex-col">
-					<Header>Latest Updates</Header>
+				<div className="flex flex-col gap-2 rounded-xl">
+					<Header>Popular Manga</Header>
+					<Swiper
+						className="select-none w-full"
+						effect={"fade"}
+						lazy={true}
+						longSwipes={true}
+						longSwipesMs={800}
+						speed={500}
+						freeMode={false}
+						longSwipesRatio={0.2}
+						slidesPerView={1}
+						slideToClickedSlide={false}
+						centeredSlides={true}
+						modules={[
+							FreeMode,
+							Keyboard,
+							Mousewheel,
+							A11y,
+							EffectCube,
+							Manipulation,
+						]}
+					>
+						{popularMangaList.map((manga, index) => {
+							const source = sourcesData[manga.source];
+							return (
+								<SwiperSlide
+									key={manga.slug}
+									className="w-full "
+								>
+									<Link
+										href={`/titles/${manga.source}/${manga.slug}`}
+									>
+										<div className="relative w-full h-52 md:h-80">
+											<Image
+												className="w-full -z-20 rounded-lg  object-cover bg-center bg-neutral-200"
+												src={manga.cover}
+												fill={true}
+												alt={manga.title}
+											></Image>
+											<div
+												className={`absolute -inset-[1.5px] banner-bg rounded-lg z-40 backdrop-blur-xl p-4 flex items-start gap-4`}
+											>
+												<Image
+													src={manga.cover}
+													className="object-cover rounded-md shadow-lg h-full w-auto"
+													width={200 / 2}
+													height={280 / 2}
+													alt={manga.title}
+												></Image>
+												<div className="flex flex-col h-full justify-between w-full">
+													<div>
+														<h1 className="text-lg md:text-3xl font-extrabold text-neutral z-50 flex flex-col">
+															<span>
+																{manga.title}
+															</span>
+
+															{manga.altTitles &&
+																manga.altTitles
+																	.slice(0, 4)
+																	.map(
+																		(
+																			title,
+																			index,
+																		) => {
+																			return (
+																				<span
+																					key={
+																						"popular" +
+																						manga.slug +
+																						index
+																					}
+																					className={`font-normal line-clamp-2 text-sm ${
+																						index !==
+																							0 &&
+																						"hidden md:block"
+																					}`}
+																				>
+																					{
+																						title
+																					}
+																				</span>
+																			);
+																		},
+																	)}
+														</h1>
+													</div>
+
+													<div className="flex gap-4 justify-between w-full">
+														<div className="flex items-center flex-wrap gap-2 md:hidden">
+															{manga.aniId && (
+																<ExternalSite
+																	small={true}
+																	title="Anilist"
+																	href={`https://anilist.co/manga/${
+																		manga.aniId
+																	}/${manga.title.replaceAll(
+																		" ",
+																		"-",
+																	)}`}
+																	ImageSrc={
+																		sourcesData
+																			.ANILIST
+																			.image
+																	}
+																/>
+															)}
+
+															{manga.dexId &&
+																!manga.aniId && (
+																	<ExternalSite
+																		small={
+																			true
+																		}
+																		title="MangaDex"
+																		href={`https://mangadex.org/title/${
+																			manga.dexId
+																		}/${manga.title.replaceAll(
+																			" ",
+																			"-",
+																		)}`}
+																		ImageSrc={
+																			sourcesData
+																				.MANGADEX
+																				.image
+																		}
+																	/>
+																)}
+														</div>
+														<div className="hidden items-center flex-wrap gap-2 md:flex">
+															{manga.aniId && (
+																<ExternalSite
+																	small={true}
+																	title="Anilist"
+																	href={`https://anilist.co/manga/${
+																		manga.aniId
+																	}/${manga.title.replaceAll(
+																		" ",
+																		"-",
+																	)}`}
+																	ImageSrc={
+																		sourcesData
+																			.ANILIST
+																			.image
+																	}
+																/>
+															)}
+
+															{manga.dexId && (
+																<ExternalSite
+																	small={true}
+																	title="MangaDex"
+																	href={`https://mangadex.org/title/${
+																		manga.dexId
+																	}/${manga.title.replaceAll(
+																		" ",
+																		"-",
+																	)}`}
+																	ImageSrc={
+																		sourcesData
+																			.MANGADEX
+																			.image
+																	}
+																/>
+															)}
+															<ExternalSite
+																small={true}
+																title={
+																	source.name
+																}
+																href={`${manga.url}`}
+																ImageSrc={
+																	source.image!
+																}
+															/>
+														</div>
+														<p
+															title={`manga score ${manga.score}`}
+															className="flex items-center font-semibold gap-2 line-clamp-1"
+														>
+															<StarIcon className="h-5 w-5 fill-current" />
+															{manga.score ||
+																"N/A"}
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</Link>
+								</SwiperSlide>
+							);
+						})}
+					</Swiper>
+					<Link
+						className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral"
+						href={"/titles"}
+					>
+						View All
+					</Link>
+				</div>
+
+				<div className="flex gap-2 flex-col">
+					<Header>Latest Chapters</Header>
 					<MangaCardHorizontalList
 						mangaList={latestUpdatesList}
 					></MangaCardHorizontalList>
-					<Link href="/titles/">
-						<a className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral">
-							View All
-						</a>
+					<Link
+						className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral"
+						href={"/titles"}
+					>
+						View All
 					</Link>
 				</div>
 
 				<MangaListRow
-					mangaList={popularMangaList}
-					title={"Popular Manga"}
-					href={"/titles?orderBy=popular"}
-				></MangaListRow>
-
-				<MangaListRow
 					mangaList={recentlyAddedMangaList}
-					title={"Recently Added"}
+					title={"New Titles"}
 					href={"/titles?orderBy=latest"}
 				></MangaListRow>
 			</div>
@@ -69,7 +279,7 @@ const Home: NextPage<HomePageProps> = ({
 };
 
 export const getStaticProps: GetStaticProps = async ({}) => {
-	let { source } = { source: "ARES" };
+	let { source } = { source: "MANGAKAKALOT" };
 
 	//console.log(source);
 

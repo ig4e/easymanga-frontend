@@ -13,7 +13,7 @@ function NavLink({ href, title }: { href: string; title: string }) {
 	return (
 		<div>
 			<Link href={href}>
-				<a href={href} className="flex flex-col items-center group p-1">
+				<div className="flex flex-col items-center group p-1">
 					<h1
 						className={`transition font-medium text-[0.85rem] group-hover:text-primary ${
 							active ? "text-primary" : "text-neutral-100"
@@ -34,7 +34,7 @@ function NavLink({ href, title }: { href: string; title: string }) {
 					) : (
 						<div className="h-1"></div>
 					)}
-				</a>
+				</div>
 			</Link>
 		</div>
 	);

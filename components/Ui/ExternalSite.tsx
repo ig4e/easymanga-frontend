@@ -7,27 +7,53 @@ function ExternalSite({
 	title,
 	ImageSrc,
 	ImageClassName,
+	small,
 }: {
 	href: string;
 	title: string;
 	ImageSrc: StaticImageData;
 	ImageClassName?: string;
+	small?: boolean;
 }) {
+	const Wrapper = ({ children, className, href }: any) =>
+		small ? (
+			<div className={className}>{children}</div>
+		) : (
+			<a
+				className={className}
+				href={href}
+				target="_blank"
+				rel="noreferrer"
+			>
+				{children}
+			</a>
+		);
 	return (
-		<a
+		<Wrapper
 			href={href}
-			target="_blank"
-			rel="noreferrer"
 			className="flex items-center gap-2 hover:bg-neutral-200/25 p-1 rounded-md select-none"
 		>
-			<div className={`w-6 h-6 ${ImageClassName}`}>
-				<Image src={ImageSrc} className="rounded-md" title={title}></Image>
+			<div
+				className={`w-6 h-6 ${small && "!w-5 !h-5"} ${ImageClassName}`}
+			>
+				<Image
+					src={ImageSrc}
+					className="rounded-md"
+					title={title}
+					alt={title}
+				></Image>
 			</div>
-			<span className="font-medium flex items-center gap-4 select-none">
+			<span
+				className={`font-medium flex items-center gap-4 select-none  ${
+					small && "!text-xs"
+				}`}
+			>
 				{title}
-				<ArrowTopRightOnSquareIcon className="w-4 h-4"></ArrowTopRightOnSquareIcon>
+				{!small && (
+					<ArrowTopRightOnSquareIcon className="w-4 h-4"></ArrowTopRightOnSquareIcon>
+				)}
 			</span>
-		</a>
+		</Wrapper>
 	);
 }
 

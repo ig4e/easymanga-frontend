@@ -1,6 +1,8 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
+import ImageLegacy from "next/legacy/image";
 import Image from "next/image";
+
 import { Manga } from "../../../../typings/manga";
 import { anilistClient, client } from "../../../../apollo-client";
 import { gql } from "@apollo/client";
@@ -342,7 +344,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 										  )
 										: manga.cover
 								}
-								layout="fill"
+								fill={true}
 								objectFit="cover"
 								objectPosition={"center"}
 								alt={manga.title}
@@ -416,30 +418,30 @@ const MangaPage: NextPage<MangaPageProps> = ({
 														)}
 													</h1>
 												</div>
-												<div className="flex items-center gap-2">
-													<Link
-														href={`/titles/${
-															manga.source
-														}/${
-															manga.slug
-														}/chapter?id=${
-															manga?.chapters?.[
-																manga?.chapters
-																	?.length - 1
-															]?.slug
-														}`}
-													>
-														<button className="p-2 bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition">
-															Start Reading
-														</button>
-													</Link>
-													<SearchBar
-														noBar={true}
-														initalSearchQuery={
-															manga.title
-														}
-													></SearchBar>
-												</div>
+											</div>
+
+											<div className="flex items-center gap-2 w-full">
+												<Link
+													href={`/titles/${
+														manga.source
+													}/${
+														manga.slug
+													}/chapter?id=${
+														manga?.chapters?.[
+															manga?.chapters
+																?.length - 1
+														]?.slug
+													}`}
+													className="p-2 text-center bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition"
+												>
+													Start Reading
+												</Link>
+												<SearchBar
+													noBar={true}
+													initalSearchQuery={
+														manga.title
+													}
+												></SearchBar>
 											</div>
 
 											{anilistData?.trailer?.id && (
@@ -455,7 +457,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 													<Image
 														src={manga.cover}
 														className="rounded-md absolute"
-														layout="fill"
+														fill={true}
 														objectFit="cover"
 														alt={manga.title}
 													></Image>
@@ -712,8 +714,11 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											</>
 										)}
 									</div>
-
-									<Tabs.Content value="art">
+									<div></div>
+									<Tabs.Content
+										value="art"
+										className="-translate-y-12"
+									>
 										<h3 className="text-2xl mb-4">
 											Manga Covers
 										</h3>
@@ -735,20 +740,18 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																}}
 																className="md:w-auto relative"
 															>
-																<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
-
-																<Image
+																<ImageLegacy
 																	src={
 																		cover.url
 																	}
 																	width={200}
 																	height={280}
-																	className="rounded-md object-cover"
+																	className="rounded-md object-cover bg-neutral-200"
 																	alt={
 																		manga.title +
 																		cover.volume
 																	}
-																></Image>
+																></ImageLegacy>
 															</motion.div>
 														</ShowImageModal>
 														<span>
@@ -760,7 +763,10 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											})}
 										</div>
 									</Tabs.Content>
-									<Tabs.Content value="characters">
+									<Tabs.Content
+										value="characters"
+										className="-translate-y-12"
+									>
 										<h3 className="text-2xl mb-4">
 											Manga Characters
 										</h3>
@@ -792,9 +798,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																	}}
 																	className="md:w-auto relative"
 																>
-																	<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
-
-																	<span className="bg-base p-1 px-2 absolute z-20 rounded-md bottom-3 left-2 text-sm">
+																	<span className="bg-base p-1 px-2 absolute z-20 rounded-md bottom-3 left-2 text-sm ">
 																		{role
 																			.replace(
 																				/./g,
@@ -812,7 +816,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																			)}
 																	</span>
 
-																	<Image
+																	<ImageLegacy
 																		src={
 																			`https://workers.emanga.tk/fetch?url=` +
 																			node
@@ -825,14 +829,14 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		height={
 																			280
 																		}
-																		className="rounded-md object-cover"
+																		className="rounded-md object-cover bg-neutral-200"
 																		alt={
 																			manga.title +
 																			node
 																				.name
 																				.full
 																		}
-																	></Image>
+																	></ImageLegacy>
 																</motion.div>
 															</ShowImageModal>
 															<a
@@ -1006,28 +1010,18 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																	}/chapter?id=${encodeURIComponent(
 																		chapter.slug!,
 																	)}`}
+																	className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
 																>
-																	<a
-																		href={`/titles/${
-																			manga.source
-																		}/${
-																			manga.slug
-																		}/chapter?id=${encodeURIComponent(
-																			chapter.slug!,
-																		)}`}
-																		className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
-																	>
-																		<span className="text-xs">
-																			{
-																				chapter.number
-																			}
-																		</span>
-																		<span className="truncate line-clamp-1">
-																			{
-																				chapter.name
-																			}
-																		</span>
-																	</a>
+																	<span className="text-xs">
+																		{
+																			chapter.number
+																		}
+																	</span>
+																	<span className="truncate line-clamp-1">
+																		{
+																			chapter.name
+																		}
+																	</span>
 																</Link>
 															);
 														},

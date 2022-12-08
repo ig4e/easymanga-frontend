@@ -191,7 +191,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 				<LayoutGroup id="mangaCover">
 					<div
 						key={"titles-grid"}
-						className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none ${
+						className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] sm:[grid-template-columns:repeat(auto-fill,minmax(160px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(185px,1fr));] [grid-auto-rows:1fr] gap-4 md:gap-y-6 content select-none ${
 							isSelectMenuOpen ? "pointer-events-none" : ""
 						}`}
 					>
@@ -201,6 +201,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 									key={manga.slug + index}
 									manga={manga}
 									mobile={true}
+									customClasses={``}
 								></MangaCard>
 								// <Link
 								// 	href={`/titles/${manga.source}/${manga.slug}`}
@@ -215,7 +216,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 								// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
 								// 			<Image
 								// 				src={manga.cover}
-								// 				layout="fill"
+								// 				fill={true}
 								// 				className="rounded-md object-cover "
 								// 				alt={manga.title}
 								// 			></Image>

@@ -7,11 +7,22 @@
 @layer components {
 	body {
 		@apply bg-base;
+
+		--em-background-translucent: hsla(0, 0%, 100%, 0.3);
+		--em-background: rgb(255 255 255);
 	}
 
 	/* For Webkit-based browsers (Chrome, Safari and Opera) */
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;
+	}
+
+	.banner-bg {
+		background: linear-gradient(
+			180deg,
+			var(--em-background-translucent),
+			var(--em-background)
+		);
 	}
 
 	/* For IE, Edge and Firefox */

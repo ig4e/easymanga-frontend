@@ -30,7 +30,7 @@ function MangaListRow({
 	title: string;
 	href: string;
 }) {
-	const Header: any = tw.h1`text-2xl font-semibold mb-4`;
+	const Header: any = tw.h1`text-2xl font-semibold mb-2`;
 	const [width, setWidth] = React.useState(0);
 	useEffect(() => {
 		setWidth(window.innerWidth);
@@ -86,22 +86,23 @@ function MangaListRow({
 					Manipulation,
 				]}
 			>
-				{mangaList.map((manga) => (
-					<SwiperSlide key={manga.slug}>
-						<MangaCard
-							mobile={width < breakpoints["md"]}
-							manga={manga}
-						></MangaCard>
-					</SwiperSlide>
-				))}
+				<div className="grid grid-flow-row [grid-auto-rows:1fr]">
+					{mangaList.map((manga) => (
+						<SwiperSlide key={manga.slug} className="h-full">
+							<MangaCard
+								mobile={width < breakpoints["md"]}
+								customClasses="!h-[185px]"
+								manga={manga}
+							></MangaCard>
+						</SwiperSlide>
+					))}
+				</div>
 			</Swiper>
-			<Link href={href}>
-				<a
-					href={href}
-					className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral"
-				>
-					View All
-				</a>
+			<Link
+				className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral"
+				href={href}
+			>
+				View All
 			</Link>
 		</div>
 	);

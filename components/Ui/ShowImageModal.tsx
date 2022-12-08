@@ -18,8 +18,8 @@ function ShowImageModal({
 		<motion.div className="relative">
 			<AnimatePresence>
 				<Dialog.Root>
-					<Dialog.Trigger className="relative">
-						<div className="absolute inset-0 bottom-1.5 bg-black/25 opacity-0 transition hover:opacity-100 grid place-items-center z-40 rounded-md">
+					<Dialog.Trigger className="relative h-full">
+						<div className="absolute inset-0  bg-black/25 opacity-0 transition hover:opacity-100 grid place-items-center z-40 rounded-md">
 							<ArrowsPointingOutIcon className="text-white stroke-1 h-12 w-12"></ArrowsPointingOutIcon>
 						</div>
 
@@ -35,7 +35,7 @@ function ShowImageModal({
 									type: "spring",
 									duration: 0.4,
 								}}
-								className="max-w-[80vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
+								className="max-w-[95vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
 							>
 								<Dialog.Content className="">
 									{!isLoaded && (

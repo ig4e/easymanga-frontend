@@ -11,20 +11,14 @@ function MangaCardHorizontal({ manga }: { manga: Manga }) {
 
 	return (
 		<Link href={`/titles/${manga.source}/${manga.slug}`}>
-			<a
-				href={`/titles/${manga.source}/${manga.slug}`}
-				className="flex gap-2 max-h-20 bg-base-100 "
-			>
-				<div className="h-full max-w-[56px] min-w-[56px] relative">
-					<div className="absolute z-10 inset-0 bg-neutral-200/80 animate-pulse rounded"/>
+			<div className="flex gap-2 max-h-20 bg-base-100 ">
+				<div className="w-[56px] h-[80px] relative">
 					<Image
+						className="min-w-[56px] min-h-[80px] w-[56px] h-[80px] rounded object-cover z-10 bg-neutral-200"
 						src={manga.cover}
-						height={100}
-						width={70}
-						quality={90}
-						className="rounded object-cover z-20"
+						height={80}
+						width={56}
 						alt={manga.title}
-
 					></Image>
 				</div>
 				<div className="flex flex-col justify-evenly">
@@ -42,14 +36,14 @@ function MangaCardHorizontal({ manga }: { manga: Manga }) {
 						{manga.score || "N/A"}
 					</p>
 					<p
-						title={`Ch.${manga.chapters![0].number}`}
+						title={`Ch.${manga.chapters?.[0]?.number || "N/A"}`}
 						className="flex items-center font-semibold gap-2 line-clamp-1"
 					>
 						<BookOpenIcon className="h-5 w-5" />
-						Ch.{manga.chapters![0].number}
+						Ch.{manga.chapters?.[0]?.number || "N/A"}
 					</p>
 				</div>
-			</a>
+			</div>
 		</Link>
 	);
 }
