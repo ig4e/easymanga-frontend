@@ -715,7 +715,17 @@ const MangaPage: NextPage<MangaPageProps> = ({
 														<ShowImageModal
 															imgSrc={cover.url}
 														>
-															<div className="md:w-auto relative">
+															<motion.div
+																animate={{
+																	scale: 0.8,
+																	opacity: 0.9,
+																}}
+																whileInView={{
+																	scale: 1,
+																	opacity: 1,
+																}}
+																className="md:w-auto relative"
+															>
 																<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
 
 																<Image
@@ -730,7 +740,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		cover.volume
 																	}
 																></Image>
-															</div>
+															</motion.div>
 														</ShowImageModal>
 														<span>
 															Volume{" "}
@@ -762,7 +772,17 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		.large
 																}
 															>
-																<div className="md:w-auto relative">
+																<motion.div
+																	animate={{
+																		scale: 0.8,
+																		opacity: 0.9,
+																	}}
+																	whileInView={{
+																		scale: 1,
+																		opacity: 1,
+																	}}
+																	className="md:w-auto relative"
+																>
 																	<div className="bg-neutral-200/80 animate-pulse inset-0 bottom-2 absolute rounded-md"></div>
 
 																	<span className="bg-base p-1 px-2 absolute z-20 rounded-md bottom-3 left-2 text-sm">
@@ -804,7 +824,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																				.full
 																		}
 																	></Image>
-																</div>
+																</motion.div>
 															</ShowImageModal>
 															<a
 																href={`https://anilist.co/character/${node.id}/${node.name.full}`}

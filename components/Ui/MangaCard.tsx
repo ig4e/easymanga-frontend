@@ -35,11 +35,14 @@ function MangaCard({
 
 	return (
 		<Link href={`/titles/${manga.source}/${manga.slug}`}>
-			<a href={`/titles/${manga.source}/${manga.slug}`} onClick={onClick}>
+			<motion.a
+				animate={{ scale: 0.8, opacity: 0.9 }}
+				whileInView={{ scale: 1, opacity: 1 }}
+				href={`/titles/${manga.source}/${manga.slug}`}
+				onClick={onClick}
+			>
 				<div>
-					<motion.div
-						animate={{ scale: 0.8, opacity: 0.9 }}
-						whileInView={{ scale: 1, opacity: 1 }}
+					<div
 						className={`${
 							mobile ? "" : "min-h-[180px] min-w-[130px]"
 						} w-full h-full max-w-full relative`}
@@ -53,7 +56,7 @@ function MangaCard({
 							alt={manga.title}
 							onError={() => setCoverError(true)}
 						></Image>
-					</motion.div>
+					</div>
 				</div>
 				<h1
 					title={manga.title}
@@ -62,7 +65,7 @@ function MangaCard({
 					}}
 					className="text-left text-sm font-medium line-clamp-2"
 				></h1>
-			</a>
+			</motion.a>
 		</Link>
 	);
 
