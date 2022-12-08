@@ -10,11 +10,13 @@ const nextConfig = {
 	reactStrictMode: true,
 	images: {
 		domains: ["workers.emanga.tk"],
+		unoptimized: true,
 	},
 	compiler: {
 		styledComponents: {
 			ssr: true,
 		},
+		removeConsole: true,
 	},
 };
 
