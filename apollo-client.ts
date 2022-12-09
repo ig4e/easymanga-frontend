@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
-const useDevServer = true;
+const useDevServer = false;
 
 export const client = new ApolloClient({
 	uri:
