@@ -362,7 +362,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 						<div className="container z-50">
 							<div className="md:flex gap-6 ">
 								<div className="w-full max-w-[90.99vw] md:max-w-[200px]">
-									<div className="-translate-y-52 md:-translate-y-60 min-w-max md:fixed overflow-y-scroll scrollbar-hide">
+									<div className="-translate-y-52 md:-translate-y-60 min-w-max overflow-y-scroll scrollbar-hide">
 										<div className="flex flex-col gap-4 ">
 											<div>
 												<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
@@ -420,7 +420,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 												</div>
 											</div>
 
-											<div className="flex items-center gap-2 w-full">
+											<div className="flex items-center gap-2 w-full ">
 												<Link
 													href={`/titles/${
 														manga.source
