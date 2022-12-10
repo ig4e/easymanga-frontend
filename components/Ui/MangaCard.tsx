@@ -39,7 +39,7 @@ function MangaCard({
 				className="w-full h-full space-y-1"
 			>
 				<Image
-					src={coverError ? NoImagePlaceHolder : manga.cover}
+					src={coverError ? NoImagePlaceHolder : manga.cover + (manga.dexId ? ".256.jpg" : "")}
 					width={200}
 					height={280}
 					className={`rounded-md object-cover w-full z-10 h-[80%] md:h-[90%] ${customClasses} bg-neutral-200`}

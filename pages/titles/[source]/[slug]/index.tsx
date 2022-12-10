@@ -742,7 +742,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															>
 																<ImageLegacy
 																	src={
-																		cover.url
+																		cover.url +
+																		".256.jpg"
 																	}
 																	width={200}
 																	height={280}

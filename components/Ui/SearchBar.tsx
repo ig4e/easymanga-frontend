@@ -330,11 +330,6 @@ function SearchBar({
 																											asChild
 																										>
 																											<MangaCard
-																												onClick={() => {
-																													console.log(
-																														"close please!!",
-																													);
-																												}}
 																												key={
 																													source +
 																													"-result-" +
