@@ -329,7 +329,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 						/>
 						<meta
 							property="og:image"
-							content={anilistData?.bannerImage || manga.cover}
+							content={manga.cover}
 						/>
 					</Head>
 
@@ -373,7 +373,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															layoutId="mangaCoverTrans"
 															className="w-32 md:w-auto"
 														>
-															<Image
+															<ImageLegacy
 																onError={() =>
 																	setCoverError(
 																		true,
@@ -390,7 +390,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																alt={
 																	manga.title
 																}
-															></Image>
+															></ImageLegacy>
 														</motion.div>
 													</ShowImageModal>
 													<h1 className="text-lg md:text-2xl font-bold text-white z-50 flex flex-col md:hidden">
@@ -454,13 +454,13 @@ const MangaPage: NextPage<MangaPageProps> = ({
 													target="_blank"
 													className="border flex rounded-md relative select-none "
 												>
-													<Image
+													<ImageLegacy
 														src={manga.cover}
 														className="rounded-md absolute"
 														fill={true}
 														objectFit="cover"
 														alt={manga.title}
-													></Image>
+													></ImageLegacy>
 													<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
 													<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
 														<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
