@@ -454,13 +454,13 @@ const MangaPage: NextPage<MangaPageProps> = ({
 													target="_blank"
 													className="border flex rounded-md relative select-none "
 												>
-													<ImageLegacy
+													<Image
 														src={manga.cover}
 														className="rounded-md absolute"
 														fill={true}
 														objectFit="cover"
 														alt={manga.title}
-													></ImageLegacy>
+													></Image>
 													<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
 													<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
 														<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
