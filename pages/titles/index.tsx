@@ -151,7 +151,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 						</Select.Trigger>
 
 						<Select.Portal>
-							<Select.Content className="bg-root p-2 border drop-shadow-md rounded-md z-50">
+							<Select.Content className="bg-root p-2 border border-root drop-shadow-md rounded-md z-50">
 								<Select.ScrollUpButton className="SelectScrollButton text-reverse">
 									<ChevronUpIcon className="h-4 w-4" />
 								</Select.ScrollUpButton>
