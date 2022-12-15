@@ -20,20 +20,7 @@
 		// "reverse-100": "#f0f1f3",
 	*/
 
-	.dark {
-		--color-root: 18 19 24;
-		--color-root-100: 34 35 40;
-		--color-neutral: 222 239 239;
-		--color-neutral-100: 244 248 240;
-		--color-neutral-200: 182 182 182;
-		--color-reverse: 222 239 239;
-		--color-reverse-100: 240 241 243;
-
-		--em-background: #121318;
-		--em-background-translucent: rgba(18, 19, 24, 0.6);
-	}
-
-	:root {
+	[data-theme="light"] {
 		--color-primary: 50 170 255;
 		--color-primary-hover: 20 157 255;
 		--color-primary-active: 0 143 245;
@@ -50,6 +37,22 @@
 
 		--em-background: #fff;
 		--em-background-translucent: hsla(0, 0%, 100%, 0.6);
+	}
+
+	[data-theme="dark"] {
+		--color-primary: 50 170 255;
+		--color-primary-hover: 20 157 255;
+		--color-primary-active: 0 143 245;
+		--color-root: 18 19 24;
+		--color-root-100: 34 35 40;
+		--color-neutral: 222 239 239;
+		--color-neutral-100: 244 248 240;
+		--color-neutral-200: 182 182 182;
+		--color-reverse: 222 239 239;
+		--color-reverse-100: 240 241 243;
+
+		--em-background: #121318;
+		--em-background-translucent: rgba(18, 19, 24, 0.6);
 	}
 
 	body {

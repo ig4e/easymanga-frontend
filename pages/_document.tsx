@@ -46,27 +46,6 @@ export default function Document() {
 			</Head>
 
 			<body id="_body" className="transition duration-100">
-				<Script id="theme-setter" strategy="beforeInteractive">
-					{`
-					try {
-						const body =
-							typeof window !== "undefined" && document.getElementById("_body");
-						if (body) {
-							if (
-								JSON.parse(localStorage.getItem("userSettingsStore"))["state"][
-									"theme"
-								] === "dark"
-							)
-							 {
-								body.classList.add("dark");
-							 } else {
-
-								 body.classList.remove("dark");
-							 }
-						}
-					} catch {}
-				`}
-				</Script>
 				<Main />
 				<NextScript />
 			</body>

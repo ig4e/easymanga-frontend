@@ -1,4 +1,8 @@
-import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+import {
+	ComputerDesktopIcon,
+	MoonIcon,
+	SunIcon,
+} from "@heroicons/react/24/outline";
 import {
 	HomeIcon,
 	ArrowPathRoundedSquareIcon,
@@ -12,6 +16,7 @@ import React from "react";
 import { useUserSettingsStore } from "../../store";
 import NavLink from "../Ui/NavLink";
 import SearchBar from "../Ui/SearchBar";
+import { useTheme } from "next-themes";
 
 function Navbar({
 	navClass,
@@ -21,10 +26,14 @@ function Navbar({
 	mode?: "transparent";
 }) {
 	const location = useRouter();
-	const { theme, setTheme } = useUserSettingsStore((state) => ({
+	const { theme, forcedTheme, themes, resolvedTheme, systemTheme, setTheme } =
+		useTheme();
+	/*const { theme, setTheme } = useUserSettingsStore((state) => ({
 		theme: state.theme,
 		setTheme: state.setTheme,
-	}));
+	}));*/
+
+	console.log(theme);
 
 	return (
 		<>
@@ -79,10 +88,15 @@ function Navbar({
 								}
 								className="p-1 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
 							>
-								{theme === "light" ? (
-									<SunIcon className="h-6 w-6 text-neutral"></SunIcon>
+								{forcedTheme === resolvedTheme ? (
+									<ComputerDesktopIcon className={`${navClass} h-6 w-6 text-neutral stroke-current`}></ComputerDesktopIcon>
 								) : (
-									<MoonIcon className="h-6 w-6 text-neutral"></MoonIcon>
+									(theme === "light" && (
+										<SunIcon className={`${navClass} h-6 w-6 text-neutral stroke-current`}></SunIcon>
+									)) ||
+									(theme === "dark" && (
+										<MoonIcon className={`${navClass} h-6 w-6 text-neutral stroke-current`}></MoonIcon>
+									))
 								)}
 							</button>
 						</div>

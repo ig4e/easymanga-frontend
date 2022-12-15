@@ -10,6 +10,7 @@ import { client } from "../apollo-client";
 import Navbar from "../components/Navbar";
 import { useEffect } from "react";
 import { useUserSettingsStore } from "../store";
+import { ThemeProvider } from "next-themes";
 
 //Route Events.
 NProgress.configure({});
@@ -19,22 +20,24 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppProps) {
-	const theme = useUserSettingsStore((state) => state.theme);
+	//const theme = useUserSettingsStore((state) => state.theme);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		const body =
 			typeof window !== "undefined" && document.getElementById("_body");
 		if (body) {
 			if (theme === "dark") return body.classList.add("dark");
 			body.classList.remove("dark");
 		}
-	}, [theme]);
+	}, [theme]);*/
 
 	return (
 		<ApolloProvider client={client}>
-			<div className="font-body text-neutral ">
-				<Component {...pageProps} />
-			</div>
+			<ThemeProvider>
+				<div className="font-body text-neutral ">
+					<Component {...pageProps} />
+				</div>
+			</ThemeProvider>
 		</ApolloProvider>
 	);
 }
