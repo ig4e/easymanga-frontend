@@ -88,15 +88,25 @@ function Navbar({
 								}
 								className="p-1 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
 							>
-								{forcedTheme === resolvedTheme ? (
-									<ComputerDesktopIcon className={`${navClass} h-6 w-6 text-neutral stroke-current`}></ComputerDesktopIcon>
+								{(forcedTheme === resolvedTheme ? (
+									<ComputerDesktopIcon
+										className={`${navClass} h-6 w-6 text-neutral stroke-current`}
+									></ComputerDesktopIcon>
 								) : (
 									(theme === "light" && (
-										<SunIcon className={`${navClass} h-6 w-6 text-neutral stroke-current`}></SunIcon>
+										<SunIcon
+											className={`${navClass} h-6 w-6 text-neutral stroke-current`}
+										></SunIcon>
 									)) ||
 									(theme === "dark" && (
-										<MoonIcon className={`${navClass} h-6 w-6 text-neutral stroke-current`}></MoonIcon>
+										<MoonIcon
+											className={`${navClass} h-6 w-6 text-neutral stroke-current`}
+										></MoonIcon>
 									))
+								)) || (
+									<SunIcon
+										className={`${navClass} h-6 w-6 text-neutral stroke-current`}
+									></SunIcon>
 								)}
 							</button>
 						</div>
