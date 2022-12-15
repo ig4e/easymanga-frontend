@@ -9,8 +9,8 @@ export default function Document() {
 					src="https://www.googletagmanager.com/gtag/js?id=G-5B28VN7941"
 					strategy="afterInteractive"
 				/>
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF">
-<meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#000000">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#121318" />
 				<Script id="google-analytics" strategy="afterInteractive">
 					{`
 					window.dataLayer = window.dataLayer || [];
