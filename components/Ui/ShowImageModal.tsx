@@ -26,7 +26,7 @@ function ShowImageModal({
 						{children}
 					</Dialog.Trigger>
 					<Dialog.Portal>
-						<Dialog.Overlay className="bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">
+						<Dialog.Overlay className="bg-root-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">
 							<motion.div
 								initial={{ scale: 0.5 }}
 								animate={{ scale: 1 }}
