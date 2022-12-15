@@ -52,7 +52,7 @@ function ShowImageModal({
 										<Image
 											quality={100}
 											src={imgSrc}
-											layout="fill"
+											fill={true}
 											onLoad={() => setIsLoaded(true)}
 											className={`${
 												isLoaded

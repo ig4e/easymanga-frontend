@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 
 function MangaCardHorizontal({ manga }: { manga: Manga }) {
 	const MangaTitle: any = tw.h1`text-lg font-bold`;
+	const mangaCover = manga.dexId ? manga.cover.replace("&referer=", ".256.jpg&referer=") : manga.cover
 
 	return (
 		<Link href={`/titles/${manga.source}/${manga.slug}`}>
@@ -15,7 +16,7 @@ function MangaCardHorizontal({ manga }: { manga: Manga }) {
 				<div className="w-[56px] h-[80px] relative">
 					<Image
 						className="min-w-[56px] min-h-[80px] w-[56px] h-[80px] rounded object-cover z-10 bg-neutral-200"
-						src={manga.cover}
+						src={mangaCover}
 						height={80}
 						width={56}
 						alt={manga.title}
