@@ -19,9 +19,16 @@ import {
 	Manipulation,
 	Mousewheel,
 	Virtual,
+	Pagination,
+	Navigation,
 } from "swiper";
 import Image from "next/image";
-import { BookOpenIcon, StarIcon } from "@heroicons/react/24/outline";
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	BookOpenIcon,
+	StarIcon,
+} from "@heroicons/react/24/outline";
 import ExternalSite from "../components/Ui/ExternalSite";
 import { sourcesData } from "../utils/sourcesData";
 interface HomePageProps {
@@ -68,6 +75,17 @@ const Home: NextPage<HomePageProps> = ({
 						slidesPerView={1}
 						slideToClickedSlide={false}
 						centeredSlides={true}
+						navigation={{
+							nextEl: "#slide-next",
+							prevEl: "#slide-prev",
+							hiddenClass: "bg-root-100",
+							disabledClass: "bg-root-100",
+							lockClass: "bg-root-100",
+						}}
+						pagination={{
+							el: ".swiper-pagination",
+							type: "bullets",
+						}}
 						modules={[
 							FreeMode,
 							Keyboard,
@@ -75,10 +93,19 @@ const Home: NextPage<HomePageProps> = ({
 							A11y,
 							EffectCube,
 							Manipulation,
+							Pagination,
+							Navigation,
 						]}
 					>
 						{popularMangaList.map((manga, index) => {
 							const source = sourcesData[manga.source];
+							const mangaCover = manga.dexId
+								? manga.cover.replace(
+										"&referer=",
+										".256.jpg&referer=",
+								  )
+								: manga.cover;
+
 							return (
 								<SwiperSlide
 									key={manga.slug}
@@ -98,7 +125,7 @@ const Home: NextPage<HomePageProps> = ({
 												className={`absolute -inset-[1.5px] banner-bg rounded-lg z-40 backdrop-blur-xl p-4 flex items-start gap-4`}
 											>
 												<Image
-													src={manga.cover}
+													src={mangaCover}
 													className="object-cover rounded-md shadow-lg h-full w-auto"
 													width={200 / 2}
 													height={280 / 2}
@@ -246,6 +273,21 @@ const Home: NextPage<HomePageProps> = ({
 								</SwiperSlide>
 							);
 						})}
+
+						<div className="md:flex items-center gap-2 absolute top-4 right-4 z-40 hidden">
+							<button
+								id="slide-prev"
+								className="bg-root hover:bg-root-100 active:bg-neutral-200/80 p-2 rounded-full transition disabled:opacity-50 disabled:hover:bg-root disabled:active:bg-root"
+							>
+								<ArrowLeftIcon className="h-4 w-4 text-neutral "></ArrowLeftIcon>
+							</button>
+							<button
+								id="slide-next"
+								className="bg-root hover:bg-root-100 active:bg-neutral-200/80 p-2 rounded-full transition disabled:opacity-50 disabled:hover:bg-root disabled:active:bg-root"
+							>
+								<ArrowRightIcon className="h-4 w-4 text-neutral "></ArrowRightIcon>
+							</button>
+						</div>
 					</Swiper>
 					<Link
 						className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral"
@@ -347,3 +389,5 @@ export const getStaticProps: GetStaticProps = async ({}) => {
 };
 
 export default Home;
+
+

@@ -37,14 +37,14 @@ function ChapterPageChaptersMenu({ chapters }: { chapters: Chapter[] }) {
 										type: "spring",
 										duration: 0.3,
 									}}
-									className="relative p-4 pb-6 text-white rounded-t-xl drop-shadow-lg select-none bg-[#303030] z-50 w-screen max-h-[60vh] -mb-[3.31rem] md:w-auto md:h-auto md:mb-4 overflow-y-scroll"
+									className="relative p-4 pb-6 text-reverse rounded-t-xl drop-shadow-lg select-none bg-[#303030] z-50 w-screen max-h-[60vh] -mb-[3.31rem] md:w-auto md:h-auto md:mb-4 overflow-y-scroll"
 								>
 									<div className="fixed flex items-start justify-between z-50 bg-[#303030] inset-x-0 top-0 py-2 px-4">
 										<DropdownMenu.Label className="text-lg font-semibold mb-3">
 											Chapters
 										</DropdownMenu.Label>
 										<DropdownMenu.Item className="p-1.5 rounded-full hover:bg-white/10 focus:bg-white/15 active:bg-white/15">
-											<XMarkIcon className="h-4 w-4 text-white"></XMarkIcon>
+											<XMarkIcon className="h-4 w-4 text-reverse"></XMarkIcon>
 										</DropdownMenu.Item>
 									</div>
 									<div className="h-[56px]"></div>
@@ -64,7 +64,7 @@ function ChapterPageChaptersMenu({ chapters }: { chapters: Chapter[] }) {
 															chapter.slug!,
 														)}`}
 													>
-														<div className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition text-neutral">
+														<div className="p-2 border bg-root rounded-md flex gap-2 hover:bg-primary/10 transition text-neutral">
 															<span className="text-xs">
 																{chapter.number}
 															</span>

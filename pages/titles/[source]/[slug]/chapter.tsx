@@ -170,7 +170,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 	}, [chapter.slug]);
 
 	return (
-		<div className="bg-[#212121] text-white min-h-screen ">
+		<div className="bg-[#212121] text-reverse min-h-screen ">
 			<Head>
 				<title>
 					{manga.title} Chapter {chapter.name} - Easy Manga
@@ -235,7 +235,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 										currentChapter.slug!,
 									)}`}
 								>
-									<button className="text-xs text-white/60 md:text-white/60 md:text-base md:px-2 md:py-2 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
+									<button className="text-xs text-reverse/60 md:text-reverse/60 md:text-reverse md:px-2 md:py-2 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
 										{currentChapter.name}
 									</button>
 								</Link>
@@ -387,7 +387,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							<MinusIcon className="w-4 h-4 stroke-2"></MinusIcon>
 						</button>
 
-						<span className="text-sm text-white/60">
+						<span className="text-sm text-reverse/60">
 							{chapterPageScale}%
 						</span>
 
@@ -405,7 +405,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 					</div>
 
 					<div className="flex items-center gap-4">
-						<span className="text-white/60 whitespace-nowrap">
+						<span className="text-reverse/60 whitespace-nowrap">
 							{currentChapterProgress} /{" "}
 							{currentChapter.pages?.length}
 						</span>

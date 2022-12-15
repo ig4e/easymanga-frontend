@@ -143,7 +143,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 						}}
 						defaultValue={source}
 					>
-						<Select.Trigger className="bg-base h-10 px-4 rounded-md border flex gap-2 items-center whitespace-nowrap">
+						<Select.Trigger className="bg-root-100 h-10 px-4 rounded-md border border-root-100 flex gap-2 items-center whitespace-nowrap">
 							<Select.Value className="" />
 							<Select.Icon>
 								<ChevronDownIcon className="h-5 w-5"></ChevronDownIcon>
@@ -151,18 +151,18 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 						</Select.Trigger>
 
 						<Select.Portal>
-							<Select.Content className="bg-base p-2 border drop-shadow-md rounded-md z-50">
-								<Select.ScrollUpButton className="SelectScrollButton">
+							<Select.Content className="bg-root p-2 border drop-shadow-md rounded-md z-50">
+								<Select.ScrollUpButton className="SelectScrollButton text-reverse">
 									<ChevronUpIcon className="h-4 w-4" />
 								</Select.ScrollUpButton>
 								<Select.Viewport>
-									<Select.Group className="space-y-2">
+									<Select.Group className="space-y-2 text-reverse">
 										<Select.Label />
 										{sources.map((source: string) => {
 											return (
 												<Select.Item
 													key={source}
-													className="flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md SelectItem"
+													className="flex items-center justify-between gap-2 py-1 px-4 relative hover:bg-primary-hover bg-root-100 border border-root-100 rounded-md SelectItem"
 													value={source}
 												>
 													<Select.ItemText>
@@ -180,7 +180,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 										})}
 									</Select.Group>
 								</Select.Viewport>
-								<Select.ScrollDownButton className="SelectScrollButton">
+								<Select.ScrollDownButton className="SelectScrollButton text-reverse">
 									<ChevronDownIcon className="h-4 w-4" />
 								</Select.ScrollDownButton>
 							</Select.Content>
@@ -188,50 +188,48 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 					</Select.Root>
 				</div>
 
-				<LayoutGroup id="mangaCover">
-					<div
-						key={"titles-grid"}
-						className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] sm:[grid-template-columns:repeat(auto-fill,minmax(160px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(185px,1fr));] [grid-auto-rows:1fr] gap-4 md:gap-y-6 content select-none ${
-							isSelectMenuOpen ? "pointer-events-none" : ""
-						}`}
-					>
-						{mangaList.map((manga, index) => {
-							return (
-								<MangaCard
-									key={manga.slug + index}
-									manga={manga}
-									mobile={true}
-									customClasses={``}
-								></MangaCard>
-								// <Link
-								// 	href={`/titles/${manga.source}/${manga.slug}`}
-								// 	key={manga.slug}
-								// >
-								// 	<a
-								// 		href={`/titles/${manga.source}/${manga.slug}`}
-								// 		key={manga.slug}
-								// 		className="flex flex-col gap-2"
-								// 	>
-								// 		<div className="w-full h-auto aspect-[125/178] relative">
-								// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
-								// 			<Image
-								// 				src={manga.cover}
-								// 				fill={true}
-								// 				className="rounded-md object-cover "
-								// 				alt={manga.title}
-								// 			></Image>
-								// 		</div>
+				<div
+					key={"titles-grid"}
+					className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] sm:[grid-template-columns:repeat(auto-fill,minmax(160px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(185px,1fr));] [grid-auto-rows:1fr] gap-4 md:gap-y-6 content select-none ${
+						isSelectMenuOpen ? "pointer-events-none" : ""
+					}`}
+				>
+					{mangaList.map((manga, index) => {
+						return (
+							<MangaCard
+								key={manga.slug + index}
+								manga={manga}
+								mobile={true}
+								customClasses={``}
+							></MangaCard>
+							// <Link
+							// 	href={`/titles/${manga.source}/${manga.slug}`}
+							// 	key={manga.slug}
+							// >
+							// 	<a
+							// 		href={`/titles/${manga.source}/${manga.slug}`}
+							// 		key={manga.slug}
+							// 		className="flex flex-col gap-2"
+							// 	>
+							// 		<div className="w-full h-auto aspect-[125/178] relative">
+							// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
+							// 			<Image
+							// 				src={manga.cover}
+							// 				fill={true}
+							// 				className="rounded-md object-cover "
+							// 				alt={manga.title}
+							// 			></Image>
+							// 		</div>
 
-								// 		<span className="font-medium line-clamp-2">
-								// 			{manga.title}
-								// 		</span>
-								// 	</a>
-								// </Link>
-							);
-						})}
-						<div ref={lastElementRef}></div>
-					</div>
-				</LayoutGroup>
+							// 		<span className="font-medium line-clamp-2">
+							// 			{manga.title}
+							// 		</span>
+							// 	</a>
+							// </Link>
+						);
+					})}
+					<div ref={lastElementRef}></div>
+				</div>
 
 				<AnimatePresence>
 					{loading && (

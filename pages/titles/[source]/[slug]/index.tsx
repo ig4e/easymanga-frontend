@@ -332,10 +332,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 							property="og:description"
 							content={manga.synopsis}
 						/>
-						<meta
-							property="og:image"
-							content={manga.cover}
-						/>
+						<meta property="og:image" content={manga.cover} />
 					</Head>
 
 					<div>
@@ -398,7 +395,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															></ImageLegacy>
 														</motion.div>
 													</ShowImageModal>
-													<h1 className="text-lg md:text-2xl font-bold text-white z-50 flex flex-col md:hidden">
+													<h1 className="text-lg md:text-2xl font-bold text-reverse z-50 flex flex-col md:hidden">
 														<span>
 															{manga.title}
 														</span>
@@ -437,7 +434,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																?.length - 1
 														]?.slug
 													}`}
-													className="p-2 text-center bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-white text-lg font-medium transition"
+													className="p-2 text-center bg-primary hover:bg-primary-hover active:bg-primary-active w-full rounded-md text-reverse text-lg font-medium transition"
 												>
 													Start Reading
 												</Link>
@@ -457,7 +454,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 													}
 													rel="noreferrer"
 													target="_blank"
-													className="border flex rounded-md relative select-none "
+													className="border border-root flex rounded-md relative select-none "
 												>
 													<Image
 														src={manga.cover}
@@ -467,7 +464,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 														alt={manga.title}
 													></Image>
 													<div className="absolute rounded-md inset-0 bg-gradient-to-t from-black/80 to-black/20"></div>
-													<div className="z-20 flex items-center justify-center gap-2 p-1 text-white w-full">
+													<div className="z-20 flex items-center justify-center gap-2 p-1 text-reverse w-full">
 														<PlayCircleIcon className="h-8 w-8"></PlayCircleIcon>
 														<span>
 															Watch Trailer
@@ -477,7 +474,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											)}
 
 											{anilistData && (
-												<div className="bg-base-100 border p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
+												<div className="bg-root-100 border border-root-100/50 p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
 													{anilistData && (
 														<div className="flex items-start gap-6 overflow-scroll scrollbar-hide md:flex-col md:gap-2">
 															{[
@@ -584,7 +581,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 									</div>
 								</div>
 								<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
-									<h1 className="text-5xl font-black text-white -translate-y-52 h-12 md:-translate-y-64 hidden md:block relative">
+									<h1 className="text-5xl font-black text-reverse -translate-y-52 h-12 md:-translate-y-64 hidden md:block relative">
 										<span className="absolute flex flex-col">
 											<span>{manga.title}</span>
 											{anilistData && (
@@ -607,7 +604,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 									</h1>
 
 									<div className="-translate-y-12 space-y-2 ">
-										<Tabs.List className="bg-base-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
+										<Tabs.List className="bg-root-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
 											{[
 												{
 													title: "Chapters",
@@ -637,8 +634,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															className={`p-1 px-4 rounded-md transition w-full ${
 																value ===
 																currentTab
-																	? "bg-primary text-white"
-																	: "bg-base"
+																	? "bg-primary text-reverse"
+																	: "bg-root"
 															}`}
 														>
 															{title}
@@ -702,7 +699,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															return (
 																<div
 																	key={genre}
-																	className="bg-base-100 border  select-none p-1 px-2 text-xs font-bold uppercase rounded"
+																	className="bg-root-100 border border-root  select-none p-1 px-2 text-xs font-bold uppercase rounded"
 																>
 																	{genre}
 																</div>
@@ -804,7 +801,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																	}}
 																	className="md:w-auto relative"
 																>
-																	<span className="bg-base p-1 px-2 absolute z-20 rounded-md bottom-3 left-2 text-sm ">
+																	<span className="bg-root p-1 px-2 absolute z-20 rounded-md bottom-3 left-2 text-sm ">
 																		{role
 																			.replace(
 																				/./g,
@@ -890,10 +887,10 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											></ArrowUpIcon>
 											</button>*/}
 											</div>
-											<div className="bg-base-100 p-3 rounded-md space-y-4">
+											<div className="bg-root-100 p-3 rounded-md space-y-4">
 												<div className="flex items-center gap-2 md:gap-4">
 													<input
-														className={`bg-base h-10 w-full pr-2 pl-4 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
+														className={`bg-root h-10 w-full pr-2 pl-4 rounded  border-root outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
 														type="text"
 														placeholder="Chapter Number..."
 														onChange={(e) =>
@@ -950,7 +947,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															].to
 														}`}
 													>
-														<Select.Trigger className="bg-base h-10 px-4 rounded-md border flex gap-2 items-center whitespace-nowrap">
+														<Select.Trigger className="bg-root h-10 px-4 rounded-md border border-root flex gap-2 items-center whitespace-nowrap">
 															<Select.Value className="" />
 															<Select.Icon>
 																<ChevronDownIcon className="h-5 w-5"></ChevronDownIcon>
@@ -958,8 +955,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 														</Select.Trigger>
 
 														<Select.Portal>
-															<Select.Content className="bg-base p-2 border drop-shadow-md rounded-md z-50">
-																<Select.ScrollUpButton className="SelectScrollButton">
+															<Select.Content className="bg-root p-2 border border-root-100 drop-shadow-md rounded-md z-50">
+																<Select.ScrollUpButton className="SelectScrollButton text-reverse">
 																	<ChevronUpIcon className="h-4 w-4" />
 																</Select.ScrollUpButton>
 																<Select.Viewport>
@@ -973,7 +970,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																				return (
 																					<Select.Item
 																						key={`${from}-${to}`}
-																						className="SelectItem flex items-center gap-2 py-1 px-4 relative hover:bg-primary/25 bg-base-100 border rounded-md"
+																						className="SelectItem text-neutral flex items-center justify-between gap-2 py-1 px-4 relative hover:bg-primary-hover border-root bg-root-100 border rounded-md"
 																						value={`${from}-${to}`}
 																					>
 																						<Select.ItemText>
@@ -988,7 +985,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		)}
 																	</Select.Group>
 																</Select.Viewport>
-																<Select.ScrollDownButton className="SelectScrollButton">
+																<Select.ScrollDownButton className="SelectScrollButton text-reverse">
 																	<ChevronDownIcon className="h-4 w-4" />
 																</Select.ScrollDownButton>
 															</Select.Content>
@@ -1016,14 +1013,14 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																	}/chapter?id=${encodeURIComponent(
 																		chapter.slug!,
 																	)}`}
-																	className="p-2 border bg-base rounded-md flex gap-2 hover:bg-primary/10 transition"
+																	className="px-2 py-1 border border-root bg-root rounded-md hover:bg-primary-hover transition group"
 																>
-																	<span className="text-xs">
+																	<span className="text-xs text-primary group-hover:text-white">
 																		{
 																			chapter.number
 																		}
 																	</span>
-																	<span className="truncate line-clamp-1">
+																	<span className="line-clamp-2 w-full text-sm">
 																		{
 																			chapter.name
 																		}

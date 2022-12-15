@@ -7,18 +7,21 @@ import {
 import { Chapter } from "../typings/chapter";
 
 interface UserSettings {
+	theme: "light" | "dark";
 	chapterPageQuality: Quality;
 	chapterPageScale: number;
 	chapterPageNavigationMode: ChapterNavigationMode;
 	setChapterPageScale: (scale: number) => void;
 	setChapterPageQuality: (quality: Quality) => void;
 	setChapterPageNavigationMode: (mode: ChapterNavigationMode) => void;
+	setTheme: (newTheme: "light" | "dark") => void;
 }
 
 export const useUserSettingsStore = create<UserSettings>()(
 	devtools(
 		persist(
 			(set) => ({
+				theme: "light",
 				chapterPageQuality: "raw",
 				chapterPageScale: 100,
 				chapterPageNavigationMode: "scroll",
@@ -36,6 +39,11 @@ export const useUserSettingsStore = create<UserSettings>()(
 				setChapterPageNavigationMode: (mode: ChapterNavigationMode) => {
 					set(() => ({
 						chapterPageNavigationMode: mode,
+					}));
+				},
+				setTheme(newTheme) {
+					set(() => ({
+						theme: newTheme,
 					}));
 				},
 			}),

@@ -12,7 +12,7 @@ function MangaCardHorizontal({ manga }: { manga: Manga }) {
 
 	return (
 		<Link href={`/titles/${manga.source}/${manga.slug}`}>
-			<div className="flex gap-2 max-h-20 bg-base-100 ">
+			<div className="flex gap-2 max-h-20 bg-root-100 ">
 				<div className="w-[56px] h-[80px] relative">
 					<Image
 						className="min-w-[56px] min-h-[80px] w-[56px] h-[80px] rounded object-cover z-10 bg-neutral-200"

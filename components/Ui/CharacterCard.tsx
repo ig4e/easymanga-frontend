@@ -22,7 +22,7 @@ function CharacterCard({ character }: { character: Character }) {
 					alt={character.node.name.full}
 				></Image>
 				<div className="absolute flex bottom-1 inset-x-2">
-					<span className="p-0.5 px-1 rounded-md text-center text-[0.65rem] flex items-center justify-center md:text-xs w-full bg-base">
+					<span className="p-0.5 px-1 rounded-md text-center text-[0.65rem] flex items-center justify-center md:text-xs w-full bg-root">
 						{character.role
 							.replace(/./g, (str) => str.toLocaleLowerCase())
 							.replace(/./, (str) => str.toLocaleUpperCase())}

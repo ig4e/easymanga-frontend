@@ -69,7 +69,7 @@ function SearchBarUi({
 					initial={{ width: noAnimation ? CURRENT_WIDTH : 0 }}
 					animate={{ width: CURRENT_WIDTH }}
 					whileFocus={{ width: MAX_WIDTH }}
-					className={`bg-base-100 h-full w-full ${className} pr-2 pl-10 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary ${
+					className={`bg-root-100 h-full w-full ${className} pr-2 pl-10 rounded outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border border-root-100 focus:border-primary ${
 						active ? "border-primary" : ""
 					}`}
 					type="text"
@@ -177,8 +177,8 @@ function SearchBar({
 				<Dialog.Root open={open} onOpenChange={setOpen}>
 					<Dialog.Trigger className="h-full flex items-center">
 						{noBar ? (
-							<div className="p-2.5 bg-primary hover:bg-primary-hover active:bg-primary-active rounded-md h-full text-white text-lg font-medium transition">
-								<MagnifyingGlassIcon className="w-6 h-6 text-white"></MagnifyingGlassIcon>
+							<div className="p-2.5 bg-primary hover:bg-primary-hover active:bg-primary-active rounded-md h-full text-reverse text-lg font-medium transition">
+								<MagnifyingGlassIcon className="w-6 h-6 text-reverse"></MagnifyingGlassIcon>
 							</div>
 						) : (
 							<div className="h-full">
@@ -205,7 +205,7 @@ function SearchBar({
 											reducedMotion: "user",
 											duration: 0.1,
 										}}
-										className="md:bg-neutral-100/50 fixed inset-0 flex flex-col items-center justify-start z-50"
+										className="md:bg-root-100/50 fixed inset-0 flex flex-col items-center justify-start z-50"
 									>
 										<Dialog.Content asChild={true}>
 											<motion.div
@@ -216,11 +216,11 @@ function SearchBar({
 													type: "spring",
 													duration: 0.5,
 												}}
-												className="bg-base pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-16 relative"
+												className="bg-root pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-16 relative"
 											>
-												<div className="fixed inset-x-0 bg-base z-50 w-full max-w-7xl mx-auto px-6 pb-4 rounded">
+												<div className="fixed inset-x-0 bg-root z-50 w-full max-w-7xl mx-auto px-6 pb-4 rounded text-reverse">
 													<DialogTitle>
-														Search
+														<span className="text-neutral">Search</span>
 														<DialogClose>
 															<XIcon />
 														</DialogClose>
@@ -262,7 +262,7 @@ function SearchBar({
 													</div>
 												) : (
 													searchQuery && (
-														<div>
+														<div className="text-neutral">
 															{searchResults.length >
 																0 && (
 																<DialogSecondaryTitle>

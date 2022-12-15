@@ -45,7 +45,7 @@ function MangaCard({
 					}
 					width={200}
 					height={280}
-					className={`rounded-md object-cover w-full z-10 h-[80%] md:h-[90%] ${customClasses} bg-neutral-200`}
+					className={`rounded-md object-cover w-full z-10 h-[80%] md:h-[90%] lg:h-[85%] xl:h-[85%] ${customClasses} bg-neutral-200`}
 					alt={manga.title}
 					onError={() => setCoverError(true)}
 				></Image>
@@ -107,7 +107,7 @@ function MangaCard({
 	// 							forceMount={true}
 	// 						>
 	// 							<motion.div
-	// 								className="bg-base p-4 rounded-md drop-shadow-xl z-50 flex flex-col items-start gap-2"
+	// 								className="bg-root p-4 rounded-md drop-shadow-xl z-50 flex flex-col items-start gap-2"
 	// 								initial={{ scale: 0.5, opacity: 0 }}
 	// 								animate={{ scale: 1, opacity: 1 }}
 	// 								exit={{ scale: 0.5, opacity: 0 }}

@@ -5,6 +5,21 @@ export default function Document() {
 	return (
 		<Html>
 			<Head>
+				<Script
+					src="https://www.googletagmanager.com/gtag/js?id=G-5B28VN7941"
+					strategy="afterInteractive"
+				/>
+
+				<Script id="google-analytics" strategy="afterInteractive">
+					{`
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					
+					gtag('config', 'G-5B28VN7941');
+				`}
+				</Script>
+
 				<meta name="theme-color" content="#FFFFFF" />
 				<link rel="manifest" href="/manifest.json" />
 				<link
@@ -28,22 +43,30 @@ export default function Document() {
 					property="og:image"
 					content="/assets/logo-1024x1024.png"
 				/>
-				<Script
-					src="https://www.googletagmanager.com/gtag/js?id=G-5B28VN7941"
-					strategy="afterInteractive"
-				/>
+			</Head>
 
-				<Script id="google-analytics" strategy="afterInteractive">
+			<body id="_body" className="transition duration-100">
+				<Script id="theme-setter" strategy="beforeInteractive">
 					{`
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag('js', new Date());
-					
-					gtag('config', 'G-5B28VN7941');
+					try {
+						const body =
+							typeof window !== "undefined" && document.getElementById("_body");
+						if (body) {
+							if (
+								JSON.parse(localStorage.getItem("userSettingsStore"))["state"][
+									"theme"
+								] === "dark"
+							)
+							 {
+								body.classList.add("dark");
+							 } else {
+
+								 body.classList.remove("dark");
+							 }
+						}
+					} catch {}
 				`}
 				</Script>
-			</Head>
-			<body>
 				<Main />
 				<NextScript />
 			</body>

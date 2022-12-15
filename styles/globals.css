@@ -5,11 +5,55 @@
 @tailwind utilities;
 
 @layer components {
-	body {
-		@apply bg-base;
+	/*
+		//white mode
+		// primary: "#32aaff",
+		// "primary-hover": "#149DFF",
+		// "primary-active": "#008FF5",
+		// root: "#ffffff",
+		// "root-100": "#f0f1f3",
+		// neutral: "#242424",
+		// "neutral-100": "#212328",
+		// "neutral-200": "#777777",
 
-		--em-background-translucent: hsla(0, 0%, 100%, 0.3);
-		--em-background: rgb(255 255 255);
+		// reverse: "#ffffff",
+		// "reverse-100": "#f0f1f3",
+	*/
+
+	.dark {
+		--color-root: 18 19 24;
+		--color-root-100: 34 35 40;
+		--color-neutral: 222 239 239;
+		--color-neutral-100: 244 248 240;
+		--color-neutral-200: 182 182 182;
+		--color-reverse: 222 239 239;
+		--color-reverse-100: 240 241 243;
+
+		--em-background: #121318;
+		--em-background-translucent: rgba(18, 19, 24, 0.6);
+	}
+
+	:root {
+		--color-primary: 50 170 255;
+		--color-primary-hover: 20 157 255;
+		--color-primary-active: 0 143 245;
+
+		--color-root: 255 255 255;
+		--color-root-100: 240 241 243;
+
+		--color-neutral: 36 36 36;
+		--color-neutral-100: 33 35 40;
+		--color-neutral-200: 119 119 119;
+
+		--color-reverse: 255 255 255;
+		--color-reverse-100: 240 241 243;
+
+		--em-background: #fff;
+		--em-background-translucent: hsla(0, 0%, 100%, 0.6);
+	}
+
+	body {
+		@apply bg-root;
 	}
 
 	/* For Webkit-based browsers (Chrome, Safari and Opera) */
@@ -56,7 +100,7 @@
 
 	/* Track */
 	::-webkit-scrollbar-track {
-		@apply bg-base-100;
+		@apply bg-root-100;
 	}
 
 	/* Handle */

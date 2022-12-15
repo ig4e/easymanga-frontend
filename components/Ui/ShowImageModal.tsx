@@ -20,7 +20,7 @@ function ShowImageModal({
 				<Dialog.Root>
 					<Dialog.Trigger className="relative h-full">
 						<div className="absolute inset-0 bottom-2  bg-black/25 opacity-0 transition hover:opacity-100 grid place-items-center z-40 rounded-md">
-							<ArrowsPointingOutIcon className="text-white stroke-1 h-12 w-12"></ArrowsPointingOutIcon>
+							<ArrowsPointingOutIcon className="text-reverse stroke-1 h-12 w-12"></ArrowsPointingOutIcon>
 						</div>
 
 						{children}

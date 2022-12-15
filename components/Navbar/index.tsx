@@ -1,13 +1,15 @@
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import {
+	HomeIcon,
 	ArrowPathRoundedSquareIcon,
 	ListBulletIcon,
-} from "@heroicons/react/24/outline";
-import { HomeIcon } from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/solid";
 import { LayoutGroup } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { useUserSettingsStore } from "../../store";
 import NavLink from "../Ui/NavLink";
 import SearchBar from "../Ui/SearchBar";
 
@@ -19,6 +21,10 @@ function Navbar({
 	mode?: "transparent";
 }) {
 	const location = useRouter();
+	const { theme, setTheme } = useUserSettingsStore((state) => ({
+		theme: state.theme,
+		setTheme: state.setTheme,
+	}));
 
 	return (
 		<>
@@ -28,9 +34,9 @@ function Navbar({
 				} `}
 			>
 				<nav
-					className={`bg-base backdrop-blur-sm my-0 py-2.5 shadow md:shadow-md fixed w-screen h-12 md:h-14 z-50 ${navClass} ${
+					className={`bg-root backdrop-blur-sm my-0 py-2.5 shadow md:shadow-md fixed w-screen h-12 md:h-14 z-50 ${navClass} ${
 						mode === "transparent" &&
-						"bg-black/20 text-white md:text-neutral md:bg-base"
+						"bg-black/20 text-reverse md:text-neutral md:bg-root"
 					} rounded-b-md md:rounded-b-none`}
 				>
 					<div className="flex items-center justify-between container h-full w-full">
@@ -62,25 +68,40 @@ function Navbar({
 							</LayoutGroup>
 						</div>
 
-						<div className="flex items-center space-x-2 h-full">
+						<div className="flex items-center space-x-4 h-full">
 							<SearchBar />
+
+							<button
+								onClick={() =>
+									setTheme(
+										theme === "light" ? "dark" : "light",
+									)
+								}
+								className="p-1 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
+							>
+								{theme === "light" ? (
+									<SunIcon className="h-6 w-6 text-neutral"></SunIcon>
+								) : (
+									<MoonIcon className="h-6 w-6 text-neutral"></MoonIcon>
+								)}
+							</button>
 						</div>
 					</div>
 				</nav>
 			</div>
 
 			<footer className="md:hidden">
-				<div className="fixed bottom-0 z-50 shadow-inner border-t-[1px] border-t-black/25 inset-x-0 bg-base">
+				<div className="fixed bottom-0 z-50 shadow-inner border-t-[1px] border-t-neutral/25 inset-x-0 bg-root">
 					<div className="flex items-center justify-between container">
 						<Link
 							href={"/"}
-							className="flex flex-col items-center w-full py-2 select-none"
+							className="flex flex-col items-center w-full py-2 select-none transition"
 						>
 							<HomeIcon
-								className={`h-5 w-5 fill-current ${
+								className={`h-5 w-5 stroke-current ${
 									location.pathname === "/"
-										? "text-primary"
-										: "text-black/60"
+										? "text-primary fill-current"
+										: "text-neutral/60 fill-transparent"
 								}`}
 							></HomeIcon>
 							<span className="text-xs ">Home</span>
@@ -88,13 +109,13 @@ function Navbar({
 
 						<Link
 							href={"/titles"}
-							className="flex flex-col items-center w-full py-2 select-none"
+							className="flex flex-col items-center w-full py-2 select-none transition"
 						>
 							<ListBulletIcon
-								className={`h-5 w-5 fill-current ${
+								className={`h-5 w-5 stroke-current ${
 									location.pathname === "/titles"
-										? "text-primary"
-										: "text-black/60"
+										? "text-primary fill-current"
+										: "text-neutral/60 fill-transparent"
 								}`}
 							></ListBulletIcon>
 							<span className="text-xs stroke-2 ">Titles</span>
@@ -102,16 +123,16 @@ function Navbar({
 
 						<Link
 							href={"/"}
-							className="flex flex-col items-center w-full py-2 select-none"
+							className="flex flex-col items-center w-full py-2 select-none transition"
 						>
 							<ArrowPathRoundedSquareIcon
-								className={`h-5 w-5 ${
+								className={`h-5 w-5 stroke-current ${
 									location.pathname === "/random"
-										? "text-primary"
-										: "text-black/60"
+										? "text-primary fill-current"
+										: "text-neutral/60 fill-transparent"
 								} `}
 							></ArrowPathRoundedSquareIcon>
-							<span className="text-xs stroke-2 ">Random</span>
+							<span className="text-xs stroke-2">Random</span>
 						</Link>
 					</div>
 				</div>

@@ -39,14 +39,14 @@ function ChapterPageSettingsMenu({
 								animate={{ scale: 1 }}
 								exit={{ scale: 0, opacity: 0 }}
 								transition={{ type: "spring", duration: 0.3 }}
-								className=" p-4 pb-6 text-white rounded-t-md select-none bg-[#303030] z-50 w-screen mb-[3.2rem] md:w-auto  md:h-auto md:mb-4"
+								className=" p-4 pb-6 text-reverse rounded-t-md select-none bg-[#303030] z-50 w-screen mb-[3.2rem] md:w-auto  md:h-auto md:mb-4"
 							>
 								<div className="flex items-start justify-between">
 									<DropdownMenu.Label className="text-lg font-semibold mb-3">
 										Quality
 									</DropdownMenu.Label>
 									<DropdownMenu.Item className="p-1.5 rounded-full hover:bg-white/10 focus:bg-white/15 active:bg-white/15">
-										<XMarkIcon className="h-4 w-4 text-white"></XMarkIcon>
+										<XMarkIcon className="h-4 w-4 text-reverse"></XMarkIcon>
 									</DropdownMenu.Item>
 								</div>
 
