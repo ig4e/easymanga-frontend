@@ -27,11 +27,10 @@ function MangaCard({
 }) {
 	const [coverError, setCoverError] = useState(false);
 
+	const mangaCover = manga.dexId ? manga.cover.replace("&referer=", ".256.jpg&referer=") : manga.cover
+
 	return (
-		<Link
-			href={`/titles/${manga.source}/${manga.slug}`}
-			className=""
-		>
+		<Link href={`/titles/${manga.source}/${manga.slug}`} className="">
 			<motion.div
 				animate={{ scale: 0.8, opacity: 0.9 }}
 				whileInView={{ scale: 1, opacity: 1 }}
@@ -39,7 +38,11 @@ function MangaCard({
 				className="w-full h-full space-y-1"
 			>
 				<Image
-					src={coverError ? NoImagePlaceHolder : manga.cover + (manga.dexId ? ".256.jpg" : "")}
+					src={
+						coverError
+							? NoImagePlaceHolder
+							: mangaCover
+					}
 					width={200}
 					height={280}
 					className={`rounded-md object-cover w-full z-10 h-[80%] md:h-[90%] ${customClasses} bg-neutral-200`}

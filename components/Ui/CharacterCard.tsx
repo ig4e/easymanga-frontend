@@ -29,7 +29,9 @@ function CharacterCard({ character }: { character: Character }) {
 					</span>
 				</div>
 			</div>
-			<span className="text-sm line-clamp-1">{character.node.name.full}</span>
+			<span className="text-sm line-clamp-1">
+				{character.node.name.full}
+			</span>
 		</a>
 	);
 }

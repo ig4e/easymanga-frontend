@@ -46,7 +46,7 @@ function Navbar({
 											alt={"Easy Manga"}
 										></Image>
 									</div>
-									<h1 className="md:font-semibold mt-1 uppercase">
+									<h1 className="md:font-semibold uppercase">
 										Easy Manga
 									</h1>
 								</div>

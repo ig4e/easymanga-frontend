@@ -276,7 +276,12 @@ const MangaPage: NextPage<MangaPageProps> = ({
 				.slice(chapterRange.from, chapterRange.to)
 				.reverse(),
 		);
-	}, [manga]);
+
+		setChapterRange({
+			from: chapterRageData[chapterRageData.length - 1]?.from || 0,
+			to: chapterRageData[chapterRageData.length - 1]?.to || 100,
+		});
+	}, [manga, chapterRageData]);
 
 	const [searchQuery, setSearchQuery] = useState("");
 	const [chapterRangeSelectOpen, setChapterRangeSelectOpen] = useState(false);
@@ -290,7 +295,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 			});
 			const result = chapterFuse.search(searchQuery).map((x) => x.item);
 			searchDelay = setTimeout(() => {
-				setDisplayedChapters(result.slice(0, 250));
+				setDisplayedChapters(result.slice(0, 100));
 			}, 500);
 		}
 
@@ -741,10 +746,10 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																className="md:w-auto relative"
 															>
 																<ImageLegacy
-																	src={
-																		cover.url +
-																		".256.jpg"
-																	}
+																	src={cover.url.replace(
+																		"&referer=",
+																		".256.jpg&referer=",
+																	)}
 																	width={200}
 																	height={280}
 																	className="rounded-md object-cover bg-neutral-200"
