@@ -471,7 +471,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 										}/chapter?id=${encodeURIComponent(
 											currentChapter.nextSlug!,
 										)}`}
-										className="flex items-center gap-2 hover:bg-white/25 rounded-md p-2 disabled:opacity-50"
+										
 									>
 										<div
 											className={`flex items-center gap-2 hover:bg-white/25 rounded-md p-2`}

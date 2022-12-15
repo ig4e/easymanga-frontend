@@ -35,7 +35,7 @@ function ShowImageModal({
 									type: "spring",
 									duration: 0.4,
 								}}
-								className="max-w-[95vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
+								className="max-w-[94vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
 							>
 								<Dialog.Content className="">
 									{!isLoaded && (

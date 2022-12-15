@@ -334,7 +334,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 						/>
 						<meta
 							property="og:image"
-							content={anilistData?.bannerImage || manga.cover}
+							content={manga.cover}
 						/>
 					</Head>
 
@@ -378,7 +378,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															layoutId="mangaCoverTrans"
 															className="w-32 md:w-auto"
 														>
-															<Image
+															<ImageLegacy
 																onError={() =>
 																	setCoverError(
 																		true,
@@ -395,7 +395,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																alt={
 																	manga.title
 																}
-															></Image>
+															></ImageLegacy>
 														</motion.div>
 													</ShowImageModal>
 													<h1 className="text-lg md:text-2xl font-bold text-white z-50 flex flex-col md:hidden">
