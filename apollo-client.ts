@@ -8,7 +8,7 @@ export const client = new ApolloClient({
 		process.env.NODE_ENV === "development"
 			? useDevServer
 				? "http://localhost:3000/graphql" 
-				: useCyclicServer ? "https://wicked-gloves-moth.cyclic.app" : useRenderServer ? "https://emanga-backend-tkty.onrender.com" : "https://fr.emanga.tk/graphql"
+				: useCyclicServer ? "https://wicked-gloves-moth.cyclic.app/graphql" : useRenderServer ? "https://emanga-backend-tkty.onrender.com/graphql" : "https://fr.emanga.tk/graphql"
 			: "https://fr.emanga.tk/graphql", //"https://api.emanga.tk/graphql",
 	cache: new InMemoryCache(),
 });
