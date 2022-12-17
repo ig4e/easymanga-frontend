@@ -319,7 +319,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 	return (
 		<>
-			<Navbar navClass="!text-white md:text-neutral" mode="transparent"></Navbar>
+			<Navbar navClass="!text-white md:!text-neutral" mode="transparent"></Navbar>
 			<Tabs.Root
 				value={currentTab}
 				onValueChange={(value: any) => setCurrentTab(value)}
