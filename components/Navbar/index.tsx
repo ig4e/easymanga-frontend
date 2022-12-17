@@ -33,7 +33,6 @@ function Navbar({
 		setTheme: state.setTheme,
 	}));*/
 
-	console.log(theme);
 
 	return (
 		<>

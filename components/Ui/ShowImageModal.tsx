@@ -8,9 +8,11 @@ import { ArrowsPointingOutIcon } from "@heroicons/react/24/outline";
 function ShowImageModal({
 	children,
 	imgSrc,
+	layoutId,
 }: {
 	children: any;
 	imgSrc: string;
+	layoutId?: string;
 }) {
 	const [isLoaded, setIsLoaded] = useState(false);
 
@@ -19,7 +21,7 @@ function ShowImageModal({
 			<AnimatePresence>
 				<Dialog.Root>
 					<Dialog.Trigger className="relative h-full">
-						<div className="absolute inset-0 bottom-2  bg-black/25 opacity-0 transition hover:opacity-100 grid place-items-center z-40 rounded-md">
+						<div className="absolute inset-0 bg-black/25 opacity-0 transition hover:opacity-100 grid place-items-center z-40 rounded-md">
 							<ArrowsPointingOutIcon className="text-reverse stroke-1 h-12 w-12"></ArrowsPointingOutIcon>
 						</div>
 
@@ -35,7 +37,7 @@ function ShowImageModal({
 									type: "spring",
 									duration: 0.4,
 								}}
-								className="max-w-[94vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
+								className="max-w-[93vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
 							>
 								<Dialog.Content className="">
 									{!isLoaded && (
@@ -44,7 +46,7 @@ function ShowImageModal({
 											<div className="absolute inset-0 bg-neutral-100/25 backdrop-blur-lg rounded-md"></div>
 										</>
 									)}
-									<a
+									<motion.a
 										target={"_blank"}
 										rel="noreferrer"
 										href={imgSrc}
@@ -58,10 +60,10 @@ function ShowImageModal({
 												isLoaded
 													? "opacity-100"
 													: "opacity-0"
-											} rounded-md`}
+											} rounded-md object-cover`}
 											alt={"manga cover"}
 										></Image>
-									</a>
+									</motion.a>
 								</Dialog.Content>
 							</motion.div>
 						</Dialog.Overlay>

@@ -1,15 +1,19 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
-const useDevServer = false;
-const useCyclicServer = false; //"https://wicked-gloves-moth.cyclic.app/graphql"
-const useRenderServer = true; //"https://emanga-backend-tkty.onrender.com/graphql"
+const useDevServer = true;
+const useCyclicServer = true; //"https://wicked-gloves-moth.cyclic.app/graphql"
+const useRenderServer = false; //"https://emanga-backend-tkty.onrender.com/graphql"
 
 export const client = new ApolloClient({
 	uri:
 		process.env.NODE_ENV === "development"
 			? useDevServer
-				? "http://localhost:3000/graphql" 
-				: useCyclicServer ? "https://wicked-gloves-moth.cyclic.app/graphql" : useRenderServer ? "https://emanga-backend-tkty.onrender.com/graphql" : "https://fr.emanga.tk/graphql"
+				? "http://localhost:3000/graphql"
+				: useCyclicServer
+				? "https://wicked-gloves-moth.cyclic.app/graphql"
+				: useRenderServer
+				? "https://emanga-backend-tkty.onrender.com/graphql"
+				: "https://fr.emanga.tk/graphql"
 			: "https://fr.emanga.tk/graphql", //"https://api.emanga.tk/graphql",
 	cache: new InMemoryCache(),
 });

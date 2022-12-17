@@ -36,6 +36,7 @@ specifiers:
   postcss: ^8.4.16
   react: 18.2.0
   react-dom: 18.2.0
+  react-loading-skeleton: ^3.1.0
   sharp: ^0.31.2
   swiper: ^8.4.2
   tailwind-styled-components: ^2.2.0
@@ -71,6 +72,7 @@ dependencies:
   nprogress: 0.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-loading-skeleton: 3.1.0_react@18.2.0
   sharp: 0.31.2
   swiper: 8.4.2
   tailwind-styled-components: 2.2.0_biqbaboplfbrettd7655fr4n2y
@@ -5577,6 +5579,14 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react-loading-skeleton/3.1.0_react@18.2.0:
+    resolution: {integrity: sha512-j1U1CWWs68nBPOg7tkQqnlFcAMFF6oEK6MgqAo15f8A5p7mjH6xyKn2gHbkcimpwfO0VQXqxAswnSYVr8lWzjw==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react-remove-scroll-bar/2.3.3_w5j4k42lgipnm43s3brx6h3c34:
     resolution: {integrity: sha512-i9GMNWwpz8XpUpQ6QlevUtFjHGqnPG4Hxs+wlIJntu/xcsZVEpJcIV71K3ZkqNy2q3GfgvkD7y6t/Sv8ofYSbw==}

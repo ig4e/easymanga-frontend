@@ -59,10 +59,6 @@
 		@apply bg-root;
 	}
 
-	* {
-		@apply transition-colors duration-75 ease-in-out;
-	}
-
 	/* For Webkit-based browsers (Chrome, Safari and Opera) */
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;

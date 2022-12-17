@@ -75,6 +75,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 	const addChapter = useChapterPageStore((state) => state.addChapter);
 	const addPrevChapter = useChapterPageStore((state) => state.addPrevChapter);
 
+	const resetState = useChapterPageStore((state) => state.resetState);
 	const currentChapterProgress = useChapterPageStore(
 		(state) => state.currentChapterProgress,
 	);
@@ -150,6 +151,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 	}, []);
 
 	useEffect(() => {
+		resetState();
 		setCurrentChapter(chapter);
 	}, []);
 
@@ -222,10 +224,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 							<div className="flex flex-col items-start md:flex-row md:items-center md:gap-2 text-start">
 								<Link
 									href={`/titles/${currentChapter.source}/${manga.slug}`}
+									className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none whitespace-nowrap text-ellipsis"
 								>
-									<button className="md:px-2 md:py-1 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
-										{manga.title}
-									</button>
+									{manga.title}
 								</Link>
 								<ChevronRightIcon className="h-3 w-3 stroke-1.5 hidden md:block"></ChevronRightIcon>
 								<Link
@@ -234,10 +235,9 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 									}/chapter?id=${encodeURIComponent(
 										currentChapter.slug!,
 									)}`}
+									className="text-xs text-reverse/60 md:text-reverse/60 md:text-reverse md:px-2 md:py-2 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis"
 								>
-									<button className="text-xs text-reverse/60 md:text-reverse/60 md:text-reverse md:px-2 md:py-2 hover:bg-white/25 rounded select-none  whitespace-nowrap text-ellipsis">
-										{currentChapter.name}
-									</button>
+									{currentChapter.name}
 								</Link>
 							</div>
 						</div>
@@ -471,7 +471,6 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 										}/chapter?id=${encodeURIComponent(
 											currentChapter.nextSlug!,
 										)}`}
-										
 									>
 										<div
 											className={`flex items-center gap-2 hover:bg-white/25 rounded-md p-2`}

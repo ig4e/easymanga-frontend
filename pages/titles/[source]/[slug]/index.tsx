@@ -281,6 +281,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 			from: chapterRageData[chapterRageData.length - 1]?.from || 0,
 			to: chapterRageData[chapterRageData.length - 1]?.to || 100,
 		});
+
+		resetState();
 	}, [manga, chapterRageData]);
 
 	const [searchQuery, setSearchQuery] = useState("");
@@ -319,7 +321,10 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 	return (
 		<>
-			<Navbar navClass="!text-white md:!text-neutral" mode="transparent"></Navbar>
+			<Navbar
+				navClass="!text-white md:!text-neutral"
+				mode="transparent"
+			></Navbar>
 			<Tabs.Root
 				value={currentTab}
 				onValueChange={(value: any) => setCurrentTab(value)}
@@ -371,11 +376,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 													<ShowImageModal
 														imgSrc={manga.cover}
 													>
-														<motion.div
-															layoutId="mangaCoverTrans"
-															className="w-32 md:w-auto"
-														>
-															<ImageLegacy
+														<motion.div className="w-32 md:w-auto max-w-[200px]">
+															<Image
 																onError={() =>
 																	setCoverError(
 																		true,
@@ -386,13 +388,13 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		? NoImagePlaceholder
 																		: manga.cover
 																}
+																height={285}
 																width={200}
-																height={280}
-																className="rounded-md object-cover"
+																className="rounded-md object-cover h-full w-full aspect-[200/285]"
 																alt={
 																	manga.title
 																}
-															></ImageLegacy>
+															></Image>
 														</motion.div>
 													</ShowImageModal>
 													<h1 className="text-lg md:text-2xl font-bold text-reverse z-50 flex flex-col md:hidden">

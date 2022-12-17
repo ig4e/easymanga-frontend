@@ -75,6 +75,7 @@ const Home: NextPage<HomePageProps> = ({
 						slidesPerView={1}
 						slideToClickedSlide={false}
 						centeredSlides={true}
+						autoplay={true}
 						navigation={{
 							nextEl: "#slide-next",
 							prevEl: "#slide-prev",
@@ -389,5 +390,3 @@ export const getStaticProps: GetStaticProps = async ({}) => {
 };
 
 export default Home;
-
-
