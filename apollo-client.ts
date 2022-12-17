@@ -1,8 +1,9 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 const useDevServer = false;
-const useCyclicServer = false;
-const useRenderServer = true;
+const useCyclicServer = false; //"https://wicked-gloves-moth.cyclic.app/graphql"
+const useRenderServer = true; //"https://emanga-backend-tkty.onrender.com/graphql"
+
 export const client = new ApolloClient({
 	uri:
 		process.env.NODE_ENV === "development"

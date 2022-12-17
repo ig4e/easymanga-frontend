@@ -59,6 +59,10 @@
 		@apply bg-root;
 	}
 
+	* {
+		@apply transition-colors;
+	}
+
 	/* For Webkit-based browsers (Chrome, Safari and Opera) */
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;
