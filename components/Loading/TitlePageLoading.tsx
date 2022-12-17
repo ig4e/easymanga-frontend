@@ -192,7 +192,7 @@ function TitlePageLoading() {
 												{["0G", "1G", "2G", "3G"].map(
 													(genre) => {
 														return (
-															<div className="w-16">
+															<div key={genre} className="w-16">
 																<Skeleton
 																	className="w-full"
 																	key={genre}
