@@ -9,8 +9,16 @@ export default function Document() {
 					src="https://www.googletagmanager.com/gtag/js?id=G-5B28VN7941"
 					strategy="afterInteractive"
 				/>
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
-<meta name="theme-color" media="(prefers-color-scheme: dark)"  content="#121318" />
+				<meta
+					name="theme-color"
+					media="(prefers-color-scheme: light)"
+					content="#FFFFFF"
+				/>
+				<meta
+					name="theme-color"
+					media="(prefers-color-scheme: dark)"
+					content="#121318"
+				/>
 				<Script id="google-analytics" strategy="afterInteractive">
 					{`
 					window.dataLayer = window.dataLayer || [];
@@ -20,6 +28,13 @@ export default function Document() {
 					gtag('config', 'G-5B28VN7941');
 				`}
 				</Script>
+
+				<Script
+					async
+					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5470501595675282"
+					crossOrigin="anonymous"
+					strategy="afterInteractive"
+				></Script>
 
 				<meta name="theme-color" content="#FFFFFF" />
 				<link rel="manifest" href="/manifest.json" />
