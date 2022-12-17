@@ -132,6 +132,7 @@ function SearchBar({
 	}
 	const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 	const [searchQuery, setSearchQuery] = useState(initalSearchQuery || "");
+        useEffect(() => { initalSearchQuery && setSearchQuery(initalSearchQuery)}, [initalSearchQuery])
 	const [getSearchResults, { loading, error, data }] =
 		useLazyQuery(queryString);
 
