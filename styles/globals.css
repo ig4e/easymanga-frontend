@@ -60,7 +60,7 @@
 	}
 
 	* {
-		@apply transition-colors duration-75 ;
+		@apply transition-colors duration-75;
 	}
 
 	/* For Webkit-based browsers (Chrome, Safari and Opera) */
