@@ -9,7 +9,7 @@ const withPWA = require("next-pwa")({
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
-		domains: ["workers.emanga.tk"],
+		domains: ["workers.emanga.tk", "emanga-img-ext1.mo.cloudinary.net"],
 		unoptimized: true,
 	},
 	compiler: {

@@ -27,7 +27,10 @@ function MangaCard({
 }) {
 	const [coverError, setCoverError] = useState(false);
 
-	const mangaCover = manga.dexId ? manga.cover.replace("&referer=", ".256.jpg&referer=") : manga.cover
+	const mangaCover =
+		`https://emanga-img-ext1.mo.cloudinary.net/performance/` + manga.dexId
+			? manga.cover.replace("&referer=", ".256.jpg&referer=")
+			: manga.cover;
 
 	return (
 		<Link href={`/titles/${manga.source}/${manga.slug}`} className="">
@@ -38,11 +41,7 @@ function MangaCard({
 				className="w-full h-full space-y-1"
 			>
 				<Image
-					src={
-						coverError
-							? NoImagePlaceHolder
-							: mangaCover
-					}
+					src={coverError ? NoImagePlaceHolder : mangaCover}
 					width={200}
 					height={280}
 					className={`rounded-md object-cover w-full z-10 h-[80%] md:h-[90%] lg:h-[85%] xl:h-[85%] ${customClasses} bg-neutral-200`}

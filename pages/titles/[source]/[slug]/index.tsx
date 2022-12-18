@@ -386,7 +386,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																src={
 																	coverError
 																		? NoImagePlaceholder
-																		: manga.cover
+																		: `https://emanga-img-ext1.mo.cloudinary.net/performance/` +
+																		  manga.cover
 																}
 																height={285}
 																width={200}
@@ -459,7 +460,10 @@ const MangaPage: NextPage<MangaPageProps> = ({
 													className="border border-root flex rounded-md relative select-none "
 												>
 													<Image
-														src={manga.cover}
+														src={
+															`https://emanga-img-ext1.mo.cloudinary.net/performance/` +
+															manga.cover
+														}
 														className="rounded-md absolute"
 														fill={true}
 														objectFit="cover"
@@ -745,10 +749,13 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																className="md:w-auto relative"
 															>
 																<ImageLegacy
-																	src={cover.url.replace(
-																		"&referer=",
-																		".256.jpg&referer=",
-																	)}
+																	src={
+																		`https://emanga-img-ext1.mo.cloudinary.net/performance/` +
+																		cover.url.replace(
+																			"&referer=",
+																			".256.jpg&referer=",
+																		)
+																	}
 																	width={200}
 																	height={280}
 																	className="rounded-md object-cover bg-neutral-200"

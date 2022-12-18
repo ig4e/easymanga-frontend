@@ -64,7 +64,7 @@ export default function Document() {
 					async
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5470501595675282"
 					crossOrigin="anonymous"
-				></script>
+				></script>	
 			</Head>
 
 			<body id="_body" className="transition duration-100">
