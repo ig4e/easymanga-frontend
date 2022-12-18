@@ -90,6 +90,10 @@ function SearchBar({
 }) {
 	const queryString = useMemo(() => {
 		const sources = [
+                        "MANGAKAKALOT",
+			"STKISSMANGA",
+			"KISSMANGA",
+                        "ARENASCANS",
 			"ARES",
 			"GALAXYMANGA",
 			"MANGALEK",
@@ -99,12 +103,8 @@ function SearchBar({
 			//"MANGAAE",
 			"OZULSCANS",
 			"TEAMX",
-			"STKISSMANGA",
-			"KISSMANGA",
 			"MANGAPROTM",
-			"ARENASCANS",
 			"ASHQ",
-			"MANGAKAKALOT",
 		];
 
 		const searchQueryGraphql = `   <source>: search(searchInput: { query: $query, source: <source> }) {
