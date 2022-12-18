@@ -33,7 +33,7 @@ export default function Document() {
 					async
 					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5470501595675282"
 					crossOrigin="anonymous"
-					strategy="afterInteractive"
+					strategy="beforeInteractive"
 				></Script>
 
 				<meta name="theme-color" content="#FFFFFF" />
@@ -59,6 +59,12 @@ export default function Document() {
 					property="og:image"
 					content="/assets/logo-1024x1024.png"
 				/>
+
+				<script
+					async
+					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5470501595675282"
+					crossOrigin="anonymous"
+				></script>
 			</Head>
 
 			<body id="_body" className="transition duration-100">
