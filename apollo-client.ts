@@ -14,7 +14,7 @@ export const client = new ApolloClient({
 				: useRenderServer
 				? "https://emanga-backend-tkty.onrender.com/graphql"
 				: "https://fr.emanga.tk/graphql"
-			: "https://fr.emanga.tk/graphql", //"https://api.emanga.tk/graphql",
+			: "https://wicked-gloves-moth.cyclic.app/graphql", //"https://fr.emanga.tk/graphql",
 	cache: new InMemoryCache(),
 });
 
