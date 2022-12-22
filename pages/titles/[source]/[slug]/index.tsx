@@ -705,9 +705,9 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															return (
 																<div
 																	key={genre}
-																	className="bg-root-100 border border-root  select-none p-1 px-2 text-xs font-bold uppercase rounded"
+																	className="bg-root-100 border border-root  select-none p-1 py-0.5 md:py-1 md:px-2 text-xs font-bold uppercase rounded"
 																>
-																	{genre}
+																	<span>{genre}</span>
 																</div>
 															);
 														},
