@@ -711,7 +711,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																	key={genre}
 																	className="bg-root-100 border border-root  select-none p-1 py-0.5 md:py-1 md:px-2 text-xs font-bold uppercase rounded"
 																>
-																	<span>{genre}</span>
+																	<span className = "text-[0.5rem] md:text-sm">{genre}</span>
 																</div>
 															);
 														},
