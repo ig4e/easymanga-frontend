@@ -325,20 +325,24 @@ const MangaPage: NextPage<MangaPageProps> = ({
 				navClass="!text-white md:!text-neutral"
 				mode="transparent"
 			></Navbar>
-			<Tabs.Root
-				value={currentTab}
-				onValueChange={(value: any) => setCurrentTab(value)}
-			>
-				<div>
-					<Head>
+                        <Head>
 						<title>{manga.title} Details - Easy Manga</title>
 						<meta property="og:title" content={manga.title} />
 						<meta
 							property="og:description"
 							content={manga.synopsis}
 						/>
+<meta property="og:image:width" content="460"/>
+
+<meta property="og:image:height" content="690"/>
 						<meta property="og:image" content={manga.cover} />
-					</Head>
+		        </Head>
+			<Tabs.Root
+				value={currentTab}
+				onValueChange={(value: any) => setCurrentTab(value)}
+			>
+				<div>
+					
 
 					<div>
 						<div className="relative w-full h-[16.8rem]">
