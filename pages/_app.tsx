@@ -132,26 +132,26 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<ApolloProvider client={client}>
-			<ThemeProvider>
-				{navigationState.loading && (
-					<>
-						{navigationState.pageType === "title" && (
-							<TitlePageLoading />
-						)}
+			<div className="font-body text-neutral ">
+				<ThemeProvider>
+					{navigationState.loading && (
+						<>
+							{navigationState.pageType === "title" && (
+								<TitlePageLoading />
+							)}
 
-						{navigationState.pageType === "titles" && (
-							<TitlesPageLoading />
-						)}
-					</>
-				)}
-				{(!navigationState.loading ||
-					navigationState.pageType === "home" ||
-					navigationState.pageType === "chapter") && (
-					<div className="font-body text-neutral ">
+							{navigationState.pageType === "titles" && (
+								<TitlesPageLoading />
+							)}
+						</>
+					)}
+					{(!navigationState.loading ||
+						navigationState.pageType === "home" ||
+						navigationState.pageType === "chapter") && (
 						<Component {...pageProps} />
-					</div>
-				)}
-			</ThemeProvider>
+					)}
+				</ThemeProvider>
+			</div>
 		</ApolloProvider>
 	);
 }

@@ -45,7 +45,7 @@ function MangaListRow({
 		<div className="flex flex-col gap-2">
 			<Header>{title}</Header>
 			<Swiper
-				className="select-none w-full"
+				className="select-none w-full grid grid-flow-col grid-rows-1"
 				effect={"fade"}
 				lazy={true}
 				longSwipes={true}
@@ -77,6 +77,7 @@ function MangaListRow({
 						slidesPerView: 10,
 					},
 				}}
+				autoHeight={true}
 				modules={[
 					FreeMode,
 					Keyboard,
@@ -86,17 +87,14 @@ function MangaListRow({
 					Manipulation,
 				]}
 			>
-				<div className="grid grid-flow-row [grid-auto-rows:1fr]">
-					{mangaList.map((manga) => (
-						<SwiperSlide key={manga.slug} className="h-full">
-							<MangaCard
-								mobile={width < breakpoints["md"]}
-								customClasses="!h-[185px]"
-								manga={manga}
-							></MangaCard>
-						</SwiperSlide>
-					))}
-				</div>
+				{mangaList.map((manga) => (
+					<SwiperSlide key={manga.slug} className="h-full">
+						<MangaCard
+							mobile={width < breakpoints["md"]}
+							manga={manga}
+						></MangaCard>
+					</SwiperSlide>
+				))}
 			</Swiper>
 			<Link
 				className="self-end my-2 text-sm text-neutral-200 font-medium hover:text-neutral"

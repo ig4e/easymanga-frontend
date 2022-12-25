@@ -8,10 +8,9 @@ import { motion } from "framer-motion";
 
 function MangaCardHorizontal({ manga }: { manga: Manga }) {
 	const MangaTitle: any = tw.h1`text-lg font-bold`;
-	const mangaCover =
-		`https://emanga-img-ext1.mo.cloudinary.net/performance/` + manga.dexId
-			? manga.cover.replace("&referer=", ".256.jpg&referer=")
-			: manga.cover;
+	const mangaCover = manga.dexId
+		? manga.cover.replace("&referer=", ".256.jpg&referer=")
+		: manga.cover;
 
 	return (
 		<Link href={`/titles/${manga.source}/${manga.slug}`}>

@@ -33,7 +33,6 @@ function Navbar({
 		setTheme: state.setTheme,
 	}));*/
 
-
 	return (
 		<>
 			<div
@@ -87,7 +86,7 @@ function Navbar({
 								}
 								className="p-1 rounded-full hover:bg-neutral-100/10 focus:bg-neutral-100/15 active:bg-neutral-100/15"
 							>
-								{(forcedTheme === resolvedTheme ? (
+								{(resolvedTheme === "system" ? (
 									<ComputerDesktopIcon
 										className={`${navClass} h-6 w-6 text-neutral stroke-current`}
 									></ComputerDesktopIcon>

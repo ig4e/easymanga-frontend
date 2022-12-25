@@ -43,7 +43,9 @@ function TitlesPageLoading() {
 						</Head>
 					</div>
 
-					<div className="my-6 flex gap-2 flex-wrap"></div>
+					<div className="my-6 w-48 h-10">
+						<Skeleton count={1} height={"100%"} />
+					</div>
 
 					<div
 						key={"titles-grid"}

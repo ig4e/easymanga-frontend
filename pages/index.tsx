@@ -118,7 +118,7 @@ const Home: NextPage<HomePageProps> = ({
 										<div className="relative w-full h-52 md:h-80">
 											<Image
 												className="w-full -z-20 rounded-lg  object-cover bg-center bg-neutral-200"
-												src={manga.cover}
+												src={mangaCover}
 												fill={true}
 												alt={manga.title}
 											></Image>

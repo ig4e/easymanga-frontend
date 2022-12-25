@@ -75,8 +75,10 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 	function observerCallback(entries: any) {
 		const [entry] = entries;
 		if (entry.isIntersecting) {
-			console.log("fetching...");
-			setPage((state) => state + 1);
+			if (!loading) {
+				console.log("fetching...");
+				setPage((state) => state + 1);
+			}
 		}
 	}
 
@@ -190,7 +192,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 
 				<div
 					key={"titles-grid"}
-					className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] sm:[grid-template-columns:repeat(auto-fill,minmax(160px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(185px,1fr));] [grid-auto-rows:1fr] gap-4 md:gap-y-6 content select-none ${
+					className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] sm:[grid-template-columns:repeat(auto-fill,minmax(160px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(185px,1fr));] [grid-auto-rows:1fr] gap-4 content select-none ${
 						isSelectMenuOpen ? "pointer-events-none" : ""
 					}`}
 				>
@@ -233,13 +235,13 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 
 				<AnimatePresence>
 					{loading && (
-						<motion.div
-							initial={{ scale: 0 }}
-							animate={{ scale: 1 }}
-							exit={{ scale: 0 }}
-							className="flex justify-center my-4"
-						>
-							<div className="flex items-center gap-4">
+						<div className="flex justify-center my-4">
+							<motion.div
+								initial={{ scale: 0 }}
+								animate={{ scale: 1 }}
+								exit={{ scale: 0 }}
+								className="flex items-center gap-4"
+							>
 								<svg
 									className="animate-spin w-12 h-12"
 									xmlns="http://www.w3.org/2000/svg"
@@ -261,8 +263,8 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 									></path>
 								</svg>
 								<span>{getRandomEmoji()} Loading....</span>
-							</div>
-						</motion.div>
+							</motion.div>
+						</div>
 					)}
 				</AnimatePresence>
 			</div>

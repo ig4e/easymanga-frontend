@@ -1,4 +1,4 @@
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 import Image, { StaticImageData } from "next/image";
 import React from "react";
 
@@ -31,7 +31,7 @@ function ExternalSite({
 	return (
 		<Wrapper
 			href={href}
-			className="flex items-center gap-2 hover:bg-neutral-200/25 p-1 rounded-md select-none"
+			className="flex items-center gap-2 bg-root-100 hover:bg-neutral-200/25 p-1.5 rounded-md select-none group"
 		>
 			<div
 				className={`w-6 h-6 ${small && "!w-5 !h-5"} ${ImageClassName}`}
@@ -44,15 +44,17 @@ function ExternalSite({
 				></Image>
 			</div>
 			<span
-				className={`font-medium flex items-center gap-4 select-none  ${
+				className={`font-medium flex items-center gap-4 select-none group-hover:text-primary${
 					small && "!text-xs"
 				}`}
 			>
 				{title}
-				{!small && (
-					<ArrowTopRightOnSquareIcon className="w-4 h-4"></ArrowTopRightOnSquareIcon>
-				)}
 			</span>
+
+			{!small && (
+				<ArrowTopRightOnSquareIcon className="w-5 h-5"></ArrowTopRightOnSquareIcon>
+			)}
+
 		</Wrapper>
 	);
 }

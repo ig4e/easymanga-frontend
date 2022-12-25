@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import * as Dialog from "@radix-ui/react-dialog";
 import tw from "tailwind-styled-components";
@@ -15,62 +15,73 @@ function ShowImageModal({
 	layoutId?: string;
 }) {
 	const [isLoaded, setIsLoaded] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
+
+	useEffect(() => {
+		const delay = setTimeout(() => setIsVisible(isOpen), 0);
+
+		return () => clearTimeout(delay);
+	}, [isOpen]);
 
 	return (
-		<motion.div className="relative">
-			<AnimatePresence>
-				<Dialog.Root>
-					<Dialog.Trigger className="relative h-full">
-						<div className="absolute inset-0 bg-black/25 opacity-0 transition hover:opacity-100 grid place-items-center z-40 rounded-md">
-							<ArrowsPointingOutIcon className="text-reverse stroke-1 h-12 w-12"></ArrowsPointingOutIcon>
-						</div>
+		<div className="relative">
+			<Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+				<Dialog.Trigger className="relative h-full">
+					<div className="absolute inset-0 bg-black/25 opacity-0 transition hover:opacity-100 grid place-items-center z-40 rounded-md">
+						<ArrowsPointingOutIcon className="text-reverse stroke-1 h-12 w-12"></ArrowsPointingOutIcon>
+					</div>
 
-						{children}
-					</Dialog.Trigger>
-					<Dialog.Portal>
-						<Dialog.Overlay className="bg-root-100/50 fixed inset-0 flex flex-col items-center justify-center z-50">
-							<motion.div
-								initial={{ scale: 0.5 }}
-								animate={{ scale: 1 }}
-								exit={{ scale: 0.5 }}
-								transition={{
-									type: "spring",
-									duration: 0.4,
-								}}
-								className="max-w-[93vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md"
-							>
-								<Dialog.Content className="">
-									{!isLoaded && (
-										<>
-											<div className="absolute inset-0 bg-neutral-200/80 animate-pulse z-50 rounded-md"></div>
-											<div className="absolute inset-0 bg-neutral-100/25 backdrop-blur-lg rounded-md"></div>
-										</>
-									)}
-									<motion.a
-										target={"_blank"}
-										rel="noreferrer"
-										href={imgSrc}
-									>
-										<Image
-											quality={100}
-											src={imgSrc}
-											fill={true}
-											onLoad={() => setIsLoaded(true)}
-											className={`${
-												isLoaded
-													? "opacity-100"
-													: "opacity-0"
-											} rounded-md object-cover`}
-											alt={"manga cover"}
-										></Image>
-									</motion.a>
-								</Dialog.Content>
-							</motion.div>
-						</Dialog.Overlay>
-					</Dialog.Portal>
-				</Dialog.Root>
-			</AnimatePresence>
-		</motion.div>
+					<AnimatePresence>{children}</AnimatePresence>
+				</Dialog.Trigger>
+				<Dialog.Portal forceMount={true}>
+					<AnimatePresence>
+						{isOpen && (
+							<>
+								<Dialog.Overlay forceMount={true} asChild>
+									<motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
+										transition={{
+											duration: 0.1,
+										}}
+										className="fixed inset-0 bg-root-100/50 z-40"
+									></motion.div>
+								</Dialog.Overlay>
+
+								<div className="fixed inset-0 grid place-items-center z-50">
+									<Dialog.Content className="max-w-[92.5vw] md:max-w-xl w-full relative aspect-[3/4] rounded-md">
+										
+										<motion.div>
+											<a
+												target={"_blank"}
+												rel="noreferrer"
+												href={imgSrc}
+											>
+												{isVisible && (
+													<motion.img
+														layoutId={layoutId}
+														onLoad={() =>
+															setIsLoaded(true)
+														}
+														src={imgSrc}
+														height={285}
+														width={200}
+														className="rounded-md object-cover h-full w-full aspect-[200/285] bg-neutral-200"
+														alt={""}
+													></motion.img>
+												)}
+											</a>
+										</motion.div>
+									</Dialog.Content>
+								</div>
+							</>
+						)}
+					</AnimatePresence>
+				</Dialog.Portal>
+			</Dialog.Root>
+		</div>
 	);
 }
 

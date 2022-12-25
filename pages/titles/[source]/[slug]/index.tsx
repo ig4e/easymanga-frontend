@@ -28,7 +28,7 @@ import { Chapter } from "../../../../typings/chapter";
 
 import { SourceData, sourcesData } from "../../../../utils/sourcesData";
 import { useChapterPageStore } from "../../../../store";
-import { LayoutGroup, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import * as Tabs from "@radix-ui/react-tabs";
 
 import NoImagePlaceholder from "../../../../public/assets/no-img.png";
@@ -325,29 +325,24 @@ const MangaPage: NextPage<MangaPageProps> = ({
 				navClass="!text-white md:!text-neutral"
 				mode="transparent"
 			></Navbar>
-                        <Head>
-						<title>{manga.title} Details - Easy Manga</title>
-						<meta property="og:title" content={manga.title} />
-						<meta
-							property="og:description"
-							content={manga.synopsis}
-						/>
-<meta property="og:image:width" content="460"/>
+			<Head>
+				<title>{manga.title} Details - Easy Manga</title>
+				<meta property="og:title" content={manga.title} />
+				<meta property="og:description" content={manga.synopsis} />
+				<meta property="og:image:width" content="460" />
 
-<meta property="og:image:height" content="690"/>
-						<meta property="og:image" content={manga.cover} />
-		        </Head>
+				<meta property="og:image:height" content="690" />
+				<meta property="og:image" content={manga.cover} />
+			</Head>
 			<Tabs.Root
 				value={currentTab}
 				onValueChange={(value: any) => setCurrentTab(value)}
 			>
 				<div>
-					
-
 					<div>
 						<div className="relative w-full h-[16.8rem]">
 							<Image
-								className="w-full -z-20"
+								className="w-full object-cover md:object-center -z-20"
 								src={
 									anilistData?.bannerImage
 										? getWorkersUrl(
@@ -356,19 +351,18 @@ const MangaPage: NextPage<MangaPageProps> = ({
 										: manga.cover
 								}
 								fill={true}
-								objectFit="cover"
-								objectPosition={"center"}
 								alt={manga.title}
 							></Image>
+
 							<div
-								className={`absolute bg-black/25 inset-0 ${
+								className={`absolute bg-root/25 inset-0 ${
 									anilistData?.bannerImage
 										? "backdrop-blur-[2px]"
 										: "backdrop-blur"
 								}  -z-10`}
 							></div>
 
-							<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
+							<div className="absolute bg-gradient-to-t from-root via-root/50 bottom-0 left-0 right-0 h-full md:h-24 -z-10"></div>
 						</div>
 						<div className="container z-50">
 							<div className="md:flex gap-6 ">
@@ -378,31 +372,30 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											<div>
 												<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
 													<ShowImageModal
+														layoutId="tCt"
 														imgSrc={manga.cover}
 													>
-														<motion.div className="w-32 md:w-auto max-w-[200px]">
-															<Image
+														<div className="w-32 md:w-auto max-w-[200px] h-full aspect-[200/285] bg-neutral-200 rounded-md">
+															<motion.img
+																layoutId="tCt"
 																onError={() =>
 																	setCoverError(
 																		true,
 																	)
 																}
 																src={
-																	coverError
-																		? NoImagePlaceholder
-																		: `https://emanga-img-ext1.mo.cloudinary.net/performance/` +
-																		  manga.cover
+																	manga.cover
 																}
 																height={285}
 																width={200}
-																className="rounded-md object-cover h-full w-full aspect-[200/285]"
+																className="rounded-md object-cover h-full w-full aspect-[200/285] bg-neutral-200"
 																alt={
 																	manga.title
 																}
-															></Image>
-														</motion.div>
+															></motion.img>
+														</div>
 													</ShowImageModal>
-													<h1 className="text-lg md:text-2xl font-bold text-reverse z-50 flex flex-col md:hidden">
+													<h1 className="text-[5vw] font-bold text-reverse z-50 flex flex-col md:hidden">
 														<span>
 															{manga.title}
 														</span>
@@ -614,45 +607,49 @@ const MangaPage: NextPage<MangaPageProps> = ({
 									</h1>
 
 									<div className="-translate-y-12 space-y-2 ">
-										<Tabs.List className="bg-root-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
-											{[
-												{
-													title: "Chapters",
-													value: "chapters",
-													render: true,
-												},
-												{
-													title: "Characters",
-													value: "characters",
-													render:
-														(anilistData?.characters
-															.edges?.length ||
-															0) > 0,
-												},
-												{
-													title: "Art",
-													value: "art",
-													render: !!manga.dexId,
-												},
-											]
-												.filter((x) => x.render)
-												.map(({ title, value }) => {
-													return (
-														<Tabs.Trigger
-															key={title}
-															value={value}
-															className={`p-1 px-4 rounded-md transition w-full ${
-																value ===
-																currentTab
-																	? "bg-primary text-reverse"
-																	: "bg-root"
-															}`}
-														>
-															{title}
-														</Tabs.Trigger>
-													);
-												})}
-										</Tabs.List>
+										{!!manga.dexId && (
+											<Tabs.List className="bg-root-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
+												{[
+													{
+														title: "Chapters",
+														value: "chapters",
+														render: true,
+													},
+													{
+														title: "Characters",
+														value: "characters",
+														render:
+															(anilistData
+																?.characters
+																.edges
+																?.length || 0) >
+															0,
+													},
+													{
+														title: "Art",
+														value: "art",
+														render: !!manga.dexId,
+													},
+												]
+													.filter((x) => x.render)
+													.map(({ title, value }) => {
+														return (
+															<Tabs.Trigger
+																key={title}
+																value={value}
+																className={`p-1 px-4 rounded-md transition w-full ${
+																	value ===
+																	currentTab
+																		? "bg-primary text-reverse"
+																		: "bg-root"
+																}`}
+															>
+																{title}
+															</Tabs.Trigger>
+														);
+													})}
+											</Tabs.List>
+										)}
 
 										{currentTab === "chapters" && (
 											<>
@@ -709,9 +706,11 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															return (
 																<div
 																	key={genre}
-																	className="bg-root-100 border border-root  select-none p-1 py-0.5 md:py-1 md:px-2 text-xs font-bold uppercase rounded"
+																	className="bg-root-100 border border-root select-none p-1 md:py-1 md:px-2 text-xs font-bold uppercase rounded-md"
 																>
-																	<span className = "text-[0.5rem] md:text-sm">{genre}</span>
+																	<span className=" md:text-sm">
+																		{genre}
+																	</span>
 																</div>
 															);
 														},
@@ -739,6 +738,10 @@ const MangaPage: NextPage<MangaPageProps> = ({
 												return (
 													<div key={cover.url}>
 														<ShowImageModal
+															layoutId={
+																"tact-" +
+																cover.url
+															}
 															imgSrc={cover.url}
 														>
 															<motion.div
@@ -752,22 +755,23 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																}}
 																className="md:w-auto relative"
 															>
-																<ImageLegacy
-																	src={
-																		`https://emanga-img-ext1.mo.cloudinary.net/performance/` +
-																		cover.url.replace(
-																			"&referer=",
-																			".256.jpg&referer=",
-																		)
+																<motion.img
+																	layoutId={
+																		"tact-" +
+																		cover.url
 																	}
+																	src={cover.url.replace(
+																		"&referer=",
+																		".256.jpg&referer=",
+																	)}
 																	width={200}
 																	height={280}
-																	className="rounded-md object-cover bg-neutral-200"
+																	className="rounded-md object-cover bg-neutral-200 aspect-[200/285]"
 																	alt={
 																		manga.title +
 																		cover.volume
 																	}
-																></ImageLegacy>
+																></motion.img>
 															</motion.div>
 														</ShowImageModal>
 														<span>
@@ -797,6 +801,11 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															}
 														>
 															<ShowImageModal
+																layoutId={
+																	"tact-" +
+																	node.image
+																		.large
+																}
 																imgSrc={
 																	`https://workers.emanga.tk/fetch?url=` +
 																	node.image
@@ -832,7 +841,13 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																			)}
 																	</span>
 
-																	<ImageLegacy
+																	<motion.img
+																		layoutId={
+																			"tact-" +
+																			node
+																				.image
+																				.large
+																		}
 																		src={
 																			`https://workers.emanga.tk/fetch?url=` +
 																			node
@@ -845,14 +860,14 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		height={
 																			280
 																		}
-																		className="rounded-md object-cover bg-neutral-200"
+																		className="rounded-md object-cover bg-neutral-200 aspect-[200/285]"
 																		alt={
 																			manga.title +
 																			node
 																				.name
 																				.full
 																		}
-																	></ImageLegacy>
+																	></motion.img>
 																</motion.div>
 															</ShowImageModal>
 															<a
