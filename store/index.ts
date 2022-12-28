@@ -6,11 +6,30 @@ import {
 } from "../components/Ui/ChapterPageSettingsMenu";
 import { Chapter } from "../typings/chapter";
 
+type SourceUnion =
+	| "ARES"
+	| "GALAXYMANGA"
+	| "MANGALEK"
+	| "MANGASPARK"
+	| "AZORA"
+	| "MANGASWAT"
+	| "MANGAAE"
+	| "OZULSCANS"
+	| "TEAMX"
+	| "STKISSMANGA"
+	| "KISSMANGA"
+	| "MANGAPROTM"
+	| "ARENASCANS"
+	| "ASHQ"
+	| "MANGAKAKALOT";
+
 interface UserSettings {
+	currentSource: SourceUnion;
 	theme: "light" | "dark";
 	chapterPageQuality: Quality;
 	chapterPageScale: number;
 	chapterPageNavigationMode: ChapterNavigationMode;
+	setCurrentSource: (newSource: SourceUnion) => void;
 	setChapterPageScale: (scale: number) => void;
 	setChapterPageQuality: (quality: Quality) => void;
 	setChapterPageNavigationMode: (mode: ChapterNavigationMode) => void;
@@ -21,10 +40,17 @@ export const useUserSettingsStore = create<UserSettings>()(
 	devtools(
 		persist(
 			(set) => ({
+				currentSource: "MANGAKAKALOT",
 				theme: "light",
 				chapterPageQuality: "raw",
 				chapterPageScale: 100,
 				chapterPageNavigationMode: "scroll",
+
+				setCurrentSource: (newSource) => {
+					set(() => ({
+						currentSource: newSource,
+					}));
+				},
 
 				setChapterPageScale: (scale: number) => {
 					set(() => ({

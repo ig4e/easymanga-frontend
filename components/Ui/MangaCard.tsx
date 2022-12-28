@@ -32,7 +32,7 @@ function MangaCard({
 		: manga.cover;
 
 	return (
-		<Link href={`/titles/${manga.source}/${manga.slug}`} className="">
+		<Link href={`/titles/${manga.source}/${manga.slug}?tab=chapters`} className="">
 			<motion.div
 				animate={{ scale: 0.8, opacity: 0.9 }}
 				whileInView={{ scale: 1, opacity: 1 }}

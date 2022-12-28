@@ -22,6 +22,10 @@ import * as Select from "@radix-ui/react-select";
 import { useRouter } from "next/router";
 import { sourcesData } from "../../utils/sourcesData";
 import MangaCard from "../../components/Ui/MangaCard";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { useTheme } from "next-themes";
+import { useUserSettingsStore } from "../../store";
 
 interface Genre {
 	id: number;
@@ -61,11 +65,13 @@ const MANGA_LIST = gql`
 `;
 
 const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
+	const { currentSource, setCurrentSource } = useUserSettingsStore()
 	const [fetchMore, { loading, error, data }] = useLazyQuery(MANGA_LIST);
 	const [page, setPage] = useState<number>(1);
 	const [mangaList, setMangaList] = useState<Manga[]>(list);
 	const lastElementRef = useRef<any>(null);
 	const location = useRouter();
+	const { theme } = useTheme();
 
 	useEffect(() => {
 		setPage(1);
@@ -189,49 +195,72 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 						</Select.Portal>
 					</Select.Root>
 				</div>
-
-				<div
-					key={"titles-grid"}
-					className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] sm:[grid-template-columns:repeat(auto-fill,minmax(160px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(185px,1fr));] [grid-auto-rows:1fr] gap-4 content select-none ${
-						isSelectMenuOpen ? "pointer-events-none" : ""
-					}`}
+				<SkeletonTheme
+					baseColor={theme === "dark" ? "#222328" : "#DFDFDF"}
+					highlightColor={theme === "dark" ? "#4e4f52" : "#E5E6E8"}
 				>
-					{mangaList.map((manga, index) => {
-						return (
-							<MangaCard
-								key={manga.slug + index}
-								manga={manga}
-								mobile={true}
-								customClasses={``}
-							></MangaCard>
-							// <Link
-							// 	href={`/titles/${manga.source}/${manga.slug}`}
-							// 	key={manga.slug}
-							// >
-							// 	<a
-							// 		href={`/titles/${manga.source}/${manga.slug}`}
-							// 		key={manga.slug}
-							// 		className="flex flex-col gap-2"
-							// 	>
-							// 		<div className="w-full h-auto aspect-[125/178] relative">
-							// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
-							// 			<Image
-							// 				src={manga.cover}
-							// 				fill={true}
-							// 				className="rounded-md object-cover "
-							// 				alt={manga.title}
-							// 			></Image>
-							// 		</div>
+					<div
+						key={"titles-grid"}
+						className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] sm:[grid-template-columns:repeat(auto-fill,minmax(160px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(185px,1fr));] [grid-auto-rows:1fr] gap-4 content select-none ${
+							isSelectMenuOpen ? "pointer-events-none" : ""
+						}`}
+					>
+						{mangaList.map((manga, index) => {
+							return (
+								<MangaCard
+									key={manga.slug + index}
+									manga={manga}
+									mobile={true}
+									customClasses={``}
+								></MangaCard>
+								// <Link
+								// 	href={`/titles/${manga.source}/${manga.slug}`}
+								// 	key={manga.slug}
+								// >
+								// 	<a
+								// 		href={`/titles/${manga.source}/${manga.slug}`}
+								// 		key={manga.slug}
+								// 		className="flex flex-col gap-2"
+								// 	>
+								// 		<div className="w-full h-auto aspect-[125/178] relative">
+								// 			<div className="bg-neutral-200/80 animate-pulse inset-0 absolute rounded-md"></div>
+								// 			<Image
+								// 				src={manga.cover}
+								// 				fill={true}
+								// 				className="rounded-md object-cover "
+								// 				alt={manga.title}
+								// 			></Image>
+								// 		</div>
 
-							// 		<span className="font-medium line-clamp-2">
-							// 			{manga.title}
-							// 		</span>
-							// 	</a>
-							// </Link>
-						);
-					})}
-					<div ref={lastElementRef}></div>
-				</div>
+								// 		<span className="font-medium line-clamp-2">
+								// 			{manga.title}
+								// 		</span>
+								// 	</a>
+								// </Link>
+							);
+						})}
+
+						{loading && Array.from({ length: 4 }).map((_, index) => {
+							return (
+								<div key={"newSkeletonManga-"+index} className="relative space-y-2">
+									<div className="">
+										<Skeleton className="-top-1 aspect-[200/285] rounded-md" />
+									</div>
+									<div>
+										<Skeleton
+											count={1}
+											width={`${
+												15 + Math.random() * 80
+											}%`}
+										/>
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				</SkeletonTheme>
+
+				<div ref={lastElementRef}></div>
 
 				<AnimatePresence>
 					{loading && (

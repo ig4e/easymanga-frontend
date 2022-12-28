@@ -27,6 +27,8 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	BookOpenIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
 	StarIcon,
 } from "@heroicons/react/24/outline";
 import ExternalSite from "../components/Ui/ExternalSite";
@@ -113,7 +115,7 @@ const Home: NextPage<HomePageProps> = ({
 									className="w-full "
 								>
 									<Link
-										href={`/titles/${manga.source}/${manga.slug}`}
+										href={`/titles/${manga.source}/${manga.slug}?tab=chapters`}
 									>
 										<div className="relative w-full h-52 md:h-80">
 											<Image
@@ -278,15 +280,15 @@ const Home: NextPage<HomePageProps> = ({
 						<div className="md:flex items-center gap-2 absolute top-4 right-4 z-40 hidden">
 							<button
 								id="slide-prev"
-								className="bg-root hover:bg-root-100 active:bg-neutral-200/80 p-2 rounded-full transition disabled:opacity-50 disabled:hover:bg-root disabled:active:bg-root"
+								className="bg-root hover:bg-root-100 active:bg-root-100/50 p-2 rounded-full transition disabled:opacity-50 disabled:hover:bg-root disabled:active:bg-root"
 							>
-								<ArrowLeftIcon className="h-4 w-4 text-neutral "></ArrowLeftIcon>
+								<ChevronLeftIcon className="h-6 w-6 text-neutral "></ChevronLeftIcon>
 							</button>
 							<button
 								id="slide-next"
-								className="bg-root hover:bg-root-100 active:bg-neutral-200/80 p-2 rounded-full transition disabled:opacity-50 disabled:hover:bg-root disabled:active:bg-root"
+								className="bg-root hover:bg-root-100 active:bg-root-100/50 p-2 rounded-full transition disabled:opacity-50 disabled:hover:bg-root disabled:active:bg-root"
 							>
-								<ArrowRightIcon className="h-4 w-4 text-neutral "></ArrowRightIcon>
+								<ChevronRightIcon className="h-6 w-6 text-neutral"></ChevronRightIcon>
 							</button>
 						</div>
 					</Swiper>

@@ -61,6 +61,7 @@ function TitlePageLoading() {
 
 						<div>
 							<div className="relative w-full h-[16.8rem] bg-gradient-to-tr from-root to-root-100 -z-10">
+
 								<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
 							</div>
 							<div className="container z-50">
@@ -192,7 +193,10 @@ function TitlePageLoading() {
 												{["0G", "1G", "2G", "3G"].map(
 													(genre) => {
 														return (
-															<div key={genre} className="w-16">
+															<div
+																key={genre}
+																className="w-16"
+															>
 																<Skeleton
 																	className="w-full"
 																	key={genre}

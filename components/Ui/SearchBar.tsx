@@ -10,6 +10,7 @@ import { MANGA_FIELDS } from "../../apollo/fragments";
 import { sourcesData } from "../../utils/sourcesData";
 import ExternalSite from "./ExternalSite";
 import MangaCard from "./MangaCard";
+import SearchBarLoading from "../Loading/SearchBarLoading";
 
 function SearchBarUi({
 	active,
@@ -18,9 +19,11 @@ function SearchBarUi({
 	className,
 	width,
 	noAnimation,
+	loading,
 }: {
 	active: boolean;
 	value: string;
+	loading?: boolean;
 	className?: string;
 	setQuery: any;
 	width?: number | string;
@@ -33,7 +36,7 @@ function SearchBarUi({
 		<div className={`h-full ${className}`}>
 			<div className="h-full relative">
 				<div className="absolute inset-0 left-2 pointer-events-none z-50 flex w-full items-center">
-					{active ? (
+					{loading ? (
 						<svg
 							className="animate-spin w-6 h-5 text-primary"
 							xmlns="http://www.w3.org/2000/svg"
@@ -90,10 +93,10 @@ function SearchBar({
 }) {
 	const queryString = useMemo(() => {
 		const sources = [
-                        "MANGAKAKALOT",
+			"MANGAKAKALOT",
 			"STKISSMANGA",
 			"KISSMANGA",
-                        "ARENASCANS",
+			"ARENASCANS",
 			"ARES",
 			"GALAXYMANGA",
 			"MANGALEK",
@@ -132,7 +135,9 @@ function SearchBar({
 	}
 	const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 	const [searchQuery, setSearchQuery] = useState(initalSearchQuery || "");
-        useEffect(() => { initalSearchQuery && setSearchQuery(initalSearchQuery)}, [initalSearchQuery])
+	useEffect(() => {
+		initalSearchQuery && setSearchQuery(initalSearchQuery);
+	}, [initalSearchQuery]);
 	const [getSearchResults, { loading, error, data }] =
 		useLazyQuery(queryString);
 
@@ -172,6 +177,10 @@ function SearchBar({
 		return () => clearTimeout(searchTimeout);
 	}, [searchQuery]);
 
+	const totalSearchHits = searchResults.filter(
+		(x) => x.results.length > 0,
+	).length;
+
 	return (
 		<>
 			<motion.div className="h-full relative">
@@ -188,6 +197,7 @@ function SearchBar({
 										setQuery={setSearchQuery}
 										value={searchQuery}
 										active={open}
+										loading={loading}
 									></SearchBarUi>
 								</div>
 								<MagnifyingGlassIcon className="w-6 h-6 text-current md:hidden"></MagnifyingGlassIcon>
@@ -217,11 +227,13 @@ function SearchBar({
 													type: "spring",
 													duration: 0.5,
 												}}
-												className="bg-root pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mt-16 relative"
+												className="bg-root pb-6 px-6 rounded max-w-7xl h-full md:h-auto w-full max-h-screen overflow-y-scroll md:mb-10 md:mt-[3.8rem] relative"
 											>
 												<div className="fixed inset-x-0 bg-root z-50 w-full max-w-7xl mx-auto px-6 pb-4 rounded text-reverse">
 													<DialogTitle>
-														<span className="text-neutral">Search</span>
+														<span className="text-neutral">
+															Search
+														</span>
 														<DialogClose>
 															<XIcon />
 														</DialogClose>
@@ -235,73 +247,57 @@ function SearchBar({
 														active={open}
 														width={"100%"}
 														noAnimation={true}
+														loading={loading}
 													/>
 												</div>
 												<div className="h-[124px]"></div>
 												{loading ? (
-													<div className="flex justify-center items-center py-6">
-														<svg
-															className="animate-spin w-24 h-24 text-neutral-200"
-															xmlns="http://www.w3.org/2000/svg"
-															fill="none"
-															viewBox="0 0 24 24"
-														>
-															<circle
-																className="opacity-25"
-																cx="12"
-																cy="12"
-																r="10"
-																stroke="currentColor"
-																strokeWidth="4"
-															></circle>
-															<path
-																className="opacity-75"
-																fill="currentColor"
-																d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-															></path>
-														</svg>
-													</div>
+													<SearchBarLoading></SearchBarLoading>
 												) : (
 													searchQuery && (
 														<div className="text-neutral">
-															{searchResults.length >
-																0 && (
+															{totalSearchHits >
+																0 &&
+															!loading &&
+															!typing ? (
 																<DialogSecondaryTitle>
 																	Manga
 																</DialogSecondaryTitle>
+															) : (
+																<span>
+																	No Search
+																	Results
+																</span>
 															)}
-															<div className="flex flex-col items-start gap-4">
-																{searchResults.filter(
-																	(x) =>
-																		x
-																			.results
-																			.length >
-																		0,
-																).length > 0
-																	? searchResults.map(
-																			({
-																				results,
-																				source,
-																			}) => {
-																				if (
-																					results.length <=
-																					0
-																				)
-																					return null;
 
-																				const sourceData =
-																					sourcesData[
-																						source
-																					];
+															<div className="space-y-4">
+																{totalSearchHits >
+																	0 &&
+																	searchResults.map(
+																		({
+																			results,
+																			source,
+																		}) => {
+																			if (
+																				results.length <=
+																				0
+																			)
+																				return null;
 
-																				return (
-																					<div
-																						key={
-																							source +
-																							"-result"
-																						}
-																						className="flex flex-col items-start gap-4"
-																					>
+																			const sourceData =
+																				sourcesData[
+																					source
+																				];
+
+																			return (
+																				<div
+																					key={
+																						source +
+																						"-result"
+																					}
+																					className="space-y-4"
+																				>
+																					<div className="w-fit">
 																						<ExternalSite
 																							title={
 																								sourceData.name
@@ -315,54 +311,44 @@ function SearchBar({
 																								"https://aresmanga.com"
 																							}
 																						></ExternalSite>
+																					</div>
 
-																						<div className="grid grid-flow-row grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-2">
-																							{results.map(
-																								(
-																									manga,
-																								) => {
-																									return (
-																										<Dialog.Close
+																					<div className="w-full grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(145px,1fr));] [grid-auto-rows:1fr] gap-4 content select-none">
+																						{results.map(
+																							(
+																								manga,
+																							) => {
+																								return (
+																									<Dialog.Close
+																										key={
+																											source +
+																											"-result-" +
+																											manga.slug
+																										}
+																										asChild
+																									>
+																										<MangaCard
 																											key={
 																												source +
 																												"-result-" +
 																												manga.slug
 																											}
-																											asChild
-																										>
-																											<MangaCard
-																												key={
-																													source +
-																													"-result-" +
-																													manga.slug
-																												}
-																												manga={
-																													manga
-																												}
-																												mobile={
-																													true
-																												}
-																											></MangaCard>
-																										</Dialog.Close>
-																									);
-																								},
-																							)}
-																						</div>
+																											manga={
+																												manga
+																											}
+																											mobile={
+																												true
+																											}
+																										></MangaCard>
+																									</Dialog.Close>
+																								);
+																							},
+																						)}
 																					</div>
-																				);
-																			},
-																	  )
-																	: searchQuery &&
-																	  !typing && (
-																			<div className="flex items-center justify-center w-full">
-																				<h1 className="text-xl font-semibold">
-																					No
-																					Search
-																					Results
-																					Found
-																				</h1>
-																			</div>
-																	  )}
+																				</div>
+																			);
+																		},
+																	)}
 															</div>
 														</div>
 													)

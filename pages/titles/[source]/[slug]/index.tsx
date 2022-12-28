@@ -340,7 +340,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 			>
 				<div>
 					<div>
-						<div className="relative w-full h-[16.8rem]">
+						<div className="relative w-full h-[16.8rem] md:h-[20rem]">
 							<Image
 								className="w-full object-cover md:object-center -z-20"
 								src={
@@ -355,19 +355,17 @@ const MangaPage: NextPage<MangaPageProps> = ({
 							></Image>
 
 							<div
-								className={`absolute bg-root/25 inset-0 ${
+								className={`absolute bg-root/20 md:bg-root/10 inset-0 ${
 									anilistData?.bannerImage
-										? "backdrop-blur-[2px]"
+										? "backdrop-blur"
 										: "backdrop-blur"
 								}  -z-10`}
 							></div>
-
-							<div className="absolute bg-gradient-to-t from-root via-root/50 bottom-0 left-0 right-0 h-full md:h-24 -z-10"></div>
 						</div>
 						<div className="container z-50">
 							<div className="md:flex gap-6 ">
 								<div className="w-full max-w-[90.99vw] md:max-w-[200px]">
-									<div className="-translate-y-52 md:-translate-y-60 min-w-max overflow-y-scroll scrollbar-hide">
+									<div className="-translate-y-52 md:-translate-y-72 min-w-max overflow-y-scroll scrollbar-hide">
 										<div className="flex flex-col gap-4 ">
 											<div>
 												<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
@@ -584,7 +582,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 									</div>
 								</div>
 								<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
-									<h1 className="text-5xl font-black text-reverse -translate-y-52 h-12 md:-translate-y-64 hidden md:block relative">
+									<h1 className="text-5xl font-black text-reverse -translate-y-[19rem] h-12 hidden md:block relative">
 										<span className="absolute flex flex-col">
 											<span>{manga.title}</span>
 											{anilistData && (
@@ -733,7 +731,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 										<h3 className="text-2xl mb-4">
 											Manga Covers
 										</h3>
-										<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
+										<div className="grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(145px,1fr));] [grid-auto-rows:1fr] gap-4 content select-none">
 											{manga.covers?.map((cover) => {
 												return (
 													<div key={cover.url}>
@@ -790,7 +788,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 										<h3 className="text-2xl mb-4">
 											Manga Characters
 										</h3>
-										<div className="grid grid-flow-row grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 gap-y-6 select-none">
+										<div className="grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(145px,1fr));] [grid-auto-rows:1fr] gap-4 content select-none">
 											{anilistData?.characters.edges?.map(
 												({ node, role }) => {
 													return (
