@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../Footer";
 import Navbar from "../Navbar";
 
 function PageLayout({ children }: any) {
@@ -6,6 +7,7 @@ function PageLayout({ children }: any) {
 		<>
 			<Navbar></Navbar>
 			<div className="container">{children}</div>
+			<Footer></Footer>
 		</>
 	);
 }

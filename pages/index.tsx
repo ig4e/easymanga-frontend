@@ -78,6 +78,8 @@ const Home: NextPage<HomePageProps> = ({
 						slideToClickedSlide={false}
 						centeredSlides={true}
 						autoplay={true}
+						keyboard={{ enabled: true }}
+						mousewheel={true}
 						navigation={{
 							nextEl: "#slide-next",
 							prevEl: "#slide-prev",
@@ -112,10 +114,11 @@ const Home: NextPage<HomePageProps> = ({
 							return (
 								<SwiperSlide
 									key={manga.slug}
-									className="w-full "
+									className="relative"
 								>
 									<Link
 										href={`/titles/${manga.source}/${manga.slug}?tab=chapters`}
+										className=""
 									>
 										<div className="relative w-full h-52 md:h-80">
 											<Image
@@ -315,7 +318,7 @@ const Home: NextPage<HomePageProps> = ({
 
 				<MangaListRow
 					mangaList={recentlyAddedMangaList}
-					title={"New Titles"}
+					title={"Recently Added"}
 					href={"/titles?orderBy=latest"}
 				></MangaListRow>
 			</div>

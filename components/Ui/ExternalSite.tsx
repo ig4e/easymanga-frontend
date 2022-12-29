@@ -31,11 +31,11 @@ function ExternalSite({
 	return (
 		<Wrapper
 			href={href}
-			className="flex items-center gap-2 bg-root-100 justify-between hover:bg-neutral-200/25 p-1.5 rounded-md select-none group"
+			className="flex items-center gap-2 bg-root-100 justify-between hover:bg-neutral-200/25 p-1 md:p-1.5 rounded-md select-none group"
 		>
 			<div className="flex items-center gap-2">
 				<div
-					className={`w-6 h-6 ${
+					className={`w-4 h-4 md:w-6 md:h-6 ${
 						small && "!w-5 !h-5"
 					} ${ImageClassName}`}
 				>
@@ -48,7 +48,7 @@ function ExternalSite({
 				</div>
 
 				<span
-					className={`font-medium flex items-center gap-4 select-none group-hover:text-primary${
+					className={`font-medium flex items-center gap-4 select-none group-hover:text-primary text-sm ${
 						small && "!text-xs"
 					}`}
 				>
@@ -57,7 +57,7 @@ function ExternalSite({
 			</div>
 
 			{!small && (
-				<ArrowTopRightOnSquareIcon className="w-5 h-5"></ArrowTopRightOnSquareIcon>
+				<ArrowTopRightOnSquareIcon className="hidden md:block md:w-5 md:h-5"></ArrowTopRightOnSquareIcon>
 			)}
 		</Wrapper>
 	);

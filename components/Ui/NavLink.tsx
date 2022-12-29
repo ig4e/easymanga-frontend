@@ -15,7 +15,7 @@ function NavLink({ href, title }: { href: string; title: string }) {
 			<Link href={href}>
 				<div className="flex flex-col items-center group p-1">
 					<h1
-						className={`transition font-medium text-[0.85rem] group-hover:text-primary ${
+						className={`transition font-medium text-reverse group-hover:text-primary ${
 							active ? "text-primary" : "text-neutral-100"
 						}`}
 					>
@@ -24,7 +24,7 @@ function NavLink({ href, title }: { href: string; title: string }) {
 
 					{active ? (
 						<motion.div
-							layoutId="underlineNav"
+							layoutId="underlineNavLink"
 							initial={{ x: -1, width: 3 }}
 							animate={{ x: 0, opacity: 1, width: 15 }}
 							exit={{ x: 1, width: 3 }}

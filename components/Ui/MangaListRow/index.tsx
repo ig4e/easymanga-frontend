@@ -56,6 +56,8 @@ function MangaListRow({
 				longSwipesRatio={0.2}
 				slidesPerView={"auto"}
 				slideToClickedSlide={false}
+				keyboard={{ enabled: true }}
+				mousewheel={true}
 				breakpoints={{
 					0: {
 						slidesPerView: 2.7,

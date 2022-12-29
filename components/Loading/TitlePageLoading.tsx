@@ -60,14 +60,14 @@ function TitlePageLoading() {
 						</Head>
 
 						<div>
-							<div className="relative w-full h-[16.8rem] bg-gradient-to-tr from-root to-root-100 -z-10">
+							<div className="relative w-full h-[17.8rem] md:h-[18.8rem] bg-gradient-to-tr from-root to-root-100 -z-10">
 
 								<div className="absolute bg-gradient-to-t from-black/70 bottom-0 left-0 right-0 h-20 -z-10"></div>
 							</div>
 							<div className="container z-50">
 								<div className="md:flex gap-6 ">
 									<div className="w-full max-w-[90.99vw] md:max-w-[200px] z-20 ">
-										<div className="-translate-y-52 md:-translate-y-60 min-w-max overflow-y-scroll scrollbar-hide z-20 ">
+										<div className="-translate-y-56 md:-translate-y-60 min-w-max overflow-y-scroll scrollbar-hide z-20 ">
 											<div className="flex flex-col gap-4 ">
 												<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full z-20 md:max-h-min overflow-hidden">
 													<motion.div

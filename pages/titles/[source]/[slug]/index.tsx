@@ -220,6 +220,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 	const router = useRouter();
 	const { resetState } = useChapterPageStore();
 	const [coverError, setCoverError] = useState(false);
+	const [showMore, setShowMore] = useState(false);
+
 	const [currentTab, setCurrentTab] = useState<
 		"chapters" | "characters" | "art"
 	>(nextCurrentTab);
@@ -321,10 +323,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 	return (
 		<>
-			<Navbar
-				navClass="!text-white md:!text-neutral"
-				mode="transparent"
-			></Navbar>
+			<Navbar navClass="" mode="transparent"></Navbar>
+
 			<Head>
 				<title>{manga.title} Details - Easy Manga</title>
 				<meta property="og:title" content={manga.title} />
@@ -338,11 +338,24 @@ const MangaPage: NextPage<MangaPageProps> = ({
 				value={currentTab}
 				onValueChange={(value: any) => setCurrentTab(value)}
 			>
+				<div className="fixed inset-0 object-cover -z-10 bg-root">
+					<div className="">
+						<Image
+							className="object-cover blur-3xl -z-20 opacity-80"
+							src={manga.cover}
+							fill={true}
+							alt={manga.title}
+						></Image>
+					</div>
+
+					<div className="absolute inset-0 bg-root/90 -z-10"></div>
+				</div>
+
 				<div>
 					<div>
-						<div className="relative w-full h-[16.8rem] md:h-[20rem]">
+						<div className="relative w-full h-[17.8rem] md:h-[18.8rem]">
 							<Image
-								className="w-full object-cover md:object-center -z-20"
+								className="w-full object-cover md:object-center -z-10"
 								src={
 									anilistData?.bannerImage
 										? getWorkersUrl(
@@ -365,7 +378,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 						<div className="container z-50">
 							<div className="md:flex gap-6 ">
 								<div className="w-full max-w-[90.99vw] md:max-w-[200px]">
-									<div className="-translate-y-52 md:-translate-y-72 min-w-max overflow-y-scroll scrollbar-hide">
+									<div className="-translate-y-56 md:-translate-y-60 min-w-max overflow-y-scroll scrollbar-hide">
 										<div className="flex flex-col gap-4 ">
 											<div>
 												<div className="flex items-start gap-4 h-full max-h-[12rem] max-w-[90vw] md:max-w-full md:max-h-min overflow-hidden">
@@ -475,7 +488,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											)}
 
 											{anilistData && (
-												<div className="bg-root-100 border border-root-100/50 p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
+												<div className="bg-root-100/25 border border-root p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
 													{anilistData && (
 														<div className="flex items-start gap-6 overflow-scroll scrollbar-hide md:flex-col md:gap-2">
 															{[
@@ -581,8 +594,8 @@ const MangaPage: NextPage<MangaPageProps> = ({
 										</div>
 									</div>
 								</div>
-								<div className="py-4 -translate-y-40 md:translate-y-0 w-full">
-									<h1 className="text-5xl font-black text-reverse -translate-y-[19rem] h-12 hidden md:block relative">
+								<div className="py-4 -translate-y-44 md:translate-y-0 w-full ">
+									<h1 className="text-5xl font-black text-reverse -translate-y-64 h-12 hidden md:block relative">
 										<span className="absolute flex flex-col">
 											<span>{manga.title}</span>
 											{anilistData && (
@@ -606,7 +619,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 									<div className="-translate-y-12 space-y-2 ">
 										{!!manga.dexId && (
-											<Tabs.List className="bg-root-100 p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
+											<Tabs.List className="bg-root-100/50 border border-root p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
 												{[
 													{
 														title: "Chapters",
@@ -635,11 +648,11 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															<Tabs.Trigger
 																key={title}
 																value={value}
-																className={`p-1 px-4 rounded-md transition w-full ${
+																className={`p-1 px-4 rounded-md border border-root transition w-full ${
 																	value ===
 																	currentTab
 																		? "bg-primary text-reverse"
-																		: "bg-root"
+																		: "bg-root/50"
 																}`}
 															>
 																{title}
@@ -649,84 +662,126 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											</Tabs.List>
 										)}
 
-										{currentTab === "chapters" && (
-											<>
-												<div className="flex items-center flex-wrap gap-2">
-													{manga.aniId && (
-														<ExternalSite
-															title="Anilist"
-															href={`https://anilist.co/manga/${
-																manga.aniId
-															}/${manga.title.replaceAll(
-																" ",
-																"-",
-															)}`}
-															ImageSrc={
-																sourcesData
-																	.ANILIST
-																	.image
-															}
-														/>
-													)}
+										<div className="flex items-center flex-wrap gap-2">
+											{manga.genres.map((genre) => {
+												return (
+													<span
+														key={genre}
+														className="inline-block bg-root-100 border border-root py-0 px-[0.375rem] m-0 md:py-1 md:px-2 font-black uppercase rounded whitespace-nowrap text-[0.625rem] md:text-xs"
+													>
+														{genre}
+													</span>
+												);
+											})}
+										</div>
 
-													{manga.dexId && (
+										<motion.div
+											className={`${
+												showMore ? "" : "max-h-32"
+											}  md:max-h-fit overflow-hidden relative`}
+											transition={{ duration: 1 }}
+										>
+											<div
+												className={`top-12 bottom-0.5 ${
+													!showMore &&
+													"bg-gradient-to-t"
+												} from-root absolute z-20 inset-0 rounded-b-lg md:hidden`}
+											>
+												<div className="w-full h-full flex justify-end items-end">
+													<button
+														onClick={() =>
+															setShowMore(
+																!showMore,
+															)
+														}
+														className={`${
+															showMore
+																? "bg-primary/50"
+																: "bg-primary"
+														} p-2 rounded-md flex gap-2 items-center`}
+													>
+														<ChevronDownIcon
+															className={`h-4 w-4 stroke-2 ${
+																showMore &&
+																"rotate-180"
+															}`}
+														/>
+														<span className="text-xs">
+															{!showMore
+																? "Show More"
+																: "Show Less"}
+														</span>
+													</button>
+												</div>
+											</div>
+
+											{currentTab === "chapters" && (
+												<>
+													<div className="flex items-center flex-wrap gap-2">
+														{manga.aniId && (
+															<ExternalSite
+																title="Anilist"
+																href={`https://anilist.co/manga/${
+																	manga.aniId
+																}/${manga.title.replaceAll(
+																	" ",
+																	"-",
+																)}`}
+																ImageSrc={
+																	sourcesData
+																		.ANILIST
+																		.image
+																}
+															/>
+														)}
+
+														{manga.dexId && (
+															<ExternalSite
+																title="MangaDex"
+																href={`https://mangadex.org/title/${
+																	manga.dexId
+																}/${manga.title.replaceAll(
+																	" ",
+																	"-",
+																)}`}
+																ImageSrc={
+																	sourcesData
+																		.MANGADEX
+																		.image
+																}
+															/>
+														)}
 														<ExternalSite
-															title="MangaDex"
-															href={`https://mangadex.org/title/${
-																manga.dexId
-															}/${manga.title.replaceAll(
-																" ",
-																"-",
-															)}`}
+															title={source.name}
+															href={`${manga.url}`}
 															ImageSrc={
-																sourcesData
-																	.MANGADEX
-																	.image
+																source.image!
 															}
 														/>
-													)}
-													<ExternalSite
-														title={source.name}
-														href={`${manga.url}`}
-														ImageSrc={source.image!}
-													/>
-													<div className="flex items-center gap-1 select-none">
-														<StarIcon className="h-6 w-6 stroke-1 fill-current text-primary"></StarIcon>
+
+														<div className="items-center gap-1 select-none hidden md:flex">
+															<StarIcon className="h-6 w-6 stroke-1 fill-current text-primary"></StarIcon>
+															<span>
+																{manga.score ||
+																	"N/A"}
+															</span>
+														</div>
+													</div>
+
+													<div>
 														<span>
-															{manga.score ||
-																"N/A"}
+															{manga.synopsis ||
+																"لا يوجد ملخص للأن , نعتذر منكم!"}
 														</span>
 													</div>
-												</div>
-												<div className="flex items-center flex-wrap gap-2">
-													{manga.genres.map(
-														(genre) => {
-															return (
-																<div
-																	key={genre}
-																	className="bg-root-100 border border-root select-none p-1 md:py-1 md:px-2 text-xs font-bold uppercase rounded-md"
-																>
-																	<span className=" md:text-sm">
-																		{genre}
-																	</span>
-																</div>
-															);
-														},
-													)}
-												</div>
-												<div>
-													<span>
-														{manga.synopsis ||
-															"لا يوجد ملخص للأن , نعتذر منكم!"}
-													</span>
-												</div>
-											</>
-										)}
+												</>
+											)}
+										</motion.div>
 									</div>
 									<div></div>
 									<Tabs.Content
 										value="art"
-										className="-translate-y-12"
+										className="-translate-y-8"
 									>
 										<h3 className="text-2xl mb-4">
 											Manga Covers
@@ -783,7 +838,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 									</Tabs.Content>
 									<Tabs.Content
 										value="characters"
-										className="-translate-y-12"
+										className="-translate-y-8"
 									>
 										<h3 className="text-2xl mb-4">
 											Manga Characters
@@ -913,7 +968,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											></ArrowUpIcon>
 											</button>*/}
 											</div>
-											<div className="bg-root-100 p-3 rounded-md space-y-4">
+											<div className="bg-root-100/25 p-3 rounded-md space-y-4 border border-root">
 												<div className="flex items-center gap-2 md:gap-4">
 													<input
 														className={`bg-root h-10 w-full pr-2 pl-4 rounded  border-root outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
@@ -1020,7 +1075,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 												</div>
 
 												<div
-													className={`grid grid-flow-row grid-cols-3 md:grid-cols-4 gap-2 w-full ${
+													className={`grid grid-flow-row [grid-template-columns:repeat(auto-fill,minmax(100px,1fr));] md:[grid-template-columns:repeat(auto-fill,minmax(145px,1fr));] [grid-auto-rows:1fr] gap-2 w-full ${
 														chapterRangeSelectOpen &&
 														"select-none"
 													}`}
@@ -1039,7 +1094,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																	}/chapter?id=${encodeURIComponent(
 																		chapter.slug!,
 																	)}`}
-																	className="px-2 py-1 border border-root bg-root rounded-md hover:bg-primary-hover transition group"
+																	className="px-2 py-1 bg-root/50 rounded-md hover:bg-primary-hover transition group"
 																>
 																	<span className="text-xs text-primary group-hover:text-white">
 																		{
