@@ -22,6 +22,7 @@ function privacy() {
 					<a
 						href="https://www.freeprivacypolicy.com/free-privacy-policy-generator/"
 						target="_blank"
+                        rel="noreferrer"
 					>
 						Free Privacy Policy Generator
 					</a>
@@ -206,6 +207,7 @@ function privacy() {
 					<a
 						href="https://www.freeprivacypolicy.com/blog/sample-privacy-policy-template/#Use_Of_Cookies_And_Tracking"
 						target="_blank"
+                        rel="noreferrer"
 					>
 						Free Privacy Policy website
 					</a>{" "}
