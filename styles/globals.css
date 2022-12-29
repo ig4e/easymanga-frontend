@@ -20,6 +20,29 @@
 		// "reverse-100": "#f0f1f3",
 	*/
 
+	.pplicy h1 {
+		@apply text-3xl font-semibold my-4
+	}
+
+	.pplicy h2 {
+		@apply text-xl font-semibold my-2
+	}
+
+	.pplicy  ul {
+		@apply my-2
+	}
+
+	.pplicy  li {
+		@apply mx-4 my-2
+	}
+
+	
+	
+
+	.pplicy > p {
+		@apply text-sm
+	}
+
 	[data-theme="light"] {
 		--color-primary: 50 170 255;
 		--color-primary-hover: 20 157 255;
