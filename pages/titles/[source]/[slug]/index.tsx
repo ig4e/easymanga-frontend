@@ -348,7 +348,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 						></Image>
 					</div>
 
-					<div className="absolute inset-0 bg-root/90 -z-10"></div>
+					<div className="absolute inset-0 bg-gradient-to-t via-root/80 from-root/90 -z-10"></div>
 				</div>
 
 				<div>
