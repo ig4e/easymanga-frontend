@@ -166,11 +166,11 @@ const TitlesPage: NextPage<TitlesPageProps> = ({ list, source }) => {
 
 						<Select.Portal>
 							<Select.Content className="bg-root p-2 border border-root drop-shadow-md rounded-md z-50">
-								<Select.ScrollUpButton className="SelectScrollButton text-reverse">
+								<Select.ScrollUpButton className="SelectScrollButton text-neutral">
 									<ChevronUpIcon className="h-4 w-4" />
 								</Select.ScrollUpButton>
 								<Select.Viewport>
-									<Select.Group className="space-y-2 text-reverse">
+									<Select.Group className="space-y-2 text-neutral">
 										<Select.Label />
 										{sources.map((source: string) => {
 											return (
