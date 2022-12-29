@@ -26,6 +26,7 @@ function Navbar({
 	mode?: "transparent";
 }) {
 	const [scrolled, setScrolled] = useState(false);
+	const { currentSource, setCurrentSource } = useUserSettingsStore();
 
 	useEffect(() => {
 		function scroll(event: any) {
@@ -80,7 +81,7 @@ function Navbar({
 								<div className="hidden items-center space-x-6 mt-1.5 md:flex">
 									<NavLink href="/" title="Home"></NavLink>
 									<NavLink
-										href="/titles"
+										href={`/titles?source=${currentSource || "MANGAKAKALOT"}`}
 										title="Titles"
 									></NavLink>
 								</div>

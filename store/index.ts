@@ -6,7 +6,7 @@ import {
 } from "../components/Ui/ChapterPageSettingsMenu";
 import { Chapter } from "../typings/chapter";
 
-type SourceUnion =
+export type SourceUnion =
 	| "ARES"
 	| "GALAXYMANGA"
 	| "MANGALEK"

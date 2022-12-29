@@ -25,7 +25,7 @@ import MangaCard from "../../components/Ui/MangaCard";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useTheme } from "next-themes";
-import { useUserSettingsStore } from "../../store";
+import { SourceUnion, useUserSettingsStore } from "../../store";
 
 interface Genre {
 	id: number;
@@ -64,8 +64,13 @@ const MANGA_LIST = gql`
 	}
 `;
 
-const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
-	const { currentSource, setCurrentSource } = useUserSettingsStore()
+const TitlesPage: NextPage<TitlesPageProps> = ({ list, source }) => {
+	const { currentSource, setCurrentSource } = useUserSettingsStore();
+
+	useEffect(() => {
+
+	}, []);
+
 	const [fetchMore, { loading, error, data }] = useLazyQuery(MANGA_LIST);
 	const [page, setPage] = useState<number>(1);
 	const [mangaList, setMangaList] = useState<Manga[]>(list);
@@ -147,6 +152,7 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 							} else setSelectMenuOpen(open);
 						}}
 						onValueChange={(value) => {
+							setCurrentSource(value as SourceUnion)
 							location.push(`/titles?source=${value}`);
 						}}
 						defaultValue={source}
@@ -240,23 +246,27 @@ const Home: NextPage<TitlesPageProps> = ({ list, source }) => {
 							);
 						})}
 
-						{loading && Array.from({ length: 4 }).map((_, index) => {
-							return (
-								<div key={"newSkeletonManga-"+index} className="relative space-y-2">
-									<div className="">
-										<Skeleton className="-top-1 aspect-[200/285] rounded-md" />
+						{loading &&
+							Array.from({ length: 2 }).map((_, index) => {
+								return (
+									<div
+										key={"newSkeletonManga-" + index}
+										className="relative space-y-2"
+									>
+										<div className="">
+											<Skeleton className="-top-1 aspect-[200/285] rounded-md" />
+										</div>
+										<div>
+											<Skeleton
+												count={1}
+												width={`${
+													15 + Math.random() * 80
+												}%`}
+											/>
+										</div>
 									</div>
-									<div>
-										<Skeleton
-											count={1}
-											width={`${
-												15 + Math.random() * 80
-											}%`}
-										/>
-									</div>
-								</div>
-							);
-						})}
+								);
+							})}
 					</div>
 				</SkeletonTheme>
 
@@ -331,4 +341,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	};
 };
 
-export default Home;
+export default TitlesPage;
