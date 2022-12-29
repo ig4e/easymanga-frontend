@@ -113,7 +113,7 @@ function privacy() {
 							accessible from{" "}
 							<a
 								href="https://www.emanga.tk/"
-								rel="external nofollow noopener"
+                                rel="noreferrer"
 								target="_blank"
 							>
 								https://www.emanga.tk/
