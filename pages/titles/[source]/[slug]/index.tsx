@@ -619,7 +619,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 									<div className="-translate-y-12 space-y-2 ">
 										{!!manga.dexId && (
-											<Tabs.List className="bg-root-100/50 border border-root p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
+											<Tabs.List className="bg-root-100/25 border border-root p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
 												{[
 													{
 														title: "Chapters",
@@ -678,7 +678,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 										<motion.div
 											className={`${
 												showMore ? "" : "max-h-32"
-											}  md:max-h-fit overflow-hidden relative`}
+											}  md:max-h-fit overflow-hidden relative `}
 											transition={{ duration: 1 }}
 										>
 											<div
@@ -706,7 +706,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																"rotate-180"
 															}`}
 														/>
-														<span className="text-xs">
+														<span className="text-xs text-white">
 															{!showMore
 																? "Show More"
 																: "Show Less"}
