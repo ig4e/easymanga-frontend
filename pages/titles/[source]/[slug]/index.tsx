@@ -682,7 +682,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											transition={{ duration: 1 }}
 										>
 											<div
-												className={`top-12 bottom-0.5 ${
+												className={`top-10 ${
 													!showMore &&
 													"bg-gradient-to-t"
 												} from-root absolute z-20 inset-0 rounded-b-lg md:hidden`}
@@ -698,7 +698,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 															showMore
 																? "bg-primary/50"
 																: "bg-primary"
-														} p-2 rounded-md flex gap-2 items-center`}
+														} p-2 rounded-md flex gap-2 items-center text-white`}
 													>
 														<ChevronDownIcon
 															className={`h-4 w-4 stroke-2 ${
@@ -706,7 +706,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																"rotate-180"
 															}`}
 														/>
-														<span className="text-xs text-white">
+														<span className="text-xs">
 															{!showMore
 																? "Show More"
 																: "Show Less"}
@@ -768,7 +768,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 														</div>
 													</div>
 
-													<div>
+													<div className="mt-2">
 														<span>
 															{manga.synopsis ||
 																"لا يوجد ملخص للأن , نعتذر منكم!"}
