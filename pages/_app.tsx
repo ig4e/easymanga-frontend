@@ -132,8 +132,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<ApolloProvider client={client}>
-			<div className="font-body text-neutral ">
-				<ThemeProvider>
+			<div className="font-body text-neutral">
+				<ThemeProvider >
 					{navigationState.loading && (
 						<>
 							{navigationState.pageType === "title" && (

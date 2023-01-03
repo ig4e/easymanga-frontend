@@ -30,7 +30,7 @@ function Navbar({
 
 	useEffect(() => {
 		function scroll(event: any) {
-			if (window.scrollY > 50) return setScrolled(true);
+			if (window.scrollY > 25) return setScrolled(true);
 			return setScrolled(false);
 		}
 
@@ -54,7 +54,7 @@ function Navbar({
 					className={`bg-root my-0 py-2.5 fixed w-screen h-12 md:h-14 z-50 transition ${navClass} ${
 						mode === "transparent"
 							? `${
-									scrolled ? "bg-root" : "bg-transparent"
+									scrolled ? "bg-root" : "bg-transparent !text-white"
 							  } text-neutral`
 							: "shadow md:shadow-md"
 					} rounded-b-md md:rounded-b-none`}

@@ -31,6 +31,8 @@ import { getRandomEmoji } from "../../../../utils/getRandomEmoji";
 import SmolImg from "../../../../public/images/smol.png";
 import ChapterPageChaptersMenu from "../../../../components/Ui/ChapterPageChaptersMenu";
 import Head from "next/head";
+import CommentsDialog from "../../../../components/CommentsDialog";
+import { Manga } from "../../../../typings/manga";
 
 interface IPageProps {
 	manga: { title: string; slug: string; chapters: Chapter[] };
@@ -486,6 +488,7 @@ const Chapter: NextPage<IPageProps> = ({ chapter, manga }) => {
 								setChapterPageNavigationMode
 							}
 						></ChapterPageSettingsMenu>
+						<CommentsDialog manga={manga as Manga} chapter={chapter}></CommentsDialog>
 						{/*<ChapterPageChaptersMenu
 							chapters={manga.chapters}
 						></ChapterPageChaptersMenu>*/}

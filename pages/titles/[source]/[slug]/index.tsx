@@ -34,6 +34,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import NoImagePlaceholder from "../../../../public/assets/no-img.png";
 import { useRouter } from "next/router";
 import SearchBar from "../../../../components/Ui/SearchBar";
+import { DiscussionEmbed } from "disqus-react";
 
 export interface Character {
 	role: "MAIN" | "SUPPORTING" | "BACKGROUND";
@@ -348,7 +349,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 						></Image>
 					</div>
 
-					<div className="absolute inset-0 bg-gradient-to-t via-root/80 from-root/90 -z-10"></div>
+					<div className="absolute inset-0 bg-gradient-to-t to-root/90 via-root/80 from-root/90 -z-10"></div>
 				</div>
 
 				<div>
@@ -368,11 +369,11 @@ const MangaPage: NextPage<MangaPageProps> = ({
 							></Image>
 
 							<div
-								className={`absolute bg-root/20 md:bg-root/10 inset-0 ${
+								className={`absolute bg-[#121318]/50 inset-0 ${
 									anilistData?.bannerImage
 										? "backdrop-blur"
 										: "backdrop-blur"
-								}  -z-10`}
+								} `}
 							></div>
 						</div>
 						<div className="container z-50">
@@ -488,7 +489,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											)}
 
 											{anilistData && (
-												<div className="bg-root-100/25 border border-root p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
+												<div className="bg-root-100/50 border border-root p-2 rounded-md flex flex-col md:flex-col-reverse max-w-[90.99vw] md:max-w-[200px] ">
 													{anilistData && (
 														<div className="flex items-start gap-6 overflow-scroll scrollbar-hide md:flex-col md:gap-2">
 															{[
@@ -619,7 +620,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 									<div className="-translate-y-12 space-y-2 ">
 										{!!manga.dexId && (
-											<Tabs.List className="bg-root-100/25 border border-root p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
+											<Tabs.List className="bg-root-100/50 border border-root p-2 rounded-md w-full md:w-fit flex items-center gap-2 mb-3">
 												{[
 													{
 														title: "Chapters",
@@ -968,7 +969,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											></ArrowUpIcon>
 											</button>*/}
 											</div>
-											<div className="bg-root-100/25 p-3 rounded-md space-y-4 border border-root">
+											<div className="bg-root-100/50 p-3 rounded-md space-y-4 border border-root">
 												<div className="flex items-center gap-2 md:gap-4">
 													<input
 														className={`bg-root h-10 w-full pr-2 pl-4 rounded  border-root outline-none relative placeholder:text-neutral-200 placeholder:font-normal text-neutral-100 font-medium border focus:border-primary `}
@@ -1114,6 +1115,21 @@ const MangaPage: NextPage<MangaPageProps> = ({
 											</div>
 										</div>
 									</Tabs.Content>
+									<div
+										className={`container text-primary pt-2 rounded-md CommentsSection`}
+										style={{ colorScheme: "light" }}
+										data-theme="light"
+									>
+										<DiscussionEmbed
+											config={{
+												url: `https://emanga.tk/titles/${manga.source}/${manga.slug}`,
+												identifier: `${manga.source}/${manga.slug}`,
+												title: `${manga.title}'s Comments`,
+												language: "EN",
+											}}
+											shortname={`easy-manga`}
+										></DiscussionEmbed>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -51,6 +51,9 @@ module.exports = {
 				"neutral-200": "rgb(var(--color-neutral-200) / <alpha-value>)",
 				reverse: "rgb(var(--color-reverse-100) / <alpha-value>)",
 				"reverse-100": "rgb(var(--color-reverse) / <alpha-value>)",
+				"em-background": "rgb(var(--em-background) / <alpha-value>)",
+				"em-background-translucent":
+					"rgb(var(--em-background-translucent) / <alpha-value>)",
 
 				//dark mode
 				// primary: "#32aaff",
