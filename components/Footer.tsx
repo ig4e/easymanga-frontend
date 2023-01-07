@@ -9,7 +9,7 @@ function Footer() {
 					<span className="text-sm">© EasyManga 2022-2023</span>
 					<span className="text-xs">By Ahmed Mohamed</span>
 				</div>
-                                <div className="flex flex-col">
+                                <div className="flex flex-col text-sm">
 				  <Link href={"/privacy"}>
 				    Privacy Policy
 				  </Link>
