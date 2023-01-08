@@ -5,8 +5,8 @@ import Image from "next/image";
 
 import { Manga } from "../../../../typings/manga";
 import { anilistClient, client } from "../../../../apollo-client";
-import { gql } from "../../../../apollo/__generated__/gql"
-import { gql as rawGql } from "@apollo/client"
+import { gql } from "../../../../apollo/__generated__/gql";
+import { gql as rawGql } from "@apollo/client";
 
 import ShowImageModal from "../../../../components/Ui/ShowImageModal";
 import ExternalSite from "../../../../components/Ui/ExternalSite";
@@ -324,7 +324,9 @@ const MangaPage: NextPage<MangaPageProps> = ({
 	}, [searchQuery, chapterRange]);
 
 	const source: SourceData = sourcesData[manga.source];
-
+	const mangaCover = manga.dexId
+		? manga.cover.replace("&referer=", ".256.jpg&referer=")
+		: manga.cover;
 	return (
 		<>
 			<Navbar mode="transparent"></Navbar>
@@ -398,9 +400,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		true,
 																	)
 																}
-																src={
-																	manga.cover
-																}
+																src={mangaCover}
 																height={285}
 																width={200}
 																className="rounded-md object-cover h-full w-full aspect-[200/285] bg-neutral-200"
