@@ -5,7 +5,9 @@ import Image from "next/image";
 
 import { Manga } from "../../../../typings/manga";
 import { anilistClient, client } from "../../../../apollo-client";
-import { gql } from "@apollo/client";
+import { gql } from "../../../../apollo/__generated__/gql"
+import { gql as rawGql } from "@apollo/client"
+
 import ShowImageModal from "../../../../components/Ui/ShowImageModal";
 import ExternalSite from "../../../../components/Ui/ExternalSite";
 import Fuse from "fuse.js";
@@ -35,6 +37,7 @@ import NoImagePlaceholder from "../../../../public/assets/no-img.png";
 import { useRouter } from "next/router";
 import SearchBar from "../../../../components/Ui/SearchBar";
 import { DiscussionEmbed } from "disqus-react";
+import { Sources } from "../../../../apollo/__generated__/graphql";
 
 export interface Character {
 	role: "MAIN" | "SUPPORTING" | "BACKGROUND";
@@ -1155,7 +1158,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	let { tab } = query! as { [index: string]: string };
 
 	const { data } = await client.query({
-		query: gql`
+		query: gql(`
 			query Manga($mangaUniqueInput: MangaUniqueInput!) {
 				manga(mangaUniqueInput: $mangaUniqueInput) {
 					url
@@ -1189,10 +1192,10 @@ export const getServerSideProps: GetServerSideProps = async ({
 					altTitles
 				}
 			}
-		`,
+		`),
 		variables: {
 			mangaUniqueInput: {
-				source,
+				source: source as Sources,
 				slug,
 			},
 		},
@@ -1202,7 +1205,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 	if (manga.aniId) {
 		const { data: anilistData } = await anilistClient.query({
-			query: gql`
+			query: rawGql`
 				query Media($mediaId: Int, $type: MediaType, $search: String) {
 					Media(id: $mediaId, type: $type, search: $search) {
 						volumes

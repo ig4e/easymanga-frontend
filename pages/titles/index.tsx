@@ -57,7 +57,7 @@ const MANGA_LIST_WITH_GENRES = gql`
 
 const MANGA_LIST = gql`
 	${MANGA_FIELDS}
-	query Query($mangaList: MangalistInput) {
+	query MangaListQuery($mangaList: MangalistInput) {
 		mangaList(mangaListInput: $mangaList) {
 			...MangaFields
 		}

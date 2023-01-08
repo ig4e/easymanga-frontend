@@ -333,8 +333,30 @@ export const getStaticProps: GetStaticProps = async ({}) => {
 
 	const { data } = await client.query({
 		query: gql`
-			${MANGA_FIELDS}
-			query Query(
+			fragment MangaFields on Manga {
+				dexId
+				aniId
+				muId
+				slug
+				url
+				cover
+				title
+				altTitles
+				genres
+				synopsis
+				status
+				type
+				author
+				artist
+				releaseYear
+				score
+				chapters {
+					name
+					number
+				}
+				source
+			}
+			query HomePageQuery(
 				$latestUpdatesInput: MangalistInput
 				$popularManga: MangalistInput
 				$recentlyAddedManga: MangalistInput
