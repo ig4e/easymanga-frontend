@@ -15,7 +15,7 @@ function Footer() {
 							Privacy
 						</Link>
 						<span>&</span>
-						<Link href={"#"} className="hover:text-primary">
+						<Link href={"/terms"} className="hover:text-primary">
 							TOS
 						</Link>
 					</div>
