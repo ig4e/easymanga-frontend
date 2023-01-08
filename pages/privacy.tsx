@@ -4,7 +4,7 @@ import PageLayout from "../components/Ui/PageLayout";
 function privacy() {
 	return (
 		<PageLayout>
-			<div className="py-6 pplicy">
+			<div className="py-6 pplicy flex flex-col gap-1">
 				<h1>Privacy Policy</h1>
 				<p>Last updated: December 29, 2022</p>
 				<p>

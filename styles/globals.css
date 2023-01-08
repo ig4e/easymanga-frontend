@@ -28,8 +28,8 @@
 		@apply text-xl font-semibold my-2;
 	}
 
-	.pplicy ul {
-		@apply my-2;
+	.pplicy ul, .pplicy ol {
+		@apply my-2 list-disc;
 	}
 
 	.pplicy li {

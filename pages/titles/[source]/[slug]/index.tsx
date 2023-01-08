@@ -327,7 +327,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 	return (
 		<>
-			<Navbar navClass="" mode="transparent"></Navbar>
+			<Navbar mode="transparent"></Navbar>
 
 			<Head>
 				<title>{manga.title} Details - Easy Manga</title>
@@ -357,7 +357,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 
 				<div>
 					<div>
-						<div className="relative w-full h-[17.8rem] md:h-[18.8rem]">
+						<div className="relative w-full h-[17.8rem] md:h-[20rem]">
 							<Image
 								className="w-full object-cover md:object-center -z-10"
 								src={

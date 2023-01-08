@@ -9,12 +9,20 @@ function Footer() {
 					<span className="text-sm">© EasyManga 2022-2023</span>
 					<span className="text-xs">By Ahmed Mohamed</span>
 				</div>
-                                <div className="flex flex-col text-sm">
-				  <Link href={"/privacy"}>
-				    Privacy Policy
-				  </Link>
-                                  <span>TOS</span>
-                                </div>
+				<div className="flex flex-col text-sm">
+					<div className="flex items-center gap-2">
+						<Link href={"/privacy"} className="hover:text-primary">
+							Privacy
+						</Link>
+						<span>&</span>
+						<Link href={"#"} className="hover:text-primary">
+							TOS
+						</Link>
+					</div>
+					<Link href={"/dmca"} className="hover:text-primary">
+						DMCA
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

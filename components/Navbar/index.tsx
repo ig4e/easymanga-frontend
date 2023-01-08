@@ -25,19 +25,7 @@ function Navbar({
 	navClass?: string;
 	mode?: "transparent";
 }) {
-	const [scrolled, setScrolled] = useState(false);
 	const { currentSource, setCurrentSource } = useUserSettingsStore();
-
-	useEffect(() => {
-		function scroll(event: any) {
-			if (window.scrollY > 25) return setScrolled(true);
-			return setScrolled(false);
-		}
-
-		window.addEventListener("scroll", scroll);
-
-		return () => window.removeEventListener("scroll", scroll);
-	}, []);
 
 	const location = useRouter();
 	const { theme, forcedTheme, themes, resolvedTheme, systemTheme, setTheme } =
@@ -51,13 +39,11 @@ function Navbar({
 		<>
 			<div className={`h-12 md:h-14 ${mode === "transparent" && "!h-0"}`}>
 				<nav
-					className={`bg-root my-0 py-2.5 fixed w-screen h-12 md:h-14 z-50 transition ${navClass} ${
+					className={`rounded-b-md md:rounded-b-none my-0 py-2.5 fixed w-screen h-12 md:h-14 z-50 transition ${navClass} ${
 						mode === "transparent"
-							? `${
-									scrolled ? "bg-root" : "bg-transparent !text-white"
-							  } text-neutral`
-							: "shadow md:shadow-md"
-					} rounded-b-md md:rounded-b-none`}
+							? `bg-root/60 backdrop-blur-md text-neutral`
+							: "shadow md:shadow-md bg-root"
+					} `}
 				>
 					<div className="flex items-center justify-between container h-full w-full">
 						<div className="flex items-center space-x-16">
@@ -81,7 +67,9 @@ function Navbar({
 								<div className="hidden items-center space-x-6 mt-1.5 md:flex">
 									<NavLink href="/" title="Home"></NavLink>
 									<NavLink
-										href={`/titles?source=${currentSource || "MANGAKAKALOT"}`}
+										href={`/titles?source=${
+											currentSource || "MANGAKAKALOT"
+										}`}
 										title="Titles"
 									></NavLink>
 								</div>
