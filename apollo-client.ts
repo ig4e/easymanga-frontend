@@ -9,8 +9,8 @@ export const client = new ApolloClient({
 		process.env.NODE_ENV === "development"
 			? useDevServer
 				? "http://localhost:3000/graphql"
-				: "https://easy-manga-prod-emanga-t21r7m.mo5.mogenius.io/graphql"
-			: "https://easy-manga-prod-emanga-t21r7m.mo5.mogenius.io/graphql",
+				: "https://emanga-ig4e.koyeb.app/graphql"
+			: "https://emanga-ig4e.koyeb.app/graphql",
 	// 	? "http://localhost:3000/graphql"
 	// 	: useCyclicServer
 	// 	? "https://wicked-gloves-moth.cyclic.app/graphql"
