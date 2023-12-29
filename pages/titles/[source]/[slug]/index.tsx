@@ -864,7 +864,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																		.large
 																}
 																imgSrc={
-																	`https://workers.emanga.tk/fetch?url=` +
+																	`https://easymangaproxy.sekai966.workers.dev/fetch?url=` +
 																	node.image
 																		.large
 																}
@@ -906,7 +906,7 @@ const MangaPage: NextPage<MangaPageProps> = ({
 																				.large
 																		}
 																		src={
-																			`https://workers.emanga.tk/fetch?url=` +
+																			`https://easymangaproxy.sekai966.workers.dev/fetch?url=` +
 																			node
 																				.image
 																				.large
