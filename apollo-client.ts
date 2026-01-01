@@ -5,7 +5,7 @@ const useCyclicServer = true; //"https://wicked-gloves-moth.cyclic.app/graphql"
 const useRenderServer = false; //"https://emanga-backend-tkty.onrender.com/graphql"
 
 export const client = new ApolloClient({
-	uri: "https://ooock4ogckssg0sw88wokssw.albosaty.dev/graphql"
+	uri: "https://ooock4ogckssg0sw88wokssw.albosaty.dev/graphql",
 	cache: new InMemoryCache(),
 });
 
