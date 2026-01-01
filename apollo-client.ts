@@ -5,19 +5,7 @@ const useCyclicServer = true; //"https://wicked-gloves-moth.cyclic.app/graphql"
 const useRenderServer = false; //"https://emanga-backend-tkty.onrender.com/graphql"
 
 export const client = new ApolloClient({
-	uri:
-		process.env.NODE_ENV === "development"
-			? useDevServer
-				? "http://localhost:3000/graphql"
-				: "https://wicked-gloves-moth.cyclic.app/graphql"
-			: "https://wicked-gloves-moth.cyclic.app/graphql",
-	// 	? "http://localhost:3000/graphql"
-	// 	: useCyclicServer
-	// 	? "https://wicked-gloves-moth.cyclic.app/graphql"
-	// 	: useRenderServer
-	// 	? "https://emanga-backend-tkty.onrender.com/graphql"
-	// 	: "https://fr.emanga.tk/graphql"
-	// : "https://wicked-gloves-moth.cyclic.app/graphql", //"https://fr.emanga.tk/graphql",
+	uri: "https://ooock4ogckssg0sw88wokssw.albosaty.dev/graphql"
 	cache: new InMemoryCache(),
 });
 
